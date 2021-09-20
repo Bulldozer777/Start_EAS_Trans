@@ -95,6 +95,10 @@ namespace Start_EAS_Trans
             this.button18 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.button23 = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
+            this.textBox12 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -155,7 +159,7 @@ namespace Start_EAS_Trans
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(98, 268);
+            this.label3.Location = new System.Drawing.Point(95, 284);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(0, 13);
             this.label3.TabIndex = 10;
@@ -163,9 +167,9 @@ namespace Start_EAS_Trans
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(458, 30);
+            this.listBox1.Location = new System.Drawing.Point(458, 43);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(367, 446);
+            this.listBox1.Size = new System.Drawing.Size(367, 472);
             this.listBox1.TabIndex = 11;
             // 
             // label4
@@ -197,7 +201,6 @@ namespace Start_EAS_Trans
             this.button2.TabIndex = 15;
             this.button2.Text = "Посмотреть";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -208,7 +211,6 @@ namespace Start_EAS_Trans
             this.button3.TabIndex = 16;
             this.button3.Text = "Посмотреть";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -219,7 +221,6 @@ namespace Start_EAS_Trans
             this.button4.TabIndex = 18;
             this.button4.Text = "Посмотреть";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label6
             // 
@@ -240,7 +241,6 @@ namespace Start_EAS_Trans
             this.button5.TabIndex = 20;
             this.button5.Text = "Посмотреть";
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // label7
             // 
@@ -255,7 +255,7 @@ namespace Start_EAS_Trans
             // button6
             // 
             this.button6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(97, 290);
+            this.button6.Location = new System.Drawing.Point(93, 320);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(98, 26);
             this.button6.TabIndex = 22;
@@ -267,7 +267,7 @@ namespace Start_EAS_Trans
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(97, 268);
+            this.label8.Location = new System.Drawing.Point(93, 298);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(355, 19);
             this.label8.TabIndex = 21;
@@ -276,7 +276,7 @@ namespace Start_EAS_Trans
             // textBox4
             // 
             this.textBox4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox4.Location = new System.Drawing.Point(201, 291);
+            this.textBox4.Location = new System.Drawing.Point(197, 321);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(251, 26);
             this.textBox4.TabIndex = 23;
@@ -284,7 +284,7 @@ namespace Start_EAS_Trans
             // textBox5
             // 
             this.textBox5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox5.Location = new System.Drawing.Point(201, 341);
+            this.textBox5.Location = new System.Drawing.Point(197, 371);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(251, 26);
             this.textBox5.TabIndex = 26;
@@ -292,7 +292,7 @@ namespace Start_EAS_Trans
             // button7
             // 
             this.button7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button7.Location = new System.Drawing.Point(97, 341);
+            this.button7.Location = new System.Drawing.Point(93, 371);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(98, 26);
             this.button7.TabIndex = 25;
@@ -304,7 +304,7 @@ namespace Start_EAS_Trans
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(97, 319);
+            this.label9.Location = new System.Drawing.Point(93, 349);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(355, 19);
             this.label9.TabIndex = 24;
@@ -313,7 +313,7 @@ namespace Start_EAS_Trans
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(455, 14);
+            this.label10.Location = new System.Drawing.Point(455, 27);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(84, 13);
             this.label10.TabIndex = 27;
@@ -330,7 +330,7 @@ namespace Start_EAS_Trans
             // textBox6
             // 
             this.textBox6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox6.Location = new System.Drawing.Point(201, 443);
+            this.textBox6.Location = new System.Drawing.Point(197, 473);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(251, 26);
             this.textBox6.TabIndex = 34;
@@ -338,7 +338,7 @@ namespace Start_EAS_Trans
             // button8
             // 
             this.button8.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button8.Location = new System.Drawing.Point(97, 443);
+            this.button8.Location = new System.Drawing.Point(93, 473);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(98, 26);
             this.button8.TabIndex = 33;
@@ -350,7 +350,7 @@ namespace Start_EAS_Trans
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label12.Location = new System.Drawing.Point(97, 421);
+            this.label12.Location = new System.Drawing.Point(93, 451);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(328, 19);
             this.label12.TabIndex = 32;
@@ -359,7 +359,7 @@ namespace Start_EAS_Trans
             // textBox7
             // 
             this.textBox7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox7.Location = new System.Drawing.Point(201, 393);
+            this.textBox7.Location = new System.Drawing.Point(197, 423);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(251, 26);
             this.textBox7.TabIndex = 31;
@@ -367,7 +367,7 @@ namespace Start_EAS_Trans
             // button9
             // 
             this.button9.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button9.Location = new System.Drawing.Point(97, 392);
+            this.button9.Location = new System.Drawing.Point(93, 422);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(98, 26);
             this.button9.TabIndex = 30;
@@ -379,7 +379,7 @@ namespace Start_EAS_Trans
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label13.Location = new System.Drawing.Point(97, 370);
+            this.label13.Location = new System.Drawing.Point(93, 400);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(317, 19);
             this.label13.TabIndex = 29;
@@ -388,7 +388,7 @@ namespace Start_EAS_Trans
             // button10
             // 
             this.button10.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button10.Location = new System.Drawing.Point(97, 239);
+            this.button10.Location = new System.Drawing.Point(93, 269);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(357, 28);
             this.button10.TabIndex = 35;
@@ -399,7 +399,7 @@ namespace Start_EAS_Trans
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(555, 14);
+            this.label14.Location = new System.Drawing.Point(561, 27);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(73, 13);
             this.label14.TabIndex = 36;
@@ -452,7 +452,6 @@ namespace Start_EAS_Trans
             this.button13.TabIndex = 41;
             this.button13.Text = "Удалить";
             this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
             // button14
             // 
@@ -463,7 +462,6 @@ namespace Start_EAS_Trans
             this.button14.TabIndex = 42;
             this.button14.Text = "Удалить";
             this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // button15
             // 
@@ -474,7 +472,6 @@ namespace Start_EAS_Trans
             this.button15.TabIndex = 43;
             this.button15.Text = "Удалить";
             this.button15.UseVisualStyleBackColor = true;
-            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // button16
             // 
@@ -485,7 +482,6 @@ namespace Start_EAS_Trans
             this.button16.TabIndex = 44;
             this.button16.Text = "Удалить";
             this.button16.UseVisualStyleBackColor = true;
-            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // button17
             // 
@@ -686,7 +682,7 @@ namespace Start_EAS_Trans
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(649, 14);
+            this.label21.Location = new System.Drawing.Point(658, 27);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(98, 13);
             this.label21.TabIndex = 69;
@@ -711,18 +707,58 @@ namespace Start_EAS_Trans
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(20, 499);
+            this.label22.Location = new System.Drawing.Point(21, 229);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(41, 13);
+            this.label22.Size = new System.Drawing.Size(158, 13);
             this.label22.TabIndex = 71;
-            this.label22.Text = "label22";
+            this.label22.Text = "Количество файлов реплики: ";
             this.label22.Click += new System.EventHandler(this.label22_Click);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(21, 254);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(0, 13);
+            this.label23.TabIndex = 72;
+            this.label23.Click += new System.EventHandler(this.label23_Click);
+            // 
+            // button23
+            // 
+            this.button23.Location = new System.Drawing.Point(12, 475);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(75, 23);
+            this.button23.TabIndex = 73;
+            this.button23.Text = "Проверка";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(455, 9);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(37, 13);
+            this.label24.TabIndex = 74;
+            this.label24.Text = "Путь: ";
+            // 
+            // textBox12
+            // 
+            this.textBox12.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox12.Location = new System.Drawing.Point(486, 5);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(261, 21);
+            this.textBox12.TabIndex = 75;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(828, 479);
+            this.ClientSize = new System.Drawing.Size(828, 519);
+            this.Controls.Add(this.textBox12);
+            this.Controls.Add(this.label24);
+            this.Controls.Add(this.button23);
+            this.Controls.Add(this.label23);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.button18);
             this.Controls.Add(this.label21);
@@ -860,6 +896,10 @@ namespace Start_EAS_Trans
         private System.Windows.Forms.Button button18;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Button button23;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox textBox12;
     }
 }
 
