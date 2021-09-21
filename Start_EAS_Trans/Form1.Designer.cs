@@ -137,7 +137,6 @@ namespace Start_EAS_Trans
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(224, 26);
             this.textBox2.TabIndex = 3;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // progressBar1
             // 
@@ -201,6 +200,7 @@ namespace Start_EAS_Trans
             this.button2.TabIndex = 15;
             this.button2.Text = "Посмотреть";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -211,6 +211,7 @@ namespace Start_EAS_Trans
             this.button3.TabIndex = 16;
             this.button3.Text = "Посмотреть";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -221,6 +222,7 @@ namespace Start_EAS_Trans
             this.button4.TabIndex = 18;
             this.button4.Text = "Посмотреть";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label6
             // 
@@ -241,6 +243,7 @@ namespace Start_EAS_Trans
             this.button5.TabIndex = 20;
             this.button5.Text = "Посмотреть";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // label7
             // 
@@ -697,7 +700,7 @@ namespace Start_EAS_Trans
             this.button18.TabIndex = 70;
             this.button18.Text = "Обновить IP";
             this.button18.UseVisualStyleBackColor = true;
-            this.button18.Click += new System.EventHandler(this.button18_Click_1);
+            this.button18.Click += new System.EventHandler(this.button18_Click);
             // 
             // timer1
             // 
@@ -721,7 +724,6 @@ namespace Start_EAS_Trans
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(0, 13);
             this.label23.TabIndex = 72;
-            this.label23.Click += new System.EventHandler(this.label23_Click);
             // 
             // button23
             // 
@@ -754,7 +756,7 @@ namespace Start_EAS_Trans
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(828, 519);
+            this.ClientSize = new System.Drawing.Size(1118, 519);
             this.Controls.Add(this.textBox12);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.button23);

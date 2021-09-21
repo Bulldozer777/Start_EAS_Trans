@@ -418,10 +418,21 @@ namespace Start_EAS_Trans
             timer.Interval = 1000; //интервал между срабатываниями 1000 миллисекунд
             timer.Tick += new EventHandler(timer_Tick); //подписываемся на события Tick
 
-            Button[] Mass_Button_View = new Button[4] { button2, button4, button3, button5 };
+            //Создание событий некоторых кнопок, используя лямбда выражение, циклы , создания события кнопки прои
+            Button[] Mass_Button_View_Ops = new Button[2] { button2, button4 };
+            Button[] Mass_Button_View_Stage = new Button[2] { button3, button5 };
+            Button[] Mass_Button_View_Stage_In = new Button[1] { button3 };
+            Button[] Mass_Button_View_Stage_Out = new Button[1] { button5 };
+            Button[] Mass_Button_View = new Button[Mass_Button_View_Ops.Length + Mass_Button_View_Stage.Length];
+            for (int i = 0; i < Mass_Button_View.Length; i++)
+            {
+                if (i > -1 & i < 2)
+                    Mass_Button_View[i] = Mass_Button_View_Ops[i];
+                if (i > 1 & i < 4)
+                    Mass_Button_View[i] = Mass_Button_View_Stage[i - 2];
+            }
             Button[] Mass_Button_Delete = new Button[4] { button16, button15, button14, button13 };
             Button[] Mass_Button = new Button[Mass_Button_View.Length + Mass_Button_Delete.Length];
-            string ops = textBox1.Text;
             string[] path_mass = new string[4]
             {
                  @"\c$\GMMQ\Export",
@@ -436,54 +447,116 @@ namespace Start_EAS_Trans
                 if (i > 3 & i < 8)
                     Mass_Button[i] = Mass_Button_Delete[i - 4];
             }
-            foreach (Button button in Mass_Button)
+            foreach (Button button in Mass_Button_Delete)
             {
                 CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
                                                          // отменяет отслеживание ошибок,
                                                          // но дает передать компоненты формы в другой поток 
                 button.Click += async (s, e) =>
                 {
-                    for (int i = 0; i < Mass_Button_View.Length; i++)
+                    for (int i = 0; i < Mass_Button_Delete.Length; i++)
                     {
-                        if (button == Mass_Button_View[i])
-                        {
-                            if (textBox1.Text != "")
-                            {
-                                Async_View_Files(listBox1, label10, label14, label21, Replace_path(path_mass[i], ops), textBox12);
+                        Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+                        //if (server != "")
+                        //{
+                        //    for (int i = 0; i < Mass_Button_View_Ops.Length; i++)
+                        //    {
+                        //        if (button == Mass_Button_View_Ops[i])
+                        //        {
+                        //            if (textBox1.Text != "")
+                        //            {
+                        //                Async_View_Files(listBox1, label10, label14, label21, path_mass[i], textBox12, server);
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                        //if (server == "")
+                        //{
+                        //    for (int i = 0; i < Mass_Button_View_Stage_In.Length; i++)
+                        //    {
+                        //        if (button == Mass_Button_View_Stage[i])
+                        //        {
+                        //            if (textBox1.Text != "")
+                        //            {
+                        //                Async_View_Files(listBox1, label10, label14, label21, path_mass[2], textBox12, server);
+                        //            }
+                        //        }
+                        //    }
 
-                                //Проверка!
+                        //    for (int i = 0; i < Mass_Button_View_Stage_Out.Length; i++)
+                        //    {
+                        //        if (button == Mass_Button_View_Stage[i])
+                        //        {
+                        //            if (textBox1.Text != "")
+                        //            {
+                        //                Async_View_Files(listBox1, label10, label14, label21, path_mass[2], textBox12, server);
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                        //for (int i = 0; i < Mass_Button_View.Length; i++)
+                        //{
+                        //    //if (button == Mass_Button_View[i])
+                        //    //{
+                        //    //    if (textBox1.Text != "")
+                        //    //    {
+                        //    //        //Async_View_Files(listBox1, label10, label14, label21, path_mass[i], textBox12);
 
-                                //if(path_mass[i] == @"\c$\GMMQ\Export")
-                                //{
-                                //    Async_View_Files(listBox1, label10, label14, label21, Replace_path(path_mass[0], ops), textBox12);
-                                //}
-                                //if (path_mass[i] == @"\c$\GMMQ\Import")
-                                //{
-                                //    Async_View_Files(listBox1, label10, label14, label21, Replace_path(path_mass[1], ops), textBox12);
-                                //}
-                                //if (path_mass[i] == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\1")
-                                //{
-                                //    Async_View_Files(listBox1, label10, label14, label21, Replace_path(path_mass[2], ops), textBox12);
-                                //}
-                                //if (path_mass[i] == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\2")
-                                //{
-                                //    Async_View_Files(listBox1, label10, label14, label21, Replace_path(path_mass[3], ops), textBox12);
-                                //}
-                            }
-                            else
-                                MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
-                        }
+                        //    //        //Проверка!
+
+                        //    //        if (server != "")
+                        //    //        {
+                        //    //            if (path_mass[0] == @"\c$\GMMQ\Export")
+                        //    //            {
+                        //    //                Async_View_Files(listBox1, label10, label14, label21, path_mass[0], textBox12, server);
+                        //    //                break;
+                        //    //            }
+                        //    //            if (path_mass[1] == @"\c$\GMMQ\Import")
+                        //    //            {
+                        //    //                Async_View_Files(listBox1, label10, label14, label21, path_mass[1], textBox12, server);
+                        //    //                break;
+                        //    //            }
+                        //    //            if (path_mass[2] == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\1")
+                        //    //            {
+                        //    //                Async_View_Files(listBox1, label10, label14, label21, path_mass[2], textBox12, server);
+                        //    //                break;
+                        //    //            }
+                        //    //            if (path_mass[3] == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\2")
+                        //    //            {
+                        //    //                Async_View_Files(listBox1, label10, label14, label21, path_mass[3], textBox12, server);
+                        //    //                break;
+                        //    //            }
+                        //    //        }
+                        //    //        if (server == "")
+                        //    //        {
+                        //    //            if (path_mass[i] == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\1")
+                        //    //            {
+                        //    //                Async_View_Files(listBox1, label10, label14, label21, path_mass[2], textBox12, server);
+                        //    //                break;
+                        //    //            }
+                        //    //            if (path_mass[i] == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\2")
+                        //    //            {
+                        //    //                Async_View_Files(listBox1, label10, label14, label21, path_mass[3], textBox12, server);
+                        //    //                break;
+                        //    //            }
+                        //    //        }
+                        //    //        break;
+                        //    //    }
+                        //    //    else
+                        //    //        MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
+                        //    //    break;
+                        //    //}
                         if (button == Mass_Button_Delete[i])
                         {
                             if (textBox1.Text != "")
                             {
-                                string[] files = Directory.GetFiles(Replace_path(path_mass[i], ops));
-                                string[] catalog = Directory.GetDirectories(Replace_path(path_mass[i], ops));
+                                string[] files = Directory.GetFiles(Replace_path(path_mass[i]));
+                                string[] catalog = Directory.GetDirectories(Replace_path(path_mass[i]));
                                 int all_elemetnts = files.Length + catalog.Length;
                                 if (all_elemetnts > 0)
                                 {
                                     DialogResult result = MessageBox.Show(
-       $"Удалить файлы ОПС {textBox1.Text}\nиз папки {Replace_path(path_mass[i], ops)}?",
+       $"Удалить файлы ОПС {textBox1.Text}\nиз папки {Replace_path(path_mass[i])}?",
        "Сообщение",
        MessageBoxButtons.YesNo,
        MessageBoxIcon.Information,
@@ -492,16 +565,18 @@ namespace Start_EAS_Trans
 
                                     if (result == DialogResult.Yes)
                                     {
-
-                                        await Task.Run(() => Delete_File(Replace_path(path_mass[i], ops)));
-                                        Async_View_Files(listBox1, label11, label15, label21, Replace_path(path_mass[i], ops), textBox12);
-                                        Update_Files_and_Catolog_lenght(Replace_path(path_mass[i], ops));
+                                        if (server != "")
+                                        {
+                                            await Task.Run(() => Delete_File(Replace_path(path_mass[i])));
+                                            Async_View_Files(listBox1, label11, label15, label21, Replace_path(path_mass[i]), textBox12, server);
+                                            Update_Files_and_Catolog_lenght(Replace_path(path_mass[i]));
+                                        }
                                     }
                                     if (result == DialogResult.No)
                                     {
                                         //this.TopMost = true;
                                     }
-                                    this.TopMost = true;
+                                    //this.TopMost = true;
                                 }
                                 else
                                     MessageBox.Show("Папка пустая");
@@ -513,6 +588,8 @@ namespace Start_EAS_Trans
                 };
             }
         }
+
+        //Событие, описывающее логику работы таймера времени выполнения запроса
         void timer_Tick(object sender, EventArgs e)
         {
             string minutes = "";
@@ -523,46 +600,58 @@ namespace Start_EAS_Trans
                 this.label23.Text = $"Время выполнения запроса: {minutes} {(++timerCounter) - 1 } сек.";
             }
             if (timerCounter >= 61)
-            {               
-                if (timerCounter >= 61 & timerCounter < 122)
+            {
+                for (int i = 1; i < 1000; i++)
                 {
-                    int_minutes = 1;
-                    minutes = $"{int_minutes} минута";
-                    this.label23.Text = $"Время выполнения запроса: {minutes} {(++timerCounter) - 62} сек.";
-                }
-                for (int i = 2; i < 1000; i++)
-                {
-                    if (i == 5)
+                    if (i == 31)
                     {
                         break;
                     }
                     if (timerCounter >= 60 * i + i & timerCounter < 60 * (i + 1) + (i + 1))
                     {
+                        int y = 1;
                         int_minutes = i;
-                        minutes = $"{int_minutes} минуты";
-                        this.label23.Text = $"Время выполнения запроса: {minutes} {(++timerCounter) - (60 * i + (i + 1))} сек.";
-                    }
-                }            
-            }
-            if (timerCounter >= 305 & timerCounter < 1220)
-            {
-                for (int i = 5; i < 1000; i++)
-                {
-                    if(i == 21)
-                    {
-                        break;
-                    }
-                    if (timerCounter >= 60*i + i & timerCounter < 60*(i+1) + (i+1))
-                    {
-                        int_minutes = i;
-                        minutes = $"{int_minutes} минут";
+                        if (i == 1)
+                        {
+                            minutes = $"{int_minutes} минута";
+                        }
+                        if (i >= 2 & i <= 4)
+                        {
+                            minutes = $"{int_minutes} минуты";
+                        }
+                        if (i >= 5 & i <= 20)
+                        {
+                            minutes = $"{int_minutes} минут";
+                        }
+                        if (i == 10 + 10 * y + 1)
+                        {
+                            minutes = $"{int_minutes} минута";
+                        }
+                        if (i >= 12 + 10 * y & i <= 14 + 10 * y)
+                        {
+                            minutes = $"{int_minutes} минуты";
+                        }
+                        if (i >= 15 + 10 * y & i <= 20 + 10 * y)
+                        {
+                            minutes = $"{int_minutes} минут";
+                        }
                         this.label23.Text = $"Время выполнения запроса: {minutes} {(++timerCounter) - (60 * i + (i + 1))} сек.";
                     }
                 }
             }
         }
-    
 
+
+
+        //Кнопка толкнуть транспорт скриптом
+        //Работа осуществляется в отдельном потоке от основной программы,
+        //Сам поток начинается с того, что постоянно ищет файл meta.xml, в папке отделения,
+        //Сигнализирующий о завершении SQL запроса "exec ReplicaExport 0", 
+        //если файл найден, методу View_files(progressBar1, command, action);
+        //передается переменная action, которая записана в его параметры, уже с другим значением и,
+        //исходя из этого значения, метод View_files прекращает свою работу
+        //Так же в потоке есть еще один метод, который именно и запускает SQL запрос "exec ReplicaExport 0"
+        //Этот метод - Start_Transport(progressBar1, command);
         private void button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
@@ -621,19 +710,19 @@ namespace Start_EAS_Trans
                                         }
                                     }
                                 }
-                                    Start_Transport(progressBar1, command);
-                                    View_files(progressBar1, command,action);
-                                    //};
-                                    //if (InvokeRequired)
-                                    //    Invoke(action);
-                                    //else
-                                    //    action(); /*реализация через делегат action*/
+                                Start_Transport(progressBar1, command);
+                                View_files(progressBar1, command, action);
+                                //};
+                                //if (InvokeRequired)
+                                //    Invoke(action);
+                                //else
+                                //    action(); /*реализация через делегат action*/
 
-                                    // Invoke((MethodInvoker)(() =>
-                                    //{
-                                    //    Rebut_MPK_Service(progressBar10);
-                                    //}));
-                               
+                                // Invoke((MethodInvoker)(() =>
+                                //{
+                                //    Rebut_MPK_Service(progressBar10);
+                                //}));
+
                             });
                         thread.Start();
                     }
@@ -651,6 +740,9 @@ namespace Start_EAS_Trans
                 MessageBox.Show("Поле для ввода номера ОПС - пустое");
         }
 
+        //Метод, использующий класс SqlConnection для создания запроса "exec ReplicaExport 0" на базу отделения 
+        //connectionString = $"Server={server};Database={name_database};Persist Security Info=False;User ID=sa;Password=QweAsd123;";
+        //
         async public void Start_Transport(ProgressBar progressBar, SqlCommand command)
         {
             int action = 0;
@@ -658,7 +750,7 @@ namespace Start_EAS_Trans
             {
                 if (textBox1.Text != "")
                 {
-                    
+
                     textBox9.Clear();
                     string server = "";
                     string name_database = "";
@@ -675,25 +767,23 @@ namespace Start_EAS_Trans
                         command.CommandText = "exec ReplicaExport 0";
                         command.Connection = connection;
                         command.CommandTimeout = 5000; //увеличено время на выполнение команды
-                        string path = @"\\" + server + @"\c$\GMMQ\Export";
-                        string[] files = Directory.GetFiles(path);
                         await Task.Run(() => command.ExecuteNonQueryAsync());
                         action = 1;
                         Action(action);
                         this.timer.Stop();
                         textBox2.Text = "Скрипт выполнен";
                         progressBar.Value = 100;
-                            MessageBox.Show($"Запрос в SQL: \"{command.CommandText}\" - успешно отработан");
+                        MessageBox.Show($"Запрос в SQL: \"{command.CommandText}\" - успешно отработан");
                         progressBar.Value = 0;
                         textBox2.Clear();
                         textBox9.Text = textBox1.Text + " - толкнул скриптом +";
+                        timerCounter = 0;
                         label22.Text = "Количество файлов реплики: ";
-
                     }
                 }
                 else
                     MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-                    action = 1;
+                action = 1;
             }
             catch (Exception ex)
             {
@@ -714,17 +804,17 @@ namespace Start_EAS_Trans
             }
         }
 
+        //Метод, следящий за появлением новых файлов в папке отделения, по фиксированному пути 
+        //@"\\" + server + @"\c$\GMMQ\Export"
         async public void View_files(ProgressBar progressBar, SqlCommand command, int action)
         {
             try
             {
-                //int action = 0;
                 CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
                                                          // отменяет отслеживание ошибок,
                                                          // но дает передать компоненты формы в другой поток 
                 Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
                 string path = @"\\" + server + @"\c$\GMMQ\Export";
-                //string path = @"D:\Export";
                 string[] files = Directory.GetFiles(path);
                 string[] files1 = Directory.GetFiles(path);
                 int count = 1;
@@ -741,8 +831,8 @@ namespace Start_EAS_Trans
                     {
                         if (action != 1)
                         {
-                            string h = command.ExecuteNonQueryAsync().Status.ToString();
-                            textBox9.Text = h;
+                            //string h = command.ExecuteNonQueryAsync().Status.ToString();
+                            //textBox9.Text = h;
                             textBox12.Text = path;
                             count++;
                             string[] files_1 = Directory.GetFiles(path);
@@ -775,7 +865,7 @@ namespace Start_EAS_Trans
                                     {
                                         textBox9.Text = textBox1.Text + " - толкнул скриптом +";
                                         action = 1;
-                                        break;                                     
+                                        break;
                                     }
                                 }
                                 listBox1.EndUpdate();
@@ -804,11 +894,6 @@ namespace Start_EAS_Trans
             }
         }
 
-        private void Command_StatementCompleted(object sender, StatementCompletedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         public string[] Checked(string[] mass_1, int count, string[] mass_2, out string[] mass_3)
         {
             mass_3 = new string[0];
@@ -822,7 +907,7 @@ namespace Start_EAS_Trans
             {
                 return (string[])mass_1.Except(mass_2);
             }
-              return mass_1;
+            return mass_1;
         }
         public void P(SqlCommand command, ProgressBar progressBar, string path)
         {
@@ -854,7 +939,9 @@ namespace Start_EAS_Trans
                 else
                     break;
             }
-        }            
+        }
+
+        //Метод, находящий по номеру отделения, его ip адрес и имя его основной базы данных ЕАС 
         public void Name_DataBase_and_Server(string numder_ops, out string server, out string name_database)
         {
             name_database = "DB" + numder_ops;
@@ -873,36 +960,58 @@ namespace Start_EAS_Trans
                         {
                             if (pingReply.Address.ToString() != "10.94.187.117")
                             {
-                                
+
                                 if (pingReply.Address.ToString() != "10.94.209.149")
                                 {
                                     if (pingReply.Address.ToString() != "10.94.187.101")
                                     {
-                                        server = pingReply.Address.ToString();
-                                        System.Threading.Thread.Sleep(200);
+                                        if (pingReply.Address.ToString() != "10.94.185.21")
+                                        {
+                                            if (pingReply.Address.ToString() != "10.94.225.101")
+                                            {
+                                                server = pingReply.Address.ToString();
+                                                System.Threading.Thread.Sleep(200);
+                                            }
+                                            else
+                                            {
+                                                MessageBox.Show($"\nКоманда пинг - не проходит.");
+                                                textBox9.Text = textBox1.Text + " - не подключается";
+                                                server = "";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show($"\nКоманда пинг - не проходит.");
+                                            textBox9.Text = textBox1.Text + " - не подключается";
+                                            server = "";
+                                        }
                                     }
                                     else
                                     {
                                         MessageBox.Show($"\nКоманда пинг - не проходит.");
                                         textBox9.Text = textBox1.Text + " - не подключается";
+                                        server = "";
                                     }
                                 }
                                 else
                                 {
                                     MessageBox.Show($"\nКоманда пинг - не проходит.");
                                     textBox9.Text = textBox1.Text + " - не подключается";
+                                    server = "";
                                 }
                             }
                             else
                             {
                                 MessageBox.Show($"\nКоманда пинг - не проходит.");
                                 textBox9.Text = textBox1.Text + " - не подключается";
+                                server = "";
                             }
                         }
                         else
                         {
                             MessageBox.Show($"\nКоманда пинг - не проходит.");
                             textBox9.Text = textBox1.Text + " - не подключается";
+                            server = "";
                         }
                     }
                     else
@@ -913,89 +1022,40 @@ namespace Start_EAS_Trans
                 {
                     MessageBox.Show($"\nКоманда пинг - не проходит.\n{ex.Message}");
                     textBox9.Text = textBox1.Text + " - не подключается";
+                    server = "";
                 }
                 catch (SocketException)
                 {
                     MessageBox.Show("\nКоманда пинг - не проходит.\nCould not resolve host name.");
                     textBox9.Text = textBox1.Text + " - не подключается";
+                    server = "";
                 }
 
                 catch (ArgumentNullException)
                 {
                     MessageBox.Show("\nКоманда пинг - не проходит.\nPlease enter the host name or IP address to ping.");
                     textBox9.Text = textBox1.Text + " - не подключается";
+                    server = "";
                 }
                 catch (System.Net.NetworkInformation.NetworkInformationException)
                 {
                     MessageBox.Show($"\nКоманда пинг - не проходит.\nПк ОПС {textBox1.Text} - выключен или без интернета");
                     textBox9.Text = textBox1.Text + " - не подключается";
+                    server = "";
                 }
                 catch (NullReferenceException)
                 {
                     MessageBox.Show($"\nКоманда пинг - не проходит.\nПк ОПС {textBox1.Text} - выключен или без интернета");
                     textBox9.Text = textBox1.Text + " - не подключается";
+                    server = "";
                 }
             }
             else
                 MessageBox.Show($"\nПоле для ввода номера ОПС - пустое\n(Метод Name_DataBase_and_Server)");
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            //textBox2.Text += command.ExecuteNonQueryAsync().Status.ToString();
-        }   
-        public string[] Get_Files(string path)
-        {
-            try
-            {
-                FileInfo fileInf_1 = new FileInfo(path + "*.DAT");
-                FileInfo fileInf_2 = new FileInfo(path + "*.FE");
-                FileInfo fileInf_3 = new FileInfo(path + "*.Fi");
-                if (fileInf_1.Exists)
-                {
-                    string[] files = new string[200];
-                    files[0] = " 1 ";
-                    files = Directory.GetFiles(path);
-                    //Directory.GetLastAccessTime(" ")
-
-                    if (files[0] == " 1 ")
-                        return new string[1] { "0" };
-                    else
-                        return files;
-                }
-                if (fileInf_2.Exists)
-                {
-                    string[] files = new string[200];
-                    files[0] = " 1 ";
-                    files = Directory.GetFiles(path);
-                    //Directory.GetLastAccessTime(" ")
-
-                    if (files[0] == " 1 ")
-                        return new string[1] { "0" };
-                    else
-                        return files;
-                }
-                if (fileInf_3.Exists)
-                {
-                    string[] files = new string[200];
-                    files[0] = " 1 ";
-                    files = Directory.GetFiles(path);
-                    //Directory.GetLastAccessTime(" ")
-
-                    if (files[0] == " 1 ")
-                        return new string[1] { "0" };
-                    else
-                        return files;
-                }
-                return new string[1] { "0" };
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show($"Ошибка: \n{ex}");
-                string[] files = new string[2] { "                            Папка пустая", "                            Папка пустая" };
-                return files;
-            }
-        }
+        //Функция возвращающая дату последнего доступа к папке по заданному пути,
+        //в виде строки  
         public string Get_Files_Time(string path)
         {
             if (textBox1.Text != "")
@@ -1020,6 +1080,8 @@ namespace Start_EAS_Trans
             return e;
         }
 
+        //Функция возвращающая дату последнего доступа к папке по заданному пути,
+        //в виде переменной, типа dateTime
         public DateTime Get_Date_Time(string path)
         {
             if (textBox1.Text != "")
@@ -1043,13 +1105,15 @@ namespace Start_EAS_Trans
             return e;
         }
 
-
-        public void FR(string path, string server, out List<string> files_list )
+        //Метод добавляющий имена папок в листбокс, в зависимости от заданного пути и ip сервера 
+        //Метод имеет выходной параметр типа List, в который записывает результат,
+        //Метод использует метод Find, который уже в свою очередь добавляет файлы в листбокс
+        public void FR(string path, string server, out List<string> files_list)
         {
-            
-                files_list = new List<string>();
-                List<string> files_list_1 = new List<string>();
-                List<string> files_list_2 = new List<string>();
+
+            files_list = new List<string>();
+            List<string> files_list_1 = new List<string>();
+            List<string> files_list_2 = new List<string>();
             if (textBox1.Text != "")
             {
                 try
@@ -1102,8 +1166,10 @@ namespace Start_EAS_Trans
                 }
             }
             else
-            MessageBox.Show($"\nПоле для ввода номера ОПС - пустое\n(Метод FR)");
+                MessageBox.Show($"\nПоле для ввода номера ОПС - пустое\n(Метод FR)");
         }
+
+        //Метод добавляющий файлы в листбокс по заданному пути и маске
         public void Find(string path, string mask)
         {
             if (textBox1.Text != "")
@@ -1118,197 +1184,13 @@ namespace Start_EAS_Trans
                 }
             }
             else
-            MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
+                MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
         }
-        //async private void button3_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (textBox1.Text != "")
-        //        {
-        //            CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
-        //                                                 // отменяет отслеживание ошибок,
-        //                                                 // но дает передать компоненты формы в другой поток 
-        //        string server = "";
-        //        string name_database = "";
-        //        Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
-        //        string path = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\In";
-        //        listBox1.Items.Clear();
-        //        await Task.Run(() => FR(path, server, out List<string> files_list));
-        //        string[] files = Directory.GetFiles(path);
-        //            label10.Text = "Всего файлов: " + files.Length.ToString();
-        //            string[] catalog = Directory.GetDirectories(path);
-        //            label14.Text = "Всего папок: " + catalog.Length.ToString();
-        //            label21.Text = $"Всего элементов: {files.Length + catalog.Length}";
-        //        }
-        //        else
-        //            MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"\nОшибка: \n{ex.Message}");
-        //    }
-        //    //listBox1.Items.AddRange(Get_Files(path).Select(line => line.Substring(31))
-        //    //.ToArray());
-        //}
 
-        //async private void button4_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (textBox1.Text != "")
-        //        {
-        //            string server = "";
-        //        string name_database = "";
-        //        Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
-        //        string path = @"\\" + server + @"\c$\GMMQ\Import";
-        //            textBox12.Text = path;
-        //            listBox1.Items.Clear();
-        //        await Task.Run(() => FR(path, server, out List<string> files_list));
-        //        string[] files = Directory.GetFiles(path);
-        //            label10.Text = "Всего файлов: " + files.Length.ToString();
-        //            string[] catalog = Directory.GetDirectories(path);
-        //            label14.Text = "Всего папок: " + catalog.Length.ToString();
-        //            label21.Text = $"Всего элементов: {files.Length + catalog.Length}";
-        //        }
-        //        else
-        //            MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"\nОшибка: \n{ex.Message}");
-        //    }
-        //    //    listBox1.Items.AddRange(Get_Files(path).Select(line => line.Substring(11 + server.Length))
-        //    //.ToArray());
-        //}
-        //async private void button2_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (textBox1.Text != "")
-        //        {
-                    
-        //            string server = "";
-        //            string name_database = "";
-        //            Name_DataBase_and_Server(textBox1.Text, out server, out name_database);                 
-        //            string path = @"\\" + server + @"\c$\GMMQ\Export";
-        //            textBox12.Text = path;
-        //            listBox1.Items.Clear();
-        //            await Task.Run(() => FR(path, server, out List<string> files_list));
-        //            string[] files = Directory.GetFiles(path);
-        //            label10.Text = "Всего файлов: " + files.Length.ToString();
-        //            string[] catalog = Directory.GetDirectories(path);
-        //            label14.Text = "Всего папок: " + catalog.Length.ToString();
-        //            label21.Text = $"Всего элементов: {files.Length + catalog.Length}";
-        //        }
-        //        else
-        //            MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"\nОшибка: \n{ex.Message}");
-        //    }
-        //}
 
-        //async private void button5_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (textBox1.Text != "")
-        //        {
-        //            string server = "";
-        //            string name_database = "";
-        //            Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
-        //            string path = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\Out";
-        //            textBox12.Text = path;
-        //            listBox1.Items.Clear();
-        //            await Task.Run(() => FR(path, server, out List<string> files_list));
-        //            string[] files = Directory.GetFiles(path);
-        //            label10.Text = "Всего файлов: " + files.Length.ToString();
-        //            string[] catalog = Directory.GetDirectories(path);
-        //            label14.Text = "Всего папок: " + catalog.Length.ToString();
-        //            label21.Text = $"Всего элементов: {files.Length + catalog.Length}";
-        //        }
-        //        else
-        //            MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"\nОшибка: \n{ex.Message}");
-        //    }
-        //}
 
+        //Просмотр даты обновления папок на ОПС
         async private void button6_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (textBox1.Text != "")
-                {
-                    string server = "";
-                string name_database = "";
-                Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
-                string path = @"\\" + server + @"\c$\GMMQ\Export";
-                    textBox12.Text = path;
-                    textBox4.Clear();
-                await Task.Run(() => Get_Files_Time(path));
-                textBox4.Text = "Export - " + (Get_Files_Time(path));
-                }
-                else
-                    MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"\nОшибка: \n{ex.Message}");
-            }
-        }
-
-        async private void button7_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (textBox1.Text != "")
-                {
-                    string server = "";
-                string name_database = "";
-                Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
-                string path = @"\\" + server + @"\c$\GMMQ\Import";
-                textBox5.Clear();
-                await Task.Run(() => Get_Files_Time(path));
-                textBox5.Text = "Import - " + (Get_Files_Time(path));
-                }
-                else
-                    MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"\nОшибка: \n{ex.Message}");
-            }
-        }
-
-        async private void button9_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (textBox1.Text != "")
-                {
-                    string server = "";
-                string name_database = "";
-                Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
-                string path = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\In";
-                textBox7.Clear();
-                await Task.Run(() => Get_Files_Time(path));
-                textBox7.Text = "In - " + (Get_Files_Time(path));
-                }
-                else
-                    MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"\nОшибка: \n{ex.Message}");
-            }
-        }
-
-        async private void button8_Click(object sender, EventArgs e)
         {
             try
             {
@@ -1317,6 +1199,75 @@ namespace Start_EAS_Trans
                     string server = "";
                     string name_database = "";
                     Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
+                    if (server != "")
+                    {
+                        string path = @"\\" + server + @"\c$\GMMQ\Export";
+                        textBox12.Text = path;
+                        textBox4.Clear();
+                        await Task.Run(() => Get_Files_Time(path));
+                        textBox4.Text = "Export - " + (Get_Files_Time(path));
+                    }
+                }
+                else
+                    MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"\nОшибка: \n{ex.Message}");
+            }
+        }
+        async private void button7_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (textBox1.Text != "")
+                {
+                    string server = "";
+                    string name_database = "";
+                    Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
+                    if (server != "")
+                    {
+                        string path = @"\\" + server + @"\c$\GMMQ\Import";
+                        textBox5.Clear();
+                        await Task.Run(() => Get_Files_Time(path));
+                        textBox5.Text = "Import - " + (Get_Files_Time(path));
+                    }
+                }
+                else
+                    MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"\nОшибка: \n{ex.Message}");
+            }
+        }
+
+        // Просмотр даты обновления папок на Даксе(стейдже)
+        async private void button9_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (textBox1.Text != "")
+                {
+                    string path = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\In";
+                    textBox7.Clear();
+                    await Task.Run(() => Get_Files_Time(path));
+                    textBox7.Text = "In - " + (Get_Files_Time(path));
+                }
+                else
+                    MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"\nОшибка: \n{ex.Message}");
+            }
+        }
+        async private void button8_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (textBox1.Text != "")
+                {
                     string path = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\Out";
                     textBox6.Clear();
                     await Task.Run(() => Get_Files_Time(path));
@@ -1331,6 +1282,7 @@ namespace Start_EAS_Trans
             }
         }
 
+        //Просмотр обновления сразу всех папок
         async private void button10_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
@@ -1340,22 +1292,36 @@ namespace Start_EAS_Trans
                     string server = "";
                     string name_database = "";
                     Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
-                    string path = @"\\" + server + @"\c$\GMMQ\Export";
-                    string path_1 = @"\\" + server + @"\c$\GMMQ\Import";
-                    textBox4.Clear();
-                    await Task.Run(() => Get_Files_Time(path));
-                    textBox4.Text = "Export - " + (Get_Files_Time(path));
-                    textBox5.Clear();
-                    await Task.Run(() => Get_Files_Time(path_1));
-                    textBox5.Text = "Import - " + (Get_Files_Time(path_1));
-                    string path_2 = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\In";
-                    string path_3 = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\Out";
-                    textBox7.Clear();
-                    await Task.Run(() => Get_Files_Time(path_2));
-                    textBox7.Text = "In - " + (Get_Files_Time(path_2));
-                    textBox6.Clear();
-                    await Task.Run(() => Get_Files_Time(path_3));
-                    textBox6.Text = "Out - " + (Get_Files_Time(path_3));
+                    if (server != "")
+                    {
+                        string path = @"\\" + server + @"\c$\GMMQ\Export";
+                        string path_1 = @"\\" + server + @"\c$\GMMQ\Import";
+                        textBox4.Clear();
+                        await Task.Run(() => Get_Files_Time(path));
+                        textBox4.Text = "Export - " + (Get_Files_Time(path));
+                        textBox5.Clear();
+                        await Task.Run(() => Get_Files_Time(path_1));
+                        textBox5.Text = "Import - " + (Get_Files_Time(path_1));
+                        string path_2 = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\In";
+                        string path_3 = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\Out";
+                        textBox7.Clear();
+                        await Task.Run(() => Get_Files_Time(path_2));
+                        textBox7.Text = "In - " + (Get_Files_Time(path_2));
+                        textBox6.Clear();
+                        await Task.Run(() => Get_Files_Time(path_3));
+                        textBox6.Text = "Out - " + (Get_Files_Time(path_3));
+                    }
+                    if (server == "")
+                    {
+                        string path_2 = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\In";
+                        string path_3 = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\Out";
+                        textBox7.Clear();
+                        await Task.Run(() => Get_Files_Time(path_2));
+                        textBox7.Text = "In - " + (Get_Files_Time(path_2));
+                        textBox6.Clear();
+                        await Task.Run(() => Get_Files_Time(path_3));
+                        textBox6.Text = "Out - " + (Get_Files_Time(path_3));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1366,6 +1332,7 @@ namespace Start_EAS_Trans
                 MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
         }
 
+        //Кнопка PING
         async private void button11_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
@@ -1387,7 +1354,8 @@ namespace Start_EAS_Trans
                 MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
         }
 
-         private void button12_Click(object sender, EventArgs e)
+        //Службы ЕАС
+        private void button12_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
             {
@@ -1404,13 +1372,14 @@ namespace Start_EAS_Trans
                 MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
         }
 
-       async public void Async_View_Files(ListBox listBox, Label all_files, Label all_catalogs, Label all_elemetnts, string path, TextBox way)
+        //Метод для просмотра определенных файлов и попок по маске и задонному пути,
+        //так же определяет их количество, количество папок, количество всех элементов по заданному пути
+        //Добавляет их в листбокс и количество выводит в лабел
+        async public void Async_View_Files(ListBox listBox, Label all_files, Label all_catalogs, Label all_elemetnts, string path, TextBox way, string server)
         {
-            try
+            way.Clear();
+            if (server != "")
             {
-                string server = "";
-                string name_database = "";
-                Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
                 way.Text = path;
                 listBox.Items.Clear();
                 await Task.Run(() => FR(path, server, out List<string> files_list));
@@ -1420,11 +1389,23 @@ namespace Start_EAS_Trans
                 all_catalogs.Text = "Всего папок: " + catalog.Length.ToString();
                 all_elemetnts.Text = $"Всего элементов: {files.Length + catalog.Length}";
             }
-            catch (Exception ex)
+            if (server == "")
             {
-                MessageBox.Show($"\nОшибка: \n{ex}");
+                if (path == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\" + textBox1.Text + "\\In" | path == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\" + textBox1.Text + "\\Out")
+                {
+                    way.Text = path;
+                    listBox.Items.Clear();
+                    await Task.Run(() => FR(path, server, out List<string> files_list));
+                    string[] files = Directory.GetFiles(path);
+                    all_files.Text = "Всего файлов: " + files.Length.ToString();
+                    string[] catalog = Directory.GetDirectories(path);
+                    all_catalogs.Text = "Всего папок: " + catalog.Length.ToString();
+                    all_elemetnts.Text = $"Всего элементов: {files.Length + catalog.Length}";
+                }
             }
         }
+
+        //Метод для нахождения количеста файлов, количества папок, количества всех элементов по заданному пути
         public void Update_Files_and_Catolog_lenght(string path)
         {
             string[] files = Directory.GetFiles(path);
@@ -1433,7 +1414,9 @@ namespace Start_EAS_Trans
             label14.Text = "Всего папок: " + catalog.Length.ToString();
             label21.Text = $"Всего элементов: {files.Length + catalog.Length}";
         }
-        public string Replace_path(string path, string ops)
+
+        //Функция позволяющая выводить откорректированный путь, для дальнейшего его использования в методах
+        public string Replace_path(string path)
         {
             Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
             if (server == @"D:\!localhost")
@@ -1445,15 +1428,15 @@ namespace Start_EAS_Trans
                 if (path == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\1")
                     return server + @"\In";
                 if (path == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\2")
-                    return server + @"\Out";     
+                    return server + @"\Out";
             }
-            if(server != @"D:\!localhost")
+            if (server != @"D:\!localhost")
             {
                 if (path == @"\c$\GMMQ\Export" | path == @"\c$\GMMQ\Import")
                     return @"\\" + server + path;
                 else
                 {
-                    if(path == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\1")
+                    if (path == "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\1")
                     {
                         string path_1 = "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\" + textBox1.Text + "\\In";
                         return path_1;
@@ -1464,17 +1447,20 @@ namespace Start_EAS_Trans
                         return path_1;
                     }
                 }
-                    return path;
+                return path;
             }
             return path;
         }
+
+        //Метод, удаляющий файлы и папки по заданному пути и маске,
+        //использует свою вторую версию, которая удаляет только файлы по маске и пути
         public void Delete_File(string path)
         {
             if (textBox1.Text != "")
             {
                 try
                 {
-                    string[] files = new string[1]; /*Directory.GetFiles(path)*/;
+                    string[] files = new string[1];
                     string[] catalog_1 = Directory.GetDirectories(path);
                     if (files.Length + catalog_1.Length != 0)
                     {
@@ -1484,8 +1470,6 @@ namespace Start_EAS_Trans
                             for (int i = 0; i < catalog.Length; i++)
                             {
                                 DirectoryInfo dir = new DirectoryInfo(catalog[i]);
-                                //foreach (DirectoryInfo file in dir.GetDirectories(path + catalog[i]))
-                                //{
                                 dir.Delete(true); //значение true для удаления папки со всеми содержащимися в ней файлами
                                                   //}
                             }
@@ -1495,7 +1479,6 @@ namespace Start_EAS_Trans
                         {
                             Delete_File(path, mask[i]);
                         }
-                        //MessageBox.Show($"\nФайлы из папки Export - удалены");
                     }
                     else
                         MessageBox.Show($"\nПапка пустая, элементов в папке - 0\nудаление - не произведено");
@@ -1509,9 +1492,36 @@ namespace Start_EAS_Trans
                 MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
         }
 
-      
+        //Метод удаляет только файлы по заданной маске и пути
+        //Вторая версия метода  Delete_File, отличающаяся по параметрам
+        public void Delete_File(string path, string mask)
+        {
+            if (textBox1.Text != "")
+            {
+                try
+                {
+                    CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
+                                                             // отменяет отслеживание ошибок,
+                                                             // но дает передать компоненты формы в другой поток 
+                    DirectoryInfo dir = new DirectoryInfo(path);
+                    foreach (FileInfo file in dir.GetFiles(mask))
+                    {
+                        file.Delete();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"\nОшибка: \n{ex.Message}");
+                }
+            }
+            else
+                MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
+        }
 
-      async private void button17_Click(object sender, EventArgs e)
+
+        //Кнопка проверка работы транспорта, представлена логикой условий и рассмотрения различных вариантов поведения,
+        //зависит от состояния служб транспорта, времени обновления в папках, подключения к отделению
+        async private void button17_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
             {
@@ -1527,7 +1537,7 @@ namespace Start_EAS_Trans
                 DateTime In = Get_Date_Time(@"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\In").AddHours(3);
                 DateTime Out = Get_Date_Time(@"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\Out").AddHours(3);
                 //if (now < export & now < inport & now < In & now < Out)
-                    if (now < In & now < Out)
+                if (now < In & now < Out)
                 {
                     textBox3.Text = "Время обновления папок актуальное";
                     await Task.Delay(200);
@@ -1587,196 +1597,18 @@ namespace Start_EAS_Trans
                 }
             }
             else
-                MessageBox.Show("Поле для ввода номера ОПС - пустое");        
-    }
-        public void Delete_File(string path, string mask)
-        {
-            if (textBox1.Text != "")
-            {
-                try
-                {
-                    CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
-                                                             // отменяет отслеживание ошибок,
-                                                             // но дает передать компоненты формы в другой поток 
-                    DirectoryInfo dir = new DirectoryInfo(path);
-                    foreach (FileInfo file in dir.GetFiles(mask))
-                    {
-                        file.Delete();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"\nОшибка: \n{ex.Message}");
-                }
-            }
-            else
-                MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-
+                MessageBox.Show("Поле для ввода номера ОПС - пустое");
         }
-        //async private void button16_Click(object sender, EventArgs e)
-        //{
-        //    if (textBox1.Text != "")
-        //    {
-        //        try
-        //        {
 
-        //            Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
-        //            string path = @"\\" + server + @"\c$\GMMQ\Export";
-        //            DialogResult result = MessageBox.Show(
-        //   $"Удалить файлы ОПС {textBox1.Text}\nиз папки {Replace_path(path)}?",
-        //   "Сообщение",
-        //   MessageBoxButtons.YesNo,
-        //   MessageBoxIcon.Information,
-        //   MessageBoxDefaultButton.Button1,
-        //   MessageBoxOptions.DefaultDesktopOnly);
-
-        //            if (result == DialogResult.Yes)
-        //            {
-        //                //this.TopMost = false;
-        //                await Task.Run(() => Delete_File(path));
-        //                Async_View_Files(listBox1, label11, label15, label21, path, textBox12);
-        //            }
-        //            if (result == DialogResult.No)
-        //            {
-        //                this.TopMost = true;
-        //                //Async_View_Files(listBox1, label11, label15, label21, path);
-        //            }
-        //            this.TopMost = true;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show($"\nОшибка: \n{ex.Message}");
-        //        }
-        //    }
-        //    else
-        //        MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-        //}
-       
-       // async private void button15_Click(object sender, EventArgs e)
-       // {
-       //     try
-       //     {
-       //         if (textBox1.Text != "")
-       //         {
-       //             Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
-       //         string path = @"\\" + server + @"\c$\GMMQ\Import";
-
-       //             DialogResult result = MessageBox.Show(
-       //    $"Удалить файлы ОПС {textBox1.Text}\nиз папки \\" + server + @"\c$\GMMQ\Import?",
-       //    "Сообщение",
-       //    MessageBoxButtons.YesNo,
-       //    MessageBoxIcon.Information,
-       //    MessageBoxDefaultButton.Button1,
-       //    MessageBoxOptions.DefaultDesktopOnly);
-
-       //             if (result == DialogResult.Yes)
-       //             {
-       //                 //this.TopMost = false;
-       //                 await Task.Run(() => Delete_File(path));
-       //                 Async_View_Files(listBox1, label11, label15, label21, path, textBox12);
-       //             }
-       //             if (result == DialogResult.No)
-       //             {
-       //                 this.TopMost = true;
-       //                 //Async_View_Files(listBox1, label11, label15, label21, path);
-       //             }
-       //             this.TopMost = true;
-       //         }
-       //         else
-       //             MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-       //     }
-       //     catch (Exception ex)
-
-       //     {
-       //         MessageBox.Show($"\nОшибка: \n{ex.Message}");
-       //     }
-       // }
-
-       // async private void button14_Click(object sender, EventArgs e)
-       // {
-       //     try
-       //     {
-       //         if (textBox1.Text != "")
-       //         {
-       //             string path = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\In";
-       //             DialogResult result = MessageBox.Show(
-       //$"Удалить файлы ОПС {textBox1.Text}\nиз папки \\KAL\\{textBox1.Text}\\In?",
-       //"Сообщение",
-       //MessageBoxButtons.YesNo,
-       //MessageBoxIcon.Information,
-       //MessageBoxDefaultButton.Button1,
-       //MessageBoxOptions.DefaultDesktopOnly);
-
-       //             if (result == DialogResult.Yes)
-       //             {
-       //                 //this.TopMost = false;
-       //                 await Task.Run(() => Delete_File(path));
-       //                 Async_View_Files(listBox1, label11, label15, label21, path, textBox12);
-       //             }
-       //             if (result == DialogResult.No)
-       //             {
-       //                 this.TopMost = true;
-       //                 //Async_View_Files(listBox1, label11, label15, label21, path);
-       //             }
-       //             this.TopMost = true;
-       //         }
-       //         else
-       //             MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-       //     }
-       //     catch (Exception ex)
-       //     {
-       //         MessageBox.Show($"\nОшибка: \n{ex.Message}");
-       //     }
-       // }
-
-       // async private void button13_Click(object sender, EventArgs e)
-       // {
-       //     try
-       //     {
-       //         if (textBox1.Text != "")
-       //         {
-       //             string path = @"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\Out";
-       //             DialogResult result = MessageBox.Show(
-       // $"Удалить файлы ОПС {textBox1.Text}\nиз папки \\KAL\\{textBox1.Text}\\Out?",
-       // "Сообщение",
-       // MessageBoxButtons.YesNo,
-       // MessageBoxIcon.Information,
-       // MessageBoxDefaultButton.Button1,
-       // MessageBoxOptions.DefaultDesktopOnly);
-
-       //             if (result == DialogResult.Yes)
-       //             {
-       //                 //this.TopMost = false;
-       //                 await Task.Run(() => Delete_File(path));
-       //                 Async_View_Files(listBox1, label11, label15, label21, path, textBox12);
-       //             }
-       //             if (result == DialogResult.No)
-       //             {
-       //                 this.TopMost = true;
-       //                 //Async_View_Files(listBox1, label11, label15, label21, path);
-       //             }
-       //             this.TopMost = true;
-
-       //         }
-       //         else
-       //             MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-       //     }
-       //     catch (Exception ex)
-       //     {
-       //         MessageBox.Show($"\nОшибка: \n{ex.Message}");
-       //     }
-       // }
-
+        //Кнопка Обновить
         private void button18_Click(object sender, EventArgs e)
         {
-            if (Width != 844)
-            {
-                Width = 844;
-            }
-            else
-                Width = 1200;
+            Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+            label20.Text = "IP Адрес удленного ПК: " + server;
         }
-        // Остановка служб GMMQ и Sheduller 
+
+        // Остановка служб "GMMQ" и "GM_SchedulerSvc" 
+        // Остановка службы "GMMQ"
         async private void button19_Click_1(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
@@ -1835,6 +1667,7 @@ namespace Start_EAS_Trans
             }
         }
 
+        // Остановка службы "GM_SchedulerSvc"
         async private void button28_Click(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
@@ -1895,6 +1728,9 @@ namespace Start_EAS_Trans
                 RedirectStandardOutput = true
             }).WaitForExit();
         }
+
+        //Метод представляющий процесс, запускающий power_shell с фиксированной командой, заточенной под остановку службы на удаленном пк в вашей сети,
+        //Метод ожидает своей отработки .WaitForExit(); 
         public void Powershell_service_Force(string ip, string action, string name_service, string action_more)
         {
             Process.Start(new ProcessStartInfo
@@ -1908,6 +1744,7 @@ namespace Start_EAS_Trans
         }
 
         // Запуск "GMMQ" и "GM_SchedulerSvc"
+        // Запуск "GMMQ"
         async private void button20_Click(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
@@ -1934,6 +1771,7 @@ namespace Start_EAS_Trans
             }
         }
 
+        // Запуск "GM_SchedulerSvc"
         async private void button27_Click(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
@@ -1963,7 +1801,7 @@ namespace Start_EAS_Trans
                         progressBar3.Value = 0;
                         textBox11.Text = result.Replace("\r\n", "");
                     }
-                    if(result == "Нет данных")
+                    if (result == "Нет данных")
                     {
                         progressBar3.Value = 0;
                     }
@@ -1979,7 +1817,8 @@ namespace Start_EAS_Trans
             }
         }
 
-        // Состояние служб
+        // Состояние служб "GMMQ" и "GM_SchedulerSvc"
+        // Состояние службы "GMMQ"
         async private void button22_Click(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
@@ -2001,6 +1840,7 @@ namespace Start_EAS_Trans
                 MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
         }
 
+        // Состояние службы "GM_SchedulerSvc"
         async private void button25_Click(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
@@ -2026,7 +1866,8 @@ namespace Start_EAS_Trans
                 MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
         }
 
-        // Перезапуск 
+        // Перезапуск "GMMQ" и "GM_SchedulerSvc"
+        // Перезапуск "GMMQ"
         async private void button21_Click(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
@@ -2049,7 +1890,12 @@ namespace Start_EAS_Trans
                     await Task.Run(() => Power_Shell_1($"set-service {name_service} " +
                      $"-ComputerName {ip} " +
                      $"-Status {action_service_2} -PassThru " +
-                     "| format-table Status -autosize", out result));
+                     "| format-table Status -autosize", out string result_1));
+                    progressBar2.Value = 70;
+                    await Task.Run(() => Power_Shell_1("get-service -" +
+                                  "DisplayName \"GMMQ\"" +
+                                  " -ComputerName " + ip + "" +
+                                  " | format-table Status -autosize", out result));
                     progressBar2.Value = 90;
                     await Task.Delay(500);
                     if (result == $"\r\n{action_service_2}\r\n\r\n\r\n")
@@ -2079,6 +1925,7 @@ namespace Start_EAS_Trans
             }
         }
 
+        // Перезапуск "GM_SchedulerSvc"
         async private void button26_Click(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
@@ -2123,7 +1970,7 @@ namespace Start_EAS_Trans
                     {
                         MessageBox.Show($"Блок else \nСлужба \"{name_service}\"на компьютере {ip} - Перезапущена");
                     }
-                    if(result == "Нет данных")
+                    if (result == "Нет данных")
                     {
                         textBox11.Text = result;
                         progressBar3.Value = 0;
@@ -2137,6 +1984,9 @@ namespace Start_EAS_Trans
                 MessageBox.Show($"Ошибка: \n{ex}");
             }
         }
+
+        //Метод, запускающий командную строку с определенный командой,
+        //записанной в параметр метода и выводящиЙ в выходной параметр результат выполнения команды
         public void Power_Shell_1(string command_power_shell, out string result)
         {
             try
@@ -2157,6 +2007,10 @@ namespace Start_EAS_Trans
                 result = "Нет данных";
             }
         }
+
+
+        //Метод для контроля результата выполения метода Powershell_service,
+        //исходя из результата Powershell_service, метод движется по разным сценариям
         public void Async_Power_Shell_Service(string ip, string name_service, string action_service, ProgressBar progressBar, TextBox textBox)
         {
             string check_action;
@@ -2245,14 +2099,9 @@ namespace Start_EAS_Trans
                 p = "Нет данных";
             }
         }
-        private void button18_Click_1(object sender, EventArgs e)
-        {
-            if (textBox1.Text.Length == 6 & Width > 1000)
-            { 
-                Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
-                label20.Text = "IP Адрес удленного ПК: " + server;
-            }
-        }
+
+
+        //Событие timer1 - пока не используется
         private void timer1_Tick(object sender, EventArgs e)
         {
             this.label23.Text = "Время выполнения запроса: " + (++timerCounter).ToString() + " сек.";
@@ -2270,7 +2119,7 @@ namespace Start_EAS_Trans
             //    MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
         }
 
-      async  private void label22_Click(object sender, EventArgs e)
+        async private void label22_Click(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
                                                      // отменяет отслеживание ошибок,
@@ -2308,7 +2157,9 @@ namespace Start_EAS_Trans
 
         }
 
-      async  private void button23_Click(object sender, EventArgs e)
+
+        //Тестовый контур 
+        async private void button23_Click(object sender, EventArgs e)
         {
             //string[] mass_1 = new string[5] { @"10.94\QWER1", @"10.94\QWER2", @"10.94\QWER3", @"10.94\QWER4", @"10.94\QWER5" };
             //string[] mass_2 = new string[7] { @"10.94\QWER1", @"10.94\QWER2", @"10.94\QWER3",@"10.94\QWER4",@"10.94\QWER5", @"10.94\QWER6" , @"10.94\QWER7" };
@@ -2323,11 +2174,13 @@ namespace Start_EAS_Trans
 
             this.timer.Start();
 
-            await Task.Run (() => View_files_Test(progressBar1));
+            await Task.Run(() => View_files_Test(progressBar1));
 
             //string path = @"D:\Новая папка (2)";
             //Delete_File(path);
         }
+
+        //Тестовая версия метода
         async public void View_files_Test(ProgressBar progressBar)
         {
             try
@@ -2335,8 +2188,8 @@ namespace Start_EAS_Trans
                 CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
                                                          // отменяет отслеживание ошибок,
                                                          // но дает передать компоненты формы в другой поток 
-                //Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
-                //string path = @"\\" + server + @"\c$\GMMQ\Export";
+                                                         //Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+                                                         //string path = @"\\" + server + @"\c$\GMMQ\Export";
                 string path = @"D:\!localhost\Export";
                 string[] files = Directory.GetFiles(path);
                 string[] files1 = Directory.GetFiles(path);
@@ -2458,17 +2311,66 @@ namespace Start_EAS_Trans
             {
                 MessageBox.Show($"\nОшибка: \n{ex}");
             }
-
         }
 
-        private void label23_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
+            if (textBox1.Text != "")
+            {
+                string server = "";
+                Async_View_Files(listBox1, label10, label14, label21, "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\" + textBox1.Text + "\\In", textBox12, server);
+            }
+            else
+                MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
 
         }
-        //private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    //button2_Click(sender, e);
-        //}
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "")
+            {
+               string server = "";
+                    Async_View_Files(listBox1, label10, label14, label21, "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\" + textBox1.Text + "\\Out", textBox12, server);
+            }
+            else
+                MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "")
+            {
+                Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+                if (server != "")
+                {
+                    string path = @"\c$\GMMQ\Export";
+                    string par = @"\\" + server + path;
+                    Async_View_Files(listBox1, label10, label14, label21, par, textBox12, server);
+                }
+            }
+            else
+                MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "")
+            {
+                Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+                if (server != "")
+                {
+                    string path = @"\c$\GMMQ\Import";
+                        string par = @"\\" + server + path;
+                    Async_View_Files(listBox1, label10, label14, label21, par, textBox12, server);
+                }
+            }
+            else
+                MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
+        }
     }
-   
+           
+
+           
+        
 }
