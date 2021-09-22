@@ -96,9 +96,9 @@ namespace Start_EAS_Trans
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.button23 = new System.Windows.Forms.Button();
             this.label24 = new System.Windows.Forms.Label();
             this.textBox12 = new System.Windows.Forms.TextBox();
+            this.button24 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -108,7 +108,7 @@ namespace Start_EAS_Trans
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(225, 29);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Толкнуть транспорт скриптом";
+            this.button1.Text = "Выполнить exec replicaexport 0";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -725,16 +725,6 @@ namespace Start_EAS_Trans
             this.label23.Size = new System.Drawing.Size(0, 13);
             this.label23.TabIndex = 72;
             // 
-            // button23
-            // 
-            this.button23.Location = new System.Drawing.Point(12, 475);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(75, 23);
-            this.button23.TabIndex = 73;
-            this.button23.Text = "Проверка";
-            this.button23.UseVisualStyleBackColor = true;
-            this.button23.Click += new System.EventHandler(this.button23_Click);
-            // 
             // label24
             // 
             this.label24.AutoSize = true;
@@ -749,17 +739,28 @@ namespace Start_EAS_Trans
             this.textBox12.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox12.Location = new System.Drawing.Point(486, 5);
             this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(261, 21);
+            this.textBox12.Size = new System.Drawing.Size(255, 21);
             this.textBox12.TabIndex = 75;
+            // 
+            // button24
+            // 
+            this.button24.Location = new System.Drawing.Point(747, 4);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(75, 23);
+            this.button24.TabIndex = 76;
+            this.button24.Text = "Проводник";
+            this.button24.UseVisualStyleBackColor = true;
+            this.button24.Click += new System.EventHandler(this.button24_Click);
             // 
             // Form1
             // 
+            this.AcceptButton = this.button11;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1118, 519);
+            this.Controls.Add(this.button24);
             this.Controls.Add(this.textBox12);
             this.Controls.Add(this.label24);
-            this.Controls.Add(this.button23);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.button18);
@@ -899,9 +900,9 @@ namespace Start_EAS_Trans
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Button button23;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.Button button24;
     }
 }
 
