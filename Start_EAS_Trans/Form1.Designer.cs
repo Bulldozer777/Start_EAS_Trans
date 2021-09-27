@@ -99,6 +99,7 @@ namespace Start_EAS_Trans
             this.label24 = new System.Windows.Forms.Label();
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.button24 = new System.Windows.Forms.Button();
+            this.button23 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -108,7 +109,7 @@ namespace Start_EAS_Trans
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(225, 29);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Выполнить exec replicaexport 0";
+            this.button1.Text = "Скрипт на Экспорт";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -133,14 +134,14 @@ namespace Start_EAS_Trans
             // textBox2
             // 
             this.textBox2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.Location = new System.Drawing.Point(23, 200);
+            this.textBox2.Location = new System.Drawing.Point(23, 228);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(224, 26);
             this.textBox2.TabIndex = 3;
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(24, 171);
+            this.progressBar1.Location = new System.Drawing.Point(24, 200);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(223, 26);
             this.progressBar1.TabIndex = 7;
@@ -158,7 +159,7 @@ namespace Start_EAS_Trans
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(95, 284);
+            this.label3.Location = new System.Drawing.Point(95, 315);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(0, 13);
             this.label3.TabIndex = 10;
@@ -168,7 +169,7 @@ namespace Start_EAS_Trans
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(458, 43);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(367, 472);
+            this.listBox1.Size = new System.Drawing.Size(367, 485);
             this.listBox1.TabIndex = 11;
             // 
             // label4
@@ -258,7 +259,7 @@ namespace Start_EAS_Trans
             // button6
             // 
             this.button6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(93, 320);
+            this.button6.Location = new System.Drawing.Point(93, 351);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(98, 26);
             this.button6.TabIndex = 22;
@@ -270,7 +271,7 @@ namespace Start_EAS_Trans
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(93, 298);
+            this.label8.Location = new System.Drawing.Point(93, 329);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(355, 19);
             this.label8.TabIndex = 21;
@@ -279,7 +280,7 @@ namespace Start_EAS_Trans
             // textBox4
             // 
             this.textBox4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox4.Location = new System.Drawing.Point(197, 321);
+            this.textBox4.Location = new System.Drawing.Point(197, 352);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(251, 26);
             this.textBox4.TabIndex = 23;
@@ -287,7 +288,7 @@ namespace Start_EAS_Trans
             // textBox5
             // 
             this.textBox5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox5.Location = new System.Drawing.Point(197, 371);
+            this.textBox5.Location = new System.Drawing.Point(197, 402);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(251, 26);
             this.textBox5.TabIndex = 26;
@@ -295,7 +296,7 @@ namespace Start_EAS_Trans
             // button7
             // 
             this.button7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button7.Location = new System.Drawing.Point(93, 371);
+            this.button7.Location = new System.Drawing.Point(93, 402);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(98, 26);
             this.button7.TabIndex = 25;
@@ -307,7 +308,7 @@ namespace Start_EAS_Trans
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(93, 349);
+            this.label9.Location = new System.Drawing.Point(93, 380);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(355, 19);
             this.label9.TabIndex = 24;
@@ -333,7 +334,7 @@ namespace Start_EAS_Trans
             // textBox6
             // 
             this.textBox6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox6.Location = new System.Drawing.Point(197, 473);
+            this.textBox6.Location = new System.Drawing.Point(197, 504);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(251, 26);
             this.textBox6.TabIndex = 34;
@@ -341,7 +342,7 @@ namespace Start_EAS_Trans
             // button8
             // 
             this.button8.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button8.Location = new System.Drawing.Point(93, 473);
+            this.button8.Location = new System.Drawing.Point(93, 504);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(98, 26);
             this.button8.TabIndex = 33;
@@ -353,7 +354,7 @@ namespace Start_EAS_Trans
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label12.Location = new System.Drawing.Point(93, 451);
+            this.label12.Location = new System.Drawing.Point(93, 482);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(328, 19);
             this.label12.TabIndex = 32;
@@ -362,7 +363,7 @@ namespace Start_EAS_Trans
             // textBox7
             // 
             this.textBox7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox7.Location = new System.Drawing.Point(197, 423);
+            this.textBox7.Location = new System.Drawing.Point(197, 454);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(251, 26);
             this.textBox7.TabIndex = 31;
@@ -370,7 +371,7 @@ namespace Start_EAS_Trans
             // button9
             // 
             this.button9.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button9.Location = new System.Drawing.Point(93, 422);
+            this.button9.Location = new System.Drawing.Point(93, 453);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(98, 26);
             this.button9.TabIndex = 30;
@@ -382,7 +383,7 @@ namespace Start_EAS_Trans
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label13.Location = new System.Drawing.Point(93, 400);
+            this.label13.Location = new System.Drawing.Point(93, 431);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(317, 19);
             this.label13.TabIndex = 29;
@@ -391,7 +392,7 @@ namespace Start_EAS_Trans
             // button10
             // 
             this.button10.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button10.Location = new System.Drawing.Point(93, 269);
+            this.button10.Location = new System.Drawing.Point(93, 300);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(357, 28);
             this.button10.TabIndex = 35;
@@ -710,7 +711,7 @@ namespace Start_EAS_Trans
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(21, 229);
+            this.label22.Location = new System.Drawing.Point(21, 268);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(158, 13);
             this.label22.TabIndex = 71;
@@ -752,12 +753,24 @@ namespace Start_EAS_Trans
             this.button24.UseVisualStyleBackColor = true;
             this.button24.Click += new System.EventHandler(this.button24_Click);
             // 
+            // button23
+            // 
+            this.button23.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button23.Location = new System.Drawing.Point(23, 170);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(225, 29);
+            this.button23.TabIndex = 77;
+            this.button23.Text = "Скрипт на Импорт";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click_1);
+            // 
             // Form1
             // 
             this.AcceptButton = this.button11;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1118, 519);
+            this.ClientSize = new System.Drawing.Size(1118, 535);
+            this.Controls.Add(this.button23);
             this.Controls.Add(this.button24);
             this.Controls.Add(this.textBox12);
             this.Controls.Add(this.label24);
@@ -903,6 +916,7 @@ namespace Start_EAS_Trans
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.Button button24;
+        private System.Windows.Forms.Button button23;
     }
 }
 

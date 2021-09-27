@@ -25,7 +25,7 @@ namespace Start_EAS_Trans
         {
             InitializeComponent();
             Width = 844;
-            Height = 558;
+            Height = 574;
             this.ActiveControl = button11;
             textBox11.Focus();
             AutoCompleteStringCollection source = new AutoCompleteStringCollection()
@@ -614,18 +614,18 @@ namespace Start_EAS_Trans
                                     int action = 0;
                                     Start_Transport(progressBar1, command);
                                     View_files(progressBar1, command, action);
-                                                //};
-                                                //if (InvokeRequired)
-                                                //    Invoke(action);
-                                                //else
-                                                //    action(); /*реализация через делегат action*/
+                                    //};
+                                    //if (InvokeRequired)
+                                    //    Invoke(action);
+                                    //else
+                                    //    action(); /*реализация через делегат action*/
 
-                                                // Invoke((MethodInvoker)(() =>
-                                                //{
-                                                //    Rebut_MPK_Service(progressBar10);
-                                                //}));
+                                    // Invoke((MethodInvoker)(() =>
+                                    //{
+                                    //    Rebut_MPK_Service(progressBar10);
+                                    //}));
 
-                                            });
+                                });
                             thread.Start();
                             CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
                                                                      // отменяет отслеживание ошибок,
@@ -773,9 +773,9 @@ namespace Start_EAS_Trans
                                 }
                                 else
                                 {
-                                    await Task.Delay(200000000);
-                                    action = 1;
-                                    break;
+                                    //await Task.Delay(200000000);
+                                    //action = 1;
+                                    //break;
                                 }
                             }
                             await Task.Delay(200);
@@ -783,7 +783,7 @@ namespace Start_EAS_Trans
                         else
                         {
                             action = 1;
-                            await Task.Delay(200000000);
+                            //await Task.Delay(200000000);
                         }
                     }
                     while (files.Length != 0)
@@ -2595,6 +2595,342 @@ namespace Start_EAS_Trans
                 MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
             //var dialog = new System.Windows.Forms.FolderBrowserDialog();
             //System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+        }
+
+        private void button23_Click_1(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "")
+            {
+                Name_DataBase_and_Server(textBox1.Text, out string server1, out string name_database1);
+                string file = "gmmq.packege.end";
+                string file_2 = "meta.xml";
+                string path = @"\\" + server1 + @"\c$\GMMQ\Import\" + file;
+                string path_2 = @"\\" + server1 + @"\c$\GMMQ\Import\" + file_2;
+                FileInfo fileInf = new FileInfo(path);
+                FileInfo fileInf_2 = new FileInfo(path_2);
+                //while (fileInf.Exists | fileInf_2.Exists)
+                //{
+                //    progressBar1.Value = 0;
+                //    textBox2.Clear();
+                //    textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
+                //    timerCounter = 0;
+                //    label22.Text = "Количество файлов реплики: ";
+                //}
+                //if (fileInf.Exists | fileInf_2.Exists)
+                //{
+                //    progressBar1.Value = 0;
+                //    textBox2.Clear();
+                //    textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
+                //    timerCounter = 0;
+                //    label22.Text = "Количество файлов реплики: ";
+                //}
+                //else
+                //{
+                if (fileInf.Exists | fileInf_2.Exists)
+                {
+                    try
+                    {
+                        DialogResult result = MessageBox.Show(
+            $"Выполнить скрипт \"exec ReplicaImport 0\",\nна ОПС {textBox1.Text} ? ",
+            "Сообщение",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Information);
+
+                        if (result == DialogResult.Yes)
+                        {
+                            this.timer.Start();
+                            CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
+                                                                     // отменяет отслеживание ошибок,
+                                                                     // но дает передать компоненты формы в другой поток 
+
+                            Thread thread = new Thread(
+                                () =>
+                                {
+                                    //Action action = () =>
+                                    //{
+                                    //int action = 0;
+                                    SqlCommand command = new SqlCommand();
+                                    //int action = 0;
+                                    Start_Transport_Import(progressBar1, command);
+                                    //View_files_Import(progressBar1, command, action);
+                                    //};
+                                    //if (InvokeRequired)
+                                    //    Invoke(action);
+                                    //else
+                                    //    action(); /*реализация через делегат action*/
+
+                                    // Invoke((MethodInvoker)(() =>
+                                    //{
+                                    //    Rebut_MPK_Service(progressBar10);
+                                    //}));
+
+                                });
+                            thread.Start();
+                            CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
+                                                                     // отменяет отслеживание ошибок,
+                                                                     // но дает передать компоненты формы в другой поток 
+                                                                     //Name_DataBase_and_Server(textBox1.Text, out string server1, out string name_database1);
+                                                                     //string path1 = @"\\" + server1 + @"\c$\GMMQ\Export";
+                                                                     //string[] files = Directory.GetFiles(path1);
+                                                                     //while (files.Length != 0)
+                                                                     //{
+                                                                     //    DateTime dateTime = new DateTime();
+                                                                     //    dateTime = Directory.GetLastWriteTime(path1); //перезаписывает переменную, для обновления даты изменения папки
+                                                                     //    if (dateTime.AddSeconds(3) > DateTime.Now)
+                                                                     //    {
+                                                                     //        string[] files_2 = Directory.GetFiles(path1);//перезаписывает переменную, для обновления количества файлов в папке                   
+                                                                     //        for (int i = 0; i < files_2.Length; i++)
+                                                                     //        {
+                                                                     //            if (files_2[i] == "meta.xml" | files_2[i] == "gmmq.packege.end")
+                                                                     //            {
+                                                                     //                textBox9.Text = textBox1.Text + " - толкнул скриптом +";
+                                                                     //                thread.Abort();
+                                                                     //            }
+                                                                     //        }
+                                                                     //    }
+                                                                     //}
+                        }
+                        if (result == DialogResult.No)
+                        {
+                            this.timer.Stop();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка: \n{ex}");
+                        progressBar1.Value = 0;
+                        this.timer.Stop();
+                        textBox9.Text = textBox1.Text + " - ошибка";
+                    }
+                    textBox1.Focus();
+                    //}
+                }
+                else
+                {
+                    MessageBox.Show($"Нет файлов: {file} \n{file_2} \nВ папке: {path} \n{path_2}"); 
+                }
+            }
+            else
+                MessageBox.Show("Поле для ввода номера ОПС - пустое");
+        }
+        async public void Start_Transport_Import(ProgressBar progressBar, SqlCommand command)
+        {
+            int action = 0;
+            try
+            {
+                if (textBox1.Text != "")
+                {
+
+                    textBox9.Clear();
+                    string server = "";
+                    string name_database = "";
+                    Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
+                    string connectionString = $"Server={server};Database={name_database};Persist Security Info=False;User ID=sa;Password=QweAsd123;";
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        await connection.OpenAsync();
+                        textBox2.Text = "Подключение открыто";
+                    }
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        await connection.OpenAsync();
+                        command.CommandText = "exec ReplicaImport 0";
+                        command.Connection = connection;
+                        command.CommandTimeout = 5000; //увеличено время на выполнение команды
+                        await Task.Run(() => command.ExecuteNonQueryAsync());
+                        action = 1;
+                        Action(action);
+                        this.timer.Stop();
+                        textBox2.Text = "Скрипт выполнен";
+                        progressBar.Value = 100;
+                        MessageBox.Show($"Запрос в SQL: \"{command.CommandText}\" - успешно отработан");
+                        progressBar.Value = 0;
+                        textBox2.Clear();
+                        textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
+                        timerCounter = 0;
+                        label22.Text = "Количество файлов реплики: ";
+                    }
+                }
+                else
+                    MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
+                action = 1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: \n{ex}");
+                progressBar.Value = 0;
+                this.timer.Stop();
+                textBox9.Text = textBox1.Text + " - ошибка";
+            }
+        }
+
+        //Метод, следящий за появлением новых файлов в папке отделения, по фиксированному пути 
+        //@"\\" + server + @"\c$\GMMQ\Export"
+        async public void View_files_Import(ProgressBar progressBar, SqlCommand command, int action)
+        {
+            try
+            {
+                CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
+                                                         // отменяет отслеживание ошибок,
+                                                         // но дает передать компоненты формы в другой поток 
+                Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+                string path = @"\\" + server + @"\c$\GMMQ\Import";
+                string[] files = Directory.GetFiles(path);
+                string[] files1 = Directory.GetFiles(path);
+                string[] catalog = Directory.GetDirectories(path);
+                int count = 1;
+                int u = 0;
+                textBox12.Text = path;
+                string[] mass_2 = new string[count];
+                if (action != 1)
+                {
+                    
+                    while (files.Length != 0)
+                    {
+                        if (action != 1)
+                        {
+                            count++;
+                            string[] files_1 = Directory.GetFiles(path);
+                            int file3 = files.Length;
+                            DateTime dateTime = new DateTime();
+                            dateTime = Directory.GetLastWriteTime(path); //перезаписывает переменную, для обновления даты изменения папки
+                            FileInfo file = new FileInfo(path);
+                            if (dateTime.AddSeconds(3) > DateTime.Now)
+                            {
+                                catalog = Directory.GetDirectories(path);
+                                if (catalog.Length == 0)
+                                {
+                                    //string[] files_2 = Directory.GetFiles(path);//перезаписывает переменную, для обновления количества файлов в папке
+                                    string[] mass = new string[files_1.Length];
+                                    if (u == 0)
+                                    {
+                                        u++;
+                                        mass = files_1;
+                                        listBox1.Items.Clear();
+                                        //listBox1.BeginUpdate();
+                                        for (int i = 0; i < files_1.Length; i++)
+                                        {
+                                            //if (files_1[i] != "meta.xml" | files_1[i] != "gmmq.packege.end")
+                                            //{
+                                                label22.Text = "Количество файлов реплики: " + files_1.Length + "\nПо пути: " + files_1[i];
+                                                listBox1.Items.Add(files_1[i].Substring(18 + server.Length));
+                                                if (progressBar.Value >= 0 & progressBar.Value < 99)
+                                                {
+                                                    double p = files_1.Length/200;
+                                                    double b = (1 - p)*100 ;
+                                                    if (b < 99)
+                                                    {
+                                                        progressBar.Value = Convert.ToInt32(b);
+                                                    }
+                                            }
+                                        //}
+                                            //else
+                                            //{
+                                            //    textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
+                                            //    action = 1;
+                                            //    break;
+                                            //}
+                                        }
+                                        //listBox1.EndUpdate();
+                                    }
+                                    if (u == 1)
+                                    {
+                                        listBox1.BeginUpdate();
+                                        listBox1.Items.Clear();
+                                        for (int i = 0; i < files_1.Length; i++)
+                                        {
+                                            //if (files_1[i] != "meta.xml" | files_1[i] != "gmmq.packege.end")
+                                            //{
+                                                listBox1.Items.Add(files_1[i].Substring(18 + server.Length));
+                                            //}
+                                            //else
+                                            //{
+                                            //    textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
+                                            //    action = 1;
+                                            //    break;
+                                            //}
+                                        }
+                                        listBox1.EndUpdate();
+                                        for (int i = 0; i < files_1.Length; i++)
+                                        {
+                                            if (progressBar.Value >= 0 & progressBar.Value < 99)
+                                            {
+                                                double p = files_1.Length;
+                                                double b = p / 1.8;
+                                                if (b < 99)
+                                                {
+                                                    progressBar.Value = Convert.ToInt32(b);
+                                                }
+                                            }
+                                            //if (mass[i] != files_1[i])
+                                            //{
+                                                mass = Addition_Mass(mass, files_1);
+                                                label22.Text = "Количество файлов реплики: " + files_1.Length + "\nПо пути: " + files_1[i];
+                                            //}
+                                        }
+                                    }
+                                    Update_Files_and_Catolog_lenght(path);
+                                }
+                                else
+                                    await Task.Delay(40000000);
+                            }
+                            await Task.Delay(400);
+                        }
+                        else
+                        {
+                            progressBar.Value = 0;
+                            this.timer.Stop();
+                            textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
+                            break;
+                        }
+                    }
+                    if (files.Length == 0)
+                    {
+                        //catalog = Directory.GetDirectories(path);
+                        //if (catalog.Length == 0)
+                        //{
+                            //files = Directory.GetFiles(path);
+                            //for (int i = 0; i < files.Length; i++)
+                            //{
+                            //    if (files[i] != "meta.xml" | files[i] != "gmmq.packege.end")
+
+                            //    {
+                                progressBar.Value = 0;
+                                this.timer.Stop();
+                                textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
+                                //files = Directory.GetFiles(path); //перезаписывает переменную, для обновления количества файлов в папке
+                                    label22.Text = "Количество файлов реплики: 0";
+                            //    }
+                            //    else
+                            //    {
+                            //        await Task.Delay(200000000);
+                            //        action = 1;
+                            //        break;
+                            //    }
+                            //}
+                        //    await Task.Delay(200);
+                        //}
+                        //else
+                        //{
+                        //    action = 1;
+                        //    await Task.Delay(200000000);
+                        //}
+                    }
+                }
+                else
+                {
+                    progressBar.Value = 0;
+                    this.timer.Stop();
+                    textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"\nОшибка: \n{ex}");
+                progressBar.Value = 0;
+                this.timer.Stop();
+                textBox9.Text = textBox1.Text + " - ошибка";
+            }
         }
     }     
 }
