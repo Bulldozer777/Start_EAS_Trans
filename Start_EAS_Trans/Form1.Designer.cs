@@ -32,7 +32,6 @@ namespace Start_EAS_Trans
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -73,7 +72,6 @@ namespace Start_EAS_Trans
             this.button16 = new System.Windows.Forms.Button();
             this.button17 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
             this.button19 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
             this.button21 = new System.Windows.Forms.Button();
@@ -100,10 +98,32 @@ namespace Start_EAS_Trans
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.button24 = new System.Windows.Forms.Button();
             this.button23 = new System.Windows.Forms.Button();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.button29 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button30 = new System.Windows.Forms.Button();
+            this.button31 = new System.Windows.Forms.Button();
+            this.button32 = new System.Windows.Forms.Button();
+            this.button33 = new System.Windows.Forms.Button();
+            this.button34 = new System.Windows.Forms.Button();
+            this.button35 = new System.Windows.Forms.Button();
+            this.button36 = new System.Windows.Forms.Button();
+            this.button37 = new System.Windows.Forms.Button();
+            this.button38 = new System.Windows.Forms.Button();
+            this.button39 = new System.Windows.Forms.Button();
+            this.button40 = new System.Windows.Forms.Button();
+            this.button41 = new System.Windows.Forms.Button();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.button42 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button1.Location = new System.Drawing.Point(23, 141);
             this.button1.Name = "button1";
@@ -112,14 +132,6 @@ namespace Start_EAS_Trans
             this.button1.Text = "Скрипт на Экспорт";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(24, 27);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(110, 26);
-            this.textBox1.TabIndex = 1;
             // 
             // label1
             // 
@@ -145,7 +157,6 @@ namespace Start_EAS_Trans
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(223, 26);
             this.progressBar1.TabIndex = 7;
-            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // label2
             // 
@@ -159,7 +170,7 @@ namespace Start_EAS_Trans
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(95, 315);
+            this.label3.Location = new System.Drawing.Point(251, 301);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(0, 13);
             this.label3.TabIndex = 10;
@@ -169,7 +180,7 @@ namespace Start_EAS_Trans
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(458, 43);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(367, 485);
+            this.listBox1.Size = new System.Drawing.Size(363, 264);
             this.listBox1.TabIndex = 11;
             // 
             // label4
@@ -259,7 +270,7 @@ namespace Start_EAS_Trans
             // button6
             // 
             this.button6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(93, 351);
+            this.button6.Location = new System.Drawing.Point(460, 352);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(98, 26);
             this.button6.TabIndex = 22;
@@ -271,7 +282,7 @@ namespace Start_EAS_Trans
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label8.Location = new System.Drawing.Point(93, 329);
+            this.label8.Location = new System.Drawing.Point(460, 330);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(355, 19);
             this.label8.TabIndex = 21;
@@ -280,7 +291,7 @@ namespace Start_EAS_Trans
             // textBox4
             // 
             this.textBox4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox4.Location = new System.Drawing.Point(197, 352);
+            this.textBox4.Location = new System.Drawing.Point(564, 353);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(251, 26);
             this.textBox4.TabIndex = 23;
@@ -288,7 +299,7 @@ namespace Start_EAS_Trans
             // textBox5
             // 
             this.textBox5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox5.Location = new System.Drawing.Point(197, 402);
+            this.textBox5.Location = new System.Drawing.Point(564, 403);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(251, 26);
             this.textBox5.TabIndex = 26;
@@ -296,7 +307,7 @@ namespace Start_EAS_Trans
             // button7
             // 
             this.button7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button7.Location = new System.Drawing.Point(93, 402);
+            this.button7.Location = new System.Drawing.Point(460, 403);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(98, 26);
             this.button7.TabIndex = 25;
@@ -308,7 +319,7 @@ namespace Start_EAS_Trans
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label9.Location = new System.Drawing.Point(93, 380);
+            this.label9.Location = new System.Drawing.Point(460, 381);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(355, 19);
             this.label9.TabIndex = 24;
@@ -334,15 +345,16 @@ namespace Start_EAS_Trans
             // textBox6
             // 
             this.textBox6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox6.Location = new System.Drawing.Point(197, 504);
+            this.textBox6.Location = new System.Drawing.Point(564, 505);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(251, 26);
             this.textBox6.TabIndex = 34;
             // 
             // button8
             // 
+            this.button8.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button8.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button8.Location = new System.Drawing.Point(93, 504);
+            this.button8.Location = new System.Drawing.Point(460, 505);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(98, 26);
             this.button8.TabIndex = 33;
@@ -354,7 +366,7 @@ namespace Start_EAS_Trans
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label12.Location = new System.Drawing.Point(93, 482);
+            this.label12.Location = new System.Drawing.Point(460, 483);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(328, 19);
             this.label12.TabIndex = 32;
@@ -363,15 +375,16 @@ namespace Start_EAS_Trans
             // textBox7
             // 
             this.textBox7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox7.Location = new System.Drawing.Point(197, 454);
+            this.textBox7.Location = new System.Drawing.Point(564, 455);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(251, 26);
             this.textBox7.TabIndex = 31;
             // 
             // button9
             // 
+            this.button9.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button9.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button9.Location = new System.Drawing.Point(93, 453);
+            this.button9.Location = new System.Drawing.Point(460, 454);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(98, 26);
             this.button9.TabIndex = 30;
@@ -383,7 +396,7 @@ namespace Start_EAS_Trans
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label13.Location = new System.Drawing.Point(93, 431);
+            this.label13.Location = new System.Drawing.Point(460, 432);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(317, 19);
             this.label13.TabIndex = 29;
@@ -392,9 +405,9 @@ namespace Start_EAS_Trans
             // button10
             // 
             this.button10.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button10.Location = new System.Drawing.Point(93, 300);
+            this.button10.Location = new System.Drawing.Point(460, 307);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(357, 28);
+            this.button10.Size = new System.Drawing.Size(355, 26);
             this.button10.TabIndex = 35;
             this.button10.Text = "Дата последнего обновления во всех папках";
             this.button10.UseVisualStyleBackColor = true;
@@ -506,17 +519,10 @@ namespace Start_EAS_Trans
             this.textBox3.Size = new System.Drawing.Size(223, 26);
             this.textBox3.TabIndex = 46;
             // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(254, 206);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(197, 20);
-            this.textBox9.TabIndex = 47;
-            // 
             // button19
             // 
             this.button19.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button19.Location = new System.Drawing.Point(832, 221);
+            this.button19.Location = new System.Drawing.Point(829, 164);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(112, 29);
             this.button19.TabIndex = 49;
@@ -527,7 +533,7 @@ namespace Start_EAS_Trans
             // button20
             // 
             this.button20.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button20.Location = new System.Drawing.Point(832, 256);
+            this.button20.Location = new System.Drawing.Point(829, 193);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(112, 29);
             this.button20.TabIndex = 50;
@@ -538,7 +544,7 @@ namespace Start_EAS_Trans
             // button21
             // 
             this.button21.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button21.Location = new System.Drawing.Point(832, 291);
+            this.button21.Location = new System.Drawing.Point(829, 222);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(112, 29);
             this.button21.TabIndex = 51;
@@ -549,7 +555,7 @@ namespace Start_EAS_Trans
             // button22
             // 
             this.button22.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button22.Location = new System.Drawing.Point(832, 326);
+            this.button22.Location = new System.Drawing.Point(829, 251);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(112, 29);
             this.button22.TabIndex = 52;
@@ -560,7 +566,7 @@ namespace Start_EAS_Trans
             // button25
             // 
             this.button25.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button25.Location = new System.Drawing.Point(950, 326);
+            this.button25.Location = new System.Drawing.Point(947, 251);
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(112, 29);
             this.button25.TabIndex = 57;
@@ -571,7 +577,7 @@ namespace Start_EAS_Trans
             // button26
             // 
             this.button26.Font = new System.Drawing.Font("Times New Roman", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button26.Location = new System.Drawing.Point(950, 291);
+            this.button26.Location = new System.Drawing.Point(947, 222);
             this.button26.Name = "button26";
             this.button26.Size = new System.Drawing.Size(112, 29);
             this.button26.TabIndex = 56;
@@ -582,7 +588,7 @@ namespace Start_EAS_Trans
             // button27
             // 
             this.button27.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button27.Location = new System.Drawing.Point(950, 256);
+            this.button27.Location = new System.Drawing.Point(947, 193);
             this.button27.Name = "button27";
             this.button27.Size = new System.Drawing.Size(112, 29);
             this.button27.TabIndex = 55;
@@ -593,7 +599,7 @@ namespace Start_EAS_Trans
             // button28
             // 
             this.button28.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button28.Location = new System.Drawing.Point(950, 221);
+            this.button28.Location = new System.Drawing.Point(947, 164);
             this.button28.Name = "button28";
             this.button28.Size = new System.Drawing.Size(112, 29);
             this.button28.TabIndex = 54;
@@ -605,7 +611,7 @@ namespace Start_EAS_Trans
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label16.Location = new System.Drawing.Point(827, 30);
+            this.label16.Location = new System.Drawing.Point(826, 3);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(195, 19);
             this.label16.TabIndex = 59;
@@ -613,23 +619,23 @@ namespace Start_EAS_Trans
             // 
             // progressBar2
             // 
-            this.progressBar2.Location = new System.Drawing.Point(832, 190);
+            this.progressBar2.Location = new System.Drawing.Point(830, 138);
             this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(112, 25);
+            this.progressBar2.Size = new System.Drawing.Size(110, 25);
             this.progressBar2.TabIndex = 61;
             // 
             // progressBar3
             // 
-            this.progressBar3.Location = new System.Drawing.Point(950, 190);
+            this.progressBar3.Location = new System.Drawing.Point(948, 138);
             this.progressBar3.Name = "progressBar3";
-            this.progressBar3.Size = new System.Drawing.Size(112, 25);
+            this.progressBar3.Size = new System.Drawing.Size(110, 25);
             this.progressBar3.TabIndex = 62;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label18.Location = new System.Drawing.Point(942, 166);
+            this.label18.Location = new System.Drawing.Point(939, 114);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(125, 19);
             this.label18.TabIndex = 64;
@@ -639,7 +645,7 @@ namespace Start_EAS_Trans
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label19.Location = new System.Drawing.Point(858, 167);
+            this.label19.Location = new System.Drawing.Point(855, 115);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(60, 19);
             this.label19.TabIndex = 63;
@@ -648,26 +654,26 @@ namespace Start_EAS_Trans
             // textBox10
             // 
             this.textBox10.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox10.Location = new System.Drawing.Point(832, 361);
+            this.textBox10.Location = new System.Drawing.Point(830, 281);
             this.textBox10.Multiline = true;
             this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(112, 25);
+            this.textBox10.Size = new System.Drawing.Size(110, 25);
             this.textBox10.TabIndex = 65;
             // 
             // textBox11
             // 
             this.textBox11.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox11.Location = new System.Drawing.Point(950, 361);
+            this.textBox11.Location = new System.Drawing.Point(948, 281);
             this.textBox11.Multiline = true;
             this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(112, 25);
+            this.textBox11.Size = new System.Drawing.Size(110, 25);
             this.textBox11.TabIndex = 66;
             // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label20.Location = new System.Drawing.Point(829, 74);
+            this.label20.Location = new System.Drawing.Point(828, 47);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(169, 19);
             this.label20.TabIndex = 67;
@@ -677,7 +683,7 @@ namespace Start_EAS_Trans
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label17.Location = new System.Drawing.Point(829, 48);
+            this.label17.Location = new System.Drawing.Point(828, 21);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(127, 19);
             this.label17.TabIndex = 68;
@@ -695,7 +701,7 @@ namespace Start_EAS_Trans
             // button18
             // 
             this.button18.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button18.Location = new System.Drawing.Point(831, 99);
+            this.button18.Location = new System.Drawing.Point(830, 69);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(112, 29);
             this.button18.TabIndex = 70;
@@ -764,12 +770,249 @@ namespace Start_EAS_Trans
             this.button23.UseVisualStyleBackColor = true;
             this.button23.Click += new System.EventHandler(this.button23_Click_1);
             // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(23, 307);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(225, 225);
+            this.listBox2.TabIndex = 78;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(21, 294);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(54, 13);
+            this.label25.TabIndex = 81;
+            this.label25.Text = "Файлов: ";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(93, 294);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(42, 13);
+            this.label26.TabIndex = 82;
+            this.label26.Text = "Папок:";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(156, 294);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(66, 13);
+            this.label27.TabIndex = 83;
+            this.label27.Text = "Элементов:";
+            // 
+            // button29
+            // 
+            this.button29.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button29.Location = new System.Drawing.Point(253, 353);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(198, 29);
+            this.button29.TabIndex = 100;
+            this.button29.Text = "Add str транс работает";
+            this.button29.UseVisualStyleBackColor = true;
+            this.button29.Click += new System.EventHandler(this.button29_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox1.Location = new System.Drawing.Point(24, 27);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(110, 26);
+            this.textBox1.TabIndex = 1;
+            // 
+            // button30
+            // 
+            this.button30.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button30.Location = new System.Drawing.Point(254, 226);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(198, 29);
+            this.button30.TabIndex = 101;
+            this.button30.Text = "Smart explorer";
+            this.button30.UseVisualStyleBackColor = true;
+            this.button30.Click += new System.EventHandler(this.button30_Click);
+            // 
+            // button31
+            // 
+            this.button31.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button31.Location = new System.Drawing.Point(253, 381);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(198, 29);
+            this.button31.TabIndex = 102;
+            this.button31.Text = "Add str Почтамты ОПС >>";
+            this.button31.UseVisualStyleBackColor = true;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
+            // 
+            // button32
+            // 
+            this.button32.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button32.Location = new System.Drawing.Point(828, 352);
+            this.button32.Name = "button32";
+            this.button32.Size = new System.Drawing.Size(112, 30);
+            this.button32.TabIndex = 103;
+            this.button32.Text = "Бабынинскому";
+            this.button32.UseVisualStyleBackColor = true;
+            this.button32.Click += new System.EventHandler(this.button32_Click);
+            // 
+            // button33
+            // 
+            this.button33.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button33.Location = new System.Drawing.Point(828, 382);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(112, 30);
+            this.button33.TabIndex = 104;
+            this.button33.Text = "Жуковскому";
+            this.button33.UseVisualStyleBackColor = true;
+            this.button33.Click += new System.EventHandler(this.button33_Click);
+            // 
+            // button34
+            // 
+            this.button34.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button34.Location = new System.Drawing.Point(828, 412);
+            this.button34.Name = "button34";
+            this.button34.Size = new System.Drawing.Size(112, 30);
+            this.button34.TabIndex = 105;
+            this.button34.Text = "Калужскому";
+            this.button34.UseVisualStyleBackColor = true;
+            this.button34.Click += new System.EventHandler(this.button34_Click);
+            // 
+            // button35
+            // 
+            this.button35.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button35.Location = new System.Drawing.Point(828, 442);
+            this.button35.Name = "button35";
+            this.button35.Size = new System.Drawing.Size(112, 30);
+            this.button35.TabIndex = 106;
+            this.button35.Text = "Кировскому";
+            this.button35.UseVisualStyleBackColor = true;
+            this.button35.Click += new System.EventHandler(this.button35_Click);
+            // 
+            // button36
+            // 
+            this.button36.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button36.Location = new System.Drawing.Point(828, 472);
+            this.button36.Name = "button36";
+            this.button36.Size = new System.Drawing.Size(112, 30);
+            this.button36.TabIndex = 107;
+            this.button36.Text = "Козельскому";
+            this.button36.UseVisualStyleBackColor = true;
+            this.button36.Click += new System.EventHandler(this.button36_Click);
+            // 
+            // button37
+            // 
+            this.button37.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button37.Location = new System.Drawing.Point(946, 352);
+            this.button37.Name = "button37";
+            this.button37.Size = new System.Drawing.Size(112, 30);
+            this.button37.TabIndex = 108;
+            this.button37.Text = "Кондровскому";
+            this.button37.UseVisualStyleBackColor = true;
+            this.button37.Click += new System.EventHandler(this.button37_Click);
+            // 
+            // button38
+            // 
+            this.button38.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button38.Location = new System.Drawing.Point(946, 382);
+            this.button38.Name = "button38";
+            this.button38.Size = new System.Drawing.Size(112, 30);
+            this.button38.TabIndex = 109;
+            this.button38.Text = "Людиновскому";
+            this.button38.UseVisualStyleBackColor = true;
+            this.button38.Click += new System.EventHandler(this.button38_Click);
+            // 
+            // button39
+            // 
+            this.button39.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button39.Location = new System.Drawing.Point(946, 412);
+            this.button39.Name = "button39";
+            this.button39.Size = new System.Drawing.Size(112, 30);
+            this.button39.TabIndex = 110;
+            this.button39.Text = "Обнинскому";
+            this.button39.UseVisualStyleBackColor = true;
+            this.button39.Click += new System.EventHandler(this.button39_Click);
+            // 
+            // button40
+            // 
+            this.button40.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button40.Location = new System.Drawing.Point(946, 442);
+            this.button40.Name = "button40";
+            this.button40.Size = new System.Drawing.Size(112, 30);
+            this.button40.TabIndex = 111;
+            this.button40.Text = "Сухиничскому";
+            this.button40.UseVisualStyleBackColor = true;
+            this.button40.Click += new System.EventHandler(this.button40_Click);
+            // 
+            // button41
+            // 
+            this.button41.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button41.Location = new System.Drawing.Point(946, 472);
+            this.button41.Name = "button41";
+            this.button41.Size = new System.Drawing.Size(112, 30);
+            this.button41.TabIndex = 112;
+            this.button41.Text = "Юхновскому";
+            this.button41.UseVisualStyleBackColor = true;
+            this.button41.Click += new System.EventHandler(this.button41_Click);
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label28.Location = new System.Drawing.Point(826, 310);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(222, 19);
+            this.label28.TabIndex = 113;
+            this.label28.Text = "Добавить строку в файл записи";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label29.Location = new System.Drawing.Point(826, 329);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(238, 19);
+            this.label29.TabIndex = 114;
+            this.label29.Text = "Str = \"Транспорт по ..  почтампту\"";
+            // 
+            // button42
+            // 
+            this.button42.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button42.Location = new System.Drawing.Point(828, 502);
+            this.button42.Name = "button42";
+            this.button42.Size = new System.Drawing.Size(230, 30);
+            this.button42.TabIndex = 115;
+            this.button42.Text = "Больше остановок не зафиксир";
+            this.button42.UseVisualStyleBackColor = true;
+            this.button42.Click += new System.EventHandler(this.button42_Click);
+            // 
             // Form1
             // 
             this.AcceptButton = this.button11;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1118, 535);
+            this.Controls.Add(this.button42);
+            this.Controls.Add(this.label29);
+            this.Controls.Add(this.label28);
+            this.Controls.Add(this.button41);
+            this.Controls.Add(this.button40);
+            this.Controls.Add(this.button39);
+            this.Controls.Add(this.button38);
+            this.Controls.Add(this.button37);
+            this.Controls.Add(this.button36);
+            this.Controls.Add(this.button35);
+            this.Controls.Add(this.button34);
+            this.Controls.Add(this.button33);
+            this.Controls.Add(this.button32);
+            this.Controls.Add(this.button31);
+            this.Controls.Add(this.button30);
+            this.Controls.Add(this.button29);
+            this.Controls.Add(this.label27);
+            this.Controls.Add(this.label26);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.listBox2);
             this.Controls.Add(this.button23);
             this.Controls.Add(this.button24);
             this.Controls.Add(this.textBox12);
@@ -795,7 +1038,6 @@ namespace Start_EAS_Trans
             this.Controls.Add(this.button21);
             this.Controls.Add(this.button20);
             this.Controls.Add(this.button19);
-            this.Controls.Add(this.textBox9);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.button17);
             this.Controls.Add(this.button16);
@@ -849,7 +1091,6 @@ namespace Start_EAS_Trans
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.ProgressBar progressBar1;
@@ -890,7 +1131,6 @@ namespace Start_EAS_Trans
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Button button17;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.Button button19;
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.Button button21;
@@ -917,6 +1157,27 @@ namespace Start_EAS_Trans
         private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.Button button24;
         private System.Windows.Forms.Button button23;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Button button29;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button30;
+        private System.Windows.Forms.Button button31;
+        private System.Windows.Forms.Button button32;
+        private System.Windows.Forms.Button button33;
+        private System.Windows.Forms.Button button34;
+        private System.Windows.Forms.Button button35;
+        private System.Windows.Forms.Button button36;
+        private System.Windows.Forms.Button button37;
+        private System.Windows.Forms.Button button38;
+        private System.Windows.Forms.Button button39;
+        private System.Windows.Forms.Button button40;
+        private System.Windows.Forms.Button button41;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Button button42;
     }
 }
 
