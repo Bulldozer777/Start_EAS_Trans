@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,31 +15,52 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Smart_explorer;
 
 namespace Start_EAS_Trans
 {
     public partial class Form1 : Form
     {
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        private readonly System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         int timerCounter = 0; //счётчик для таймера
-        int action = 0;
-        int СheckTransport = 0;
-        static DateTime currentDate = DateTime.Now;
-        static string NewDateFormat = currentDate.ToString("dd-MM");
-        public string writePath = @"C:\Users\Eduard.Karpov\source\repos\Start_EAS_Trans\Start_EAS_Trans\autoreader out\транспорт " + NewDateFormat + ".txt";
-        public int streamwriteEAStrans = 0;
+        public static int action = 0;
+        public static int СheckTransport = 0;
+        private readonly static DateTime currentDate = DateTime.Now;
+        private readonly static string NewDateFormat = currentDate.ToString("dd-MM");
+        readonly static string baseFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        readonly static string appStorageFolder = Path.Combine(baseFolder, "Start_EAS_Trans");
+        public static string writePath = appStorageFolder + @"\data\path\Start_EAS_Trans\autoreader out\транспорт " + NewDateFormat + ".txt";
+        public static int streamwriteEAStrans = 0;
         public int i = 1;
-        public string pathAutoEASTrans = @"C:\Users\Eduard.Karpov\source\repos\Start_EAS_Trans\Start_EAS_Trans\autoreader in\транспорт.txt";
+        public static string pathAutoEASTrans = appStorageFolder + @"\data\path\Start_EAS_Trans\autoreader in\транспорт.txt";
         public bool isDataSaved;
         public int close = 0;
-        public string ProdwritePath = @"C:\Users\Eduard.Karpov\source\repos\Start_EAS_Trans\Start_EAS_Trans\Prod\prod.txt";
+        public static string ProdwritePath = appStorageFolder + @"\data\path\Start_EAS_Trans\Prod\prod.txt";
         public int Automodul = 0;
         public string ops = "";
-
+        private readonly static Logger logger = LogManager.GetCurrentClassLogger();
+      
         public Form1(int stream)
-        {
+        {      
             streamwriteEAStrans = stream;
             BaseConstructor();
+        }
+        public string[] ReadText(string path)
+        {
+            int count = File.ReadAllLines(path).Length;
+            string[] array = new string[count];
+            using (StreamReader fs = new StreamReader(path)) 
+            {
+                int counter = 0;
+                while (true)
+                {
+                    counter++;
+                    string temp = fs.ReadLine();
+                    if (temp == null) break;
+                    array[counter - 1] = temp;
+                }
+            }
+            return array;
         }
         private void BaseConstructor()
         {
@@ -47,11 +69,11 @@ namespace Start_EAS_Trans
                 InitializeComponent();
                 Width = 844;
                 Height = 574;
+            
                 this.ActiveControl = button11;
                 textBox11.Focus();
-
                 AutoCompleteStringCollection source = new AutoCompleteStringCollection() { };
-                source.AddRange(ReadText(@"C:\Users\Eduard.Karpov\source\repos\Start_EAS_Trans\Start_EAS_Trans\save\eas all ops.txt"));
+                source.AddRange(ReadText(appStorageFolder + @"\data\path\Start_EAS_Trans\save\eas all ops.txt"));
                 textBox1.AutoCompleteCustomSource = source;
                 textBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
                 textBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -103,31 +125,31 @@ namespace Start_EAS_Trans
                             {
                                 if (textBox1.Text != "")
                                 {
-                                    string[] files = Directory.GetFiles(Replace_path(path_mass[i]));
-                                    string[] catalog = Directory.GetDirectories(Replace_path(path_mass[i]));
-                                    int all_elemetnts = files.Length + catalog.Length;
-                                    if (all_elemetnts > 0)
+                                    Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database, "Нажатие кнопки \"Удалить\"");
+                                    if (server != "")
                                     {
-                                        DialogResult result = MessageBox.Show($"Удалить файлы ОПС {textBox1.Text}\nиз папки {Replace_path(path_mass[i])}?",
-                                                        "Сообщение",
-                                                         MessageBoxButtons.YesNo,
-                                                         MessageBoxIcon.Information);
-                                        if (result == DialogResult.Yes)
+                                        string[] files = Directory.GetFiles(Replace_path(path_mass[i], server, name_database));
+                                        string[] catalog = Directory.GetDirectories(Replace_path(path_mass[i], server, name_database));
+                                        int all_elemetnts = files.Length + catalog.Length;
+                                        if (all_elemetnts > 0)
                                         {
-                                            Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
-                                            if (server != "")
+                                            DialogResult result = MessageBox.Show($"Удалить файлы ОПС {textBox1.Text}\nиз папки {Replace_path(path_mass[i], server, name_database)}?",
+                                                            "Сообщение",
+                                                             MessageBoxButtons.YesNo,
+                                                             MessageBoxIcon.Information);
+                                            if (result == DialogResult.Yes)
                                             {
-                                                await Task.Run(() => Delete_File(Replace_path(path_mass[i])));
-                                                Async_View_Files(listBox1, label11, label15, label21, Replace_path(path_mass[i]), textBox12, server);
-                                                Update_Files_and_Catolog_lenght(Replace_path(path_mass[i]));
+                                                await Task.Run(() => Delete_File(Replace_path(path_mass[i], server, name_database)));
+                                                Async_View_Files(listBox1, label11, label15, label21, Replace_path(path_mass[i], server, name_database), textBox12, server);
+                                                Update_Files_and_Catolog_lenght(Replace_path(path_mass[i], server, name_database));
+                                            }
+                                            if (result == DialogResult.No)
+                                            {
                                             }
                                         }
-                                        if (result == DialogResult.No)
-                                        {
-                                        }
+                                        else
+                                            MessageBox.Show("Папка пустая");
                                     }
-                                    else
-                                        MessageBox.Show("Папка пустая");
                                 }
                                 else
                                     MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
@@ -145,25 +167,6 @@ namespace Start_EAS_Trans
         {
             BaseConstructor();
         }  
-
-        //Функция для считывания текста из текстового файла по строкам и записи его в массив, возвращает массив строк
-        public string[] ReadText(string path)
-        {
-            string[] array;
-            using (StreamReader fs = new StreamReader(path))
-            {
-                array = fs.ReadToEnd().Split().ToArray();
-                int counter = 0;
-                while (true)
-                {
-                    counter++;
-                    string temp = fs.ReadLine();
-                    if (temp == null) break;
-                    array[counter] = temp;
-                }
-            }
-            return array;
-        }
 
         //Событие, описывающее логику работы таймера времени выполнения запроса
         void timer_Tick(object sender, EventArgs e)
@@ -216,6 +219,12 @@ namespace Start_EAS_Trans
                 }
             }
         }
+        //private void Dummy()
+        //{
+        //    var allCtrl = new List<Control>();
+        //    allCtrl.AddRange((IEnumerable<Control>)this.listBox2);
+        //    Methods methods = new Methods(streamwriteEAStrans, writePath, allCtrl);
+        //}
 
         //Кнопка толкнуть транспорт скриптом
         //Работа осуществляется в отдельном потоке от основной программы,
@@ -228,10 +237,12 @@ namespace Start_EAS_Trans
         //Этот метод - Start_Transport(progressBar1, command);
         private void button1_Click(object sender, EventArgs e)
         {
-            this.isDataSaved = false;
+            button45.BringToFront();
+            button44.BringToFront();
             if (textBox1.Text != "")
             {
-                Name_DataBase_and_Server(textBox1.Text, out string server1, out string name_database1);
+                this.isDataSaved = false; //переменная, отвечающая за закрытие приложения
+                Name_DataBase_and_Server(textBox1.Text, out string server1, out string name_database1, "Запуск транспорта скриптом");
                 string file = "gmmq.packege.end";
                 string file_2 = "meta.xml";
                 string path = @"\\" + server1 + @"\c$\GMMQ\Export\" + file;
@@ -278,10 +289,10 @@ namespace Start_EAS_Trans
                                 {                                                                    
                                     string ops = textBox1.Text;                                  
                                     SqlCommand command = new SqlCommand();                                  
-                                    Start_Transport(progressBar1, command, ops, writePath);
+                                    Start_Transport(progressBar1, command, ops, writePath, server1, name_database1);
                                     if (action != 1)
                                     {
-                                        View_files(progressBar1, command, action, ops);
+                                        View_files(progressBar1, command, action, ops, server1, name_database1);
                                     }
                                 });
                             thread.Start();
@@ -307,156 +318,47 @@ namespace Start_EAS_Trans
             else
                 MessageBox.Show("Поле для ввода номера ОПС - пустое");
         }
-        public void AutoStartExport(string ops)
-        {
-            Automodul = 1;
-            DateTime currentDate = DateTime.Now;
-            string NewDateFormat = currentDate.ToString("dd-MM HH.mm.ss");
-            string NewDateFormat1 = currentDate.ToString("HH.mm.ss");
-            string writePath = @"C:\Users\Eduard.Karpov\source\repos\Start_EAS_Trans\Start_EAS_Trans\autoreader out\транспорт " + NewDateFormat + ".txt";
-            textBox1.Text = "auto start export";
-            Prod_Name_DataBase_and_Server(ops,  out string server1, out string name_database1);
-            if (server1 != "")
-            {
-                СheckEasTransport(server1);
-                if (СheckTransport != 1)
-                {
-                    string file = "gmmq.packege.end";
-                    string file_2 = "meta.xml";
-                    string path = @"\\" + server1 + @"\c$\GMMQ\Export\" + file;
-                    string path_2 = @"\\" + server1 + @"\c$\GMMQ\Export\" + file_2;
-                    FileInfo fileInf = new FileInfo(path);
-                    FileInfo fileInf_2 = new FileInfo(path_2);
-                    File.Create(@"C:\Users\Eduard.Karpov\source\repos\Start_EAS_Trans\Start_EAS_Trans\autoreader out\транспорт " + NewDateFormat + ".txt");
-                    //while (fileInf.Exists | fileInf_2.Exists)
-                    //{
-                    //    progressBar1.Value = 0;
-                    //    textBox2.Clear();
-                    //    string text = $"{ops} - толкнул транспорт";
-                    //    StreamWriterEAStrans(text);
-                    //    timerCounter = 0;
-                    //    label22.Text = "Количество файлов реплики: ";
-                    //}
-                    if (fileInf.Exists | fileInf_2.Exists)
-                    {
-                        progressBar1.Value = 0;
-                        textBox2.Clear();
-                        string text = $"{ops} - толкнул транспорт";
-                        StreamWriterEAStrans(text);
-                        timerCounter = 0;
-                        label22.Text = "Количество файлов реплики: ";
-                    }
-                    else
-                    {
 
-                        try
-                        {
-                            DialogResult result = MessageBox.Show(
-                $"Толкнуть транспорт скриптом,\nна ОПС {textBox1.Text} ? ",
-                "Сообщение",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Information);
-
-                            if (result == DialogResult.Yes)
-                            {
-                                this.timer.Start();
-                                action = 0;
-                                CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
-                                                                         // отменяет отслеживание ошибок,
-                                                                         // но дает передать компоненты формы в другой поток 
-
-                                Thread thread = new Thread(
-                                    () =>
-                                    {
-                                        SqlCommand command = new SqlCommand();
-                                        Prod_Start_Transport(progressBar1, command, ops, writePath);
-                                        //if (action != 1)
-                                        //{
-                                        //    View_files(progressBar1, command, action, ops);
-                                        //}
-                                    });
-                                thread.Start();
-                                CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
-                                                                         // отменяет отслеживание ошибок,
-                                                                         // но дает передать компоненты формы в другой поток 
-                            }
-                            if (result == DialogResult.No)
-                            {
-                                this.timer.Stop();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Ошибка: \n{ex}");
-                            progressBar1.Value = 0;
-                            this.timer.Stop();
-                            textBox2.Text = textBox1.Text + " - ошибка";
-                        }
-                        textBox1.Focus();
-                    }
-                }
-            }
-        }
 
 
         //Метод, использующий класс SqlConnection для создания запроса "exec ReplicaExport 0" на базу отделения 
         //connectionString = $"Server={server};Database={name_database};Persist Security Info=False;User ID=sa;Password=QweAsd123;";
         //
-        async public void Start_Transport(ProgressBar progressBar, SqlCommand command, string ops, string writePath)
+        async public void Start_Transport(ProgressBar progressBar, SqlCommand command, string ops, string writePath, string server, string name_database)
         {
             int action = 0;
             try
             {
-                if (textBox1.Text != "")
+                textBox2.Clear();
+                string connectionString = $"Server={server};Database={name_database};Persist Security Info=False;User ID=sa;Password=QweAsd123;";
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    if (ops != "")
-                    {
-                        textBox1.Text = ops;
-                    }                       
-                    textBox2.Clear();
-                    string server = "";
-                    string name_database = "";
-                    if (Automodul == 1)
-                    {
-                        Prod_Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
-                    }
-                    if (Automodul == 0)
-                    {
-                        Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
-                    }
-                    string connectionString = $"Server={server};Database={name_database};Persist Security Info=False;User ID=sa;Password=QweAsd123;";
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        await connection.OpenAsync();
-                        textBox2.Text = "Подключение открыто";
-                    }
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        await connection.OpenAsync();
-                        command.CommandText = "exec ReplicaExport 0";
-                        command.Connection = connection;
-                        command.CommandTimeout = 5000; //увеличено время на выполнение команды
-                        await Task.Run(() => command.ExecuteNonQueryAsync());
-                        action = 1;
-                        Action(action);
-                        this.action = 1;
-                        this.timer.Stop();
-                        this.isDataSaved = true;
-                        textBox2.Text = "Скрипт выполнен";
-                        progressBar.Value = 100;
-                        MessageBox.Show($"Запрос в SQL: \"{command.CommandText}\" - успешно отработан");
-                        string text = $"{ops} - толкнул скриптом +";
-                        StreamWriterEAStrans(text);
-                        progressBar.Value = 0;
-                        textBox2.Clear();
-                        textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
-                        timerCounter = 0;
-                        label22.Text = "Количество файлов реплики: ";
-                    }
+                    await connection.OpenAsync();
+                    textBox2.Text = "Подключение открыто";
                 }
-                else
-                    MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-                action = 1;
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    command.CommandText = "exec ReplicaExport 0";
+                    command.Connection = connection;
+                    command.CommandTimeout = 5000; //увеличено время на выполнение команды
+                    await Task.Run(() => command.ExecuteNonQueryAsync());
+                    action = 1;
+                    Action(action);
+                    Form1.action = 1;
+                    this.timer.Stop();
+                    this.isDataSaved = true;
+                    textBox2.Text = "Скрипт выполнен";
+                    progressBar.Value = 100;
+                    MessageBox.Show($"Запрос в SQL: \"{command.CommandText}\" - успешно отработан");
+                    string text = $"{ops} - толкнул скриптом +";
+                    StreamWriterEAStrans(text);
+                    progressBar.Value = 0;
+                    textBox2.Clear();
+                    textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
+                    timerCounter = 0;
+                    label22.Text = "Количество файлов реплики: ";
+                }
             }
             catch (Exception ex)
             {
@@ -464,64 +366,6 @@ namespace Start_EAS_Trans
                 progressBar.Value = 0;
                 this.timer.Stop();
                 textBox2.Text = textBox1.Text + " - ошибка";
-            }
-        }
-        async public void Prod_Start_Transport(ProgressBar progressBar, SqlCommand command, string ops, string writePath)
-        {
-            int action = 0;
-            try
-            {
-                if (textBox1.Text != "")
-                {
-                    if (ops != "")
-                    {
-                        textBox1.Text = ops;
-                    }
-                    textBox2.Clear();
-                    string server = "";
-                    string name_database = "";
-                    if (Automodul == 1)
-                    {
-                        Prod_Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
-                    }
-                    string connectionString = $"Server={server};Database={name_database};Persist Security Info=False;User ID=sa;Password=QweAsd123;";
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        await connection.OpenAsync();
-                        ProdStreamWriterEAStrans("Подключение открыто");
-                    }
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        await connection.OpenAsync();
-                        command.CommandText = "exec ReplicaExport 0";
-                        command.Connection = connection;
-                        command.CommandTimeout = 5000; //увеличено время на выполнение команды
-                        await Task.Run(() => command.ExecuteNonQueryAsync());
-                        action = 1;
-                        Action(action);
-                        this.action = 1;
-                        this.timer.Stop();
-                        this.isDataSaved = true;
-                        ProdStreamWriterEAStrans("Скрипт выполнен");
-                        //progressBar.Value = 100;
-                        ProdStreamWriterEAStrans($"Запрос в SQL: \"{command.CommandText}\" - успешно отработан");
-                        string text = $"{ops} - толкнул скриптом +";
-                        StreamWriterEAStrans(text);
-                        //progressBar.Value = 0;
-                        //textBox2.Clear();
-                        //textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
-                        timerCounter = 0;
-                        //label22.Text = "Количество файлов реплики: ";
-                    }
-                }
-                else
-                    ProdStreamWriterEAStrans($"\nПоле для ввода номера ОПС - пустое");
-                action = 1;
-            }
-            catch (Exception ex)
-            {
-                this.timer.Stop();
-                ProdStreamWriterEAStrans( textBox1.Text + $" - ошибка \n{ex}");
             }
         }
         public int Action(int action)
@@ -540,9 +384,8 @@ namespace Start_EAS_Trans
 
         //Метод, следящий за появлением новых файлов в папке отделения, по фиксированному пути 
         //@"\\" + server + @"\c$\GMMQ\Export"
-        async public void View_files(ProgressBar progressBar, SqlCommand command, int action, string ops)
+        async public void View_files(ProgressBar progressBar, SqlCommand command, int action, string ops, string server, string name_database)
         {
-            string server = "";
             try
             {
                 CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
@@ -553,16 +396,6 @@ namespace Start_EAS_Trans
                 {
                     textBox1.Text = ops;
                 }
-                if (Automodul == 1)
-                {
-                    Prod_Name_DataBase_and_Server(textBox1.Text, out string serverEAS, out string name_database);
-                    server = serverEAS;
-                }
-                if (Automodul == 0)
-                {
-                    Name_DataBase_and_Server(textBox1.Text, out string serverEAS, out string name_database);
-                    server = serverEAS;
-                }
                 string path = @"\\" + server + @"\c$\GMMQ\Export";
                 string[] files = Directory.GetFiles(path);
                 string[] files1 = Directory.GetFiles(path);
@@ -571,140 +404,121 @@ namespace Start_EAS_Trans
                 int u = 0;
                 textBox12.Text = path;
                 string[] mass_2 = new string[count];
-                if (action != 1 & this.action != 1)
+                while (files.Length == 0 & action != 1 & Form1.action != 1)
                 {
-                    while (files.Length == 0)
+                    catalog = Directory.GetDirectories(path);
+                    if (catalog.Length == 0)
+                    {
+                        files = Directory.GetFiles(path);
+                        label22.Text = "Количество файлов реплики: 0";
+                        await Task.Delay(200);
+                    }
+                    else
+                    {
+                        action = 1;
+                        label22.Text = $"Количество файлов реплики: {catalog.Length} - сформированная папка реплики";
+                        files = Directory.GetFiles(path);
+                        await Task.Delay(200);
+                    }
+                    files = Directory.GetFiles(path);
+                    await Task.Delay(200);
+                }
+                while (files.Length != 0 & action != 1 & Form1.action != 1)
+                {
+                    count++;
+                    string[] files_1 = Directory.GetFiles(path);
+                    int file3 = files.Length;
+                    DateTime dateTime = new DateTime();
+                    dateTime = Directory.GetLastWriteTime(path); //перезаписывает переменную, для обновления даты изменения папки
+                    FileInfo file = new FileInfo(path);
+                    if (dateTime.AddMinutes(15) > DateTime.Now)
                     {
                         catalog = Directory.GetDirectories(path);
                         if (catalog.Length == 0)
                         {
-                            files = Directory.GetFiles(path);
-                            for (int i = 0; i < files.Length; i++)
+                            string[] mass = new string[files_1.Length];
+                            if (u == 0 & Form1.action != 1)
                             {
-                                if (files[i] != "meta.xml" | files[i] != "gmmq.packege.end")
-                                
+                                u++;
+                                mass = files_1;
+                                listBox2.Items.Clear();
+                                for (int i = 0; i < files_1.Length; i++)
                                 {
-                                    files = Directory.GetFiles(path); //перезаписывает переменную, для обновления количества файлов в папке
-                                    label22.Text = "Количество файлов реплики: 0";
-                                }
-                                else
-                                {
-                                    //await Task.Delay(200000000);
-                                    //action = 1;
-                                    //break;
-                                }
-                            }
-                            await Task.Delay(200);
-                        }
-                        else
-                        {
-                            action = 1;
-                            //await Task.Delay(200000000);
-                        }
-                    }
-                    while (files.Length != 0)
-                    {
-                        if (action != 1 & this.action != 1)
-                        {
-                            count++;
-                            string[] files_1 = Directory.GetFiles(path);
-                            int file3 = files.Length;
-                            DateTime dateTime = new DateTime();
-                            dateTime = Directory.GetLastWriteTime(path); //перезаписывает переменную, для обновления даты изменения папки
-                            FileInfo file = new FileInfo(path);
-                            if (dateTime.AddSeconds(3) > DateTime.Now)
-                            {
-                                catalog = Directory.GetDirectories(path);
-                                if (catalog.Length == 0)
-                                {
-                                    string[] mass = new string[files_1.Length];
-                                    if (u == 0 & this.action != 1)
+                                    if (files_1[i] != "meta.xml" | files_1[i] != "gmmq.packege.end")
                                     {
-                                        u++;
-                                        mass = files_1;
-                                        listBox2.Items.Clear();
-                                        for (int i = 0; i < files_1.Length; i++)
+                                        label22.Text = "Количество файлов реплики: " + files_1.Length + " ; По пути: ↓↓\n" + files_1[i];
+                                        listBox2.Items.Add(files_1[i].Substring(18 + server.Length));
+                                        if (progressBar.Value >= 0 & progressBar.Value < 99)
                                         {
-                                            if (files_1[i] != "meta.xml" | files_1[i] != "gmmq.packege.end")
+                                            double p = files_1.Length;
+                                            double b = p / 1.8;
+                                            if (b < 99)
                                             {
-                                                label22.Text = "Количество файлов реплики: " + files_1.Length + "\nПо пути: " + files_1[i];
-                                                listBox2.Items.Add(files_1[i].Substring(18 + server.Length));
-                                                if (progressBar.Value >= 0 & progressBar.Value < 99)
-                                                {
-                                                    double p = files_1.Length;
-                                                    double b = p / 1.8;
-                                                    if (b < 99)
-                                                    {
-                                                        progressBar.Value = Convert.ToInt32(b);
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
-                                                action = 1;
-                                                break;
+                                                progressBar.Value = Convert.ToInt32(b);
                                             }
                                         }
                                     }
-                                    if (u == 1 & this.action != 1)
-                                    {   
-                                        listBox2.BeginUpdate();
-                                        listBox2.Items.Clear();
-                                        for (int i = 0; i < files_1.Length; i++)
-                                        {
-                                            if (files_1[i] != "meta.xml" | files_1[i] != "gmmq.packege.end")
-                                            {
-                                                listBox2.Items.Add(files_1[i].Substring(18 + server.Length));                                              
-                                            }
-                                            else
-                                            {
-                                                textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
-                                                action = 1;
-                                                break;
-                                            }
-                                        }
-                                        listBox2.EndUpdate();
-                                        for (int i = 0; i < files_1.Length; i++)
-                                        {
-                                            if (progressBar.Value >= 0 & progressBar.Value < 99)
-                                            {
-                                                double p = files_1.Length;
-                                                double b = p / 1.8;
-                                                if (b < 99)
-                                                {
-                                                    progressBar.Value = Convert.ToInt32(b);
-                                                }
-                                            }
-                                            if (mass[i] != files_1[i])
-                                            {
-                                                mass = Addition_Mass(mass, files_1);
-                                                label22.Text = "Количество файлов реплики: " + files_1.Length + "\nПо пути: " + files_1[i];
-                                            }
-                                        }
-                                        }
-                                        Update_Files_and_Catolog_lenght(path, label25,label26,label27);
+                                    else
+                                    {
+                                        textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
+                                        action = 1;
+                                        break;
+                                    }
                                 }
-                                else
-                                    await Task.Delay(40000000);
                             }
-                            await Task.Delay(400);
+                            if (u == 1 & action != 1)
+                            {
+                                listBox2.BeginUpdate();
+                                listBox2.Items.Clear();
+                                for (int i = 0; i < files_1.Length; i++)
+                                {
+                                    if (files_1[i] != "meta.xml" | files_1[i] != "gmmq.packege.end")
+                                    {
+                                        listBox2.Items.Add(files_1[i].Substring(18 + server.Length));
+                                    }
+                                    else
+                                    {
+                                        textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
+                                        action = 1;
+                                        break;
+                                    }
+                                }
+                                listBox2.EndUpdate();
+                                for (int i = 0; i < files_1.Length; i++)
+                                {
+                                    if (progressBar.Value >= 0 & progressBar.Value < 99)
+                                    {
+                                        double p = files_1.Length;
+                                        double b = p / 1.8;
+                                        if (b < 99)
+                                        {
+                                            progressBar.Value = Convert.ToInt32(b);
+                                        }
+                                    }
+                                    if (mass[i] != files_1[i])
+                                    {
+                                        mass = Addition_Mass(mass, files_1);
+                                        if (files_1[i].Length < 55)
+                                        {
+                                            label22.Text = "Количество файлов реплики: " + files_1.Length + " ; По пути: ↓↓\n" + files_1[i];
+                                        }
+                                        else
+                                        {
+                                            label22.Text = "Количество файлов реплики: " + files_1.Length + " ; По пути: ↓↓\n" + files_1[i].Substring(0,55);
+                                        }
+                                    }
+                                }
+                            }
+                            Update_Files_and_Catolog_lenght(path, label25, label26, label27);
                         }
                         else
-                        {
-                            progressBar.Value = 0;
-                            this.timer.Stop();
-                            textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
-                            break;
-                        }
+                            await Task.Delay(40000000);
                     }
+                    await Task.Delay(400);
                 }
-                else
-                {
-                    progressBar.Value = 0;
-                    this.timer.Stop();
-                    textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
-                }
+                progressBar.Value = 0;
+                this.timer.Stop();
+                textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
             }
             catch (Exception ex)
             {
@@ -776,8 +590,9 @@ namespace Start_EAS_Trans
         }
 
         //Метод, находящий по номеру отделения, его ip адрес и имя его основной базы данных ЕАС 
-        public void Name_DataBase_and_Server(string numder_ops, out string server, out string name_database)
+        public void Name_DataBase_and_Server(string numder_ops, out string server, out string name_database, string action)
         {
+            DBForm1 date = new DBForm1();
             ops = textBox1.Text;
             name_database = "DB" + numder_ops;
             server = "";
@@ -803,17 +618,35 @@ namespace Start_EAS_Trans
                                     & pingReply.Address.ToString() != "10.94.225.101"
                                     & pingReply.Address.ToString() != "10.94.205.197"
                                     & pingReply.Address.ToString() != "10.94.185.85"
-                                    & pingReply.Address.ToString() != "10.94.206.69")
-                                {
+                                    & pingReply.Address.ToString() != "10.94.206.69"
+                                    & pingReply.Address.ToString() != "10.94.219.165"
+                                    & pingReply.Address.ToString() != "10.94.185.117"
+                                    & pingReply.Address.ToString() != "10.94.218.53"
+                                    & pingReply.Address.ToString() != "10.94.207.245")
+                                { 
                                     server = pingReply.Address.ToString();
+                                    date.DBWrite(action, numder_ops, pingReply.Status.ToString(), server, DateTime.Now);
                                     System.Threading.Thread.Sleep(200);
+                                    logger.Trace("logger.Trace");
+                                    logger.Debug("logger.Debug");
+                                    logger.Info("logger.Info");
+                                    logger.Warn("logger.Warn");
+                                    logger.Error("logger.Error");
+                                    logger.Fatal("logger.Fatal");
                                 }
                                 else
-                                {
+                                {                                                                     
                                     MessageBox.Show($"\nКоманда пинг - не проходит.");
                                     textBox2.Text = textBox1.Text + " - не подключается";
                                     server = "";
                                     StreamWriterEAStrans(text);
+                                    date.DBWrite(action, numder_ops, pingReply.Status.ToString(), server, DateTime.Now);
+                                    logger.Trace("logger.Trace");
+                                    logger.Debug("logger.Debug");
+                                    logger.Info("logger.Info");
+                                    logger.Warn("logger.Warn");
+                                    logger.Error("logger.Error");
+                                    logger.Fatal("logger.Fatal");
                                 }
                             }
                             else
@@ -821,6 +654,7 @@ namespace Start_EAS_Trans
                                 MessageBox.Show($"\nКоманда пинг - не проходит.");
                                 textBox2.Text = textBox1.Text + " - не подключается";
                                 server = "";
+                                date.DBWrite(action, numder_ops, pingReply.Status.ToString(), server, DateTime.Now);
                                 StreamWriterEAStrans(text);
                             }
                         }
@@ -833,6 +667,7 @@ namespace Start_EAS_Trans
                         textBox2.Text = textBox1.Text + " - не подключается";
                         server = "";
                         StreamWriterEAStrans(text);
+                        date.DBWrite(action, numder_ops, "Ошибка", server, DateTime.Now);
                     }
                     catch (SocketException)
                     {
@@ -840,6 +675,7 @@ namespace Start_EAS_Trans
                         textBox2.Text = textBox1.Text + " - не подключается";
                         server = "";
                         StreamWriterEAStrans(text);
+                        date.DBWrite(action, numder_ops, "Ошибка", server, DateTime.Now);
                     }
 
                     catch (ArgumentNullException)
@@ -848,6 +684,7 @@ namespace Start_EAS_Trans
                         textBox2.Text = textBox1.Text + " - не подключается";
                         server = "";
                         StreamWriterEAStrans(text);
+                        date.DBWrite(action, numder_ops, "Ошибка", server, DateTime.Now);
                     }
                     catch (System.Net.NetworkInformation.NetworkInformationException)
                     {
@@ -855,6 +692,7 @@ namespace Start_EAS_Trans
                         textBox2.Text = textBox1.Text + " - не подключается";
                         server = "";
                         StreamWriterEAStrans(text);
+                        date.DBWrite(action, numder_ops, "Ошибка", server, DateTime.Now);
                     }
                     catch (NullReferenceException)
                     {
@@ -862,6 +700,7 @@ namespace Start_EAS_Trans
                         textBox2.Text = textBox1.Text + " - не подключается";
                         server = "";
                         StreamWriterEAStrans(text);
+                        date.DBWrite(action, numder_ops, "Ошибка", server, DateTime.Now);
                     }
                 }
                 else
@@ -874,107 +713,26 @@ namespace Start_EAS_Trans
             }
         }
 
-        public void StreamWriterEAStrans(string text)
-        {
-            if (streamwriteEAStrans == 1)
-            {
-                using (StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default))
-                {
-                    sw.WriteLineAsync(text);
-                }
-            }
-        }
-        public void ProdStreamWriterEAStrans(string text)
-        {
-            //if (streamwriteEAStrans == 1)
-            //{
-                using (StreamWriter sw = new StreamWriter(ProdwritePath, true, System.Text.Encoding.Default))
-                {
-                    sw.WriteLineAsync(text);
-                }
-            //}
-        }
-        public void Prod_Name_DataBase_and_Server(string number_ops, out string server, out string name_database)
-        {
-            string text = $"{number_ops} - не подключается";
-            name_database = "DB" + number_ops;
-            server = "";
-            if (textBox1.Text != "")
-            {
+       
 
-                try
+        public static void StreamWriterEAStrans(string text)
+        {
+            try
+            {
+                if (streamwriteEAStrans == 1)
                 {
-                    if (textBox1.Text == "auto start export")
+                    using (StreamWriter sw = new StreamWriter(writePath, true, System.Text.Encoding.Default))
                     {
-                        IPAddress ipAddress = Dns.GetHostEntry("r40-" + number_ops + "-n").AddressList[0];
-                        Ping ping = new Ping();
-                        PingReply pingReply = ping.Send(ipAddress);
-                        if (pingReply.Address != null)
-                        {
-                             if (pingReply.Address.ToString() != "10.94.187.117"
-                                    & pingReply.Address.ToString() != "10.94.209.149"
-                                    & pingReply.Address.ToString() != "10.94.187.101"
-                                    & pingReply.Address.ToString() != "10.94.185.21"
-                                    & pingReply.Address.ToString() != "10.94.225.101"
-                                    & pingReply.Address.ToString() != "10.94.205.197"
-                                    & pingReply.Address.ToString() != "10.94.185.85"
-                                    & pingReply.Address.ToString() != "10.94.206.69")
-                                {
-                                server = pingReply.Address.ToString();
-                                System.Threading.Thread.Sleep(200);
-                            }
-                            else
-                            {
-                                ProdStreamWriterEAStrans(text);
-                                StreamWriterEAStrans(text);
-                                server = "";
-                            }
-
-                        }
-                        else
-                        {
-                            ProdStreamWriterEAStrans(text);
-                            StreamWriterEAStrans(text);
-                            server = "";
-                        }
-
+                        sw.WriteLineAsync(text);
                     }
                 }
-                catch (PingException)
-                {
-                    ProdStreamWriterEAStrans(text);
-                    StreamWriterEAStrans(text);
-                    server = "";
-                }
-                catch (SocketException)
-                {
-                    ProdStreamWriterEAStrans(text);
-                    StreamWriterEAStrans(text);
-                    server = "";
-                }
-
-                catch (ArgumentNullException)
-                {
-                    ProdStreamWriterEAStrans(text);
-                    StreamWriterEAStrans(text);
-                    server = "";
-                }
-                catch (System.Net.NetworkInformation.NetworkInformationException)
-                {
-                    ProdStreamWriterEAStrans(text);
-                    StreamWriterEAStrans(text);
-                    server = "";
-                }
-                catch (NullReferenceException)
-                {
-                    ProdStreamWriterEAStrans(text);
-                    StreamWriterEAStrans(text);
-                    server = "";
-                }
             }
-            else
-                MessageBox.Show($"\nПоле для ввода номера ОПС - пустое\n(Метод Name_DataBase_and_Server)");
-        }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: Метод StreamWriterEAStrans \n{ex}");
+            }
+            
+        }  
 
         //Функция возвращающая дату последнего доступа к папке по заданному пути,
         //в виде строки  
@@ -1138,9 +896,7 @@ namespace Start_EAS_Trans
             {
                 if (textBox1.Text != "")
                 {
-                    string server = "";
-                    string name_database = "";
-                    Name_DataBase_and_Server(textBox1.Text, out server, out name_database);
+                    Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database, "Просмотр даты обновления папок на ОПС");
                     if (server != "")
                     {
                         string path_1 = @"\\" + server + path;
@@ -1167,9 +923,7 @@ namespace Start_EAS_Trans
                 {
                     if (textBox1.Text != "")
                     {
-                        string server = "";
-                        string name_database = "";
-                        Name_DataBase_and_Server(textBox1.Text,  out server, out name_database);
+                        Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database, "Просмотр даты обновления папок на ОПС");
                         if (server != "")
                         {
                             string path_1 = @"\\" + server + path;
@@ -1236,7 +990,7 @@ namespace Start_EAS_Trans
         {
             if (textBox1.Text != "")
             {
-                Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+                Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database, "Просмотр даты обновления всех папок на ОПС");
                 if (server != "")
                 {
                     Async_Date_View_Ops(@"\c$\GMMQ\Export", textBox4,1);
@@ -1266,8 +1020,9 @@ namespace Start_EAS_Trans
                     CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
                                                              // отменяет отслеживание ошибок,
                                                              // но дает передать компоненты формы в другой поток 
-                    Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
-                    await Task.Run(() => textBox8.Text = server);
+                    string server = "";
+                    await Task.Run(() => Name_DataBase_and_Server(textBox1.Text, out server, out string name_database, "Подключение"));
+                   textBox8.Text = server;
                 }
                 catch (Exception ex)
                 {
@@ -1289,7 +1044,7 @@ namespace Start_EAS_Trans
                 }
                 else
                     Width = 1215;
-                Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+                Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database, "Работа со службами ЕАС");
                 label20.Text = "IP Адрес удленного ПК: " + server;
             }
             else
@@ -1355,9 +1110,8 @@ namespace Start_EAS_Trans
         }
 
         //Функция позволяющая выводить откорректированный путь, для дальнейшего его использования в методах
-        public string Replace_path(string path)
-        {
-            Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+        public string Replace_path(string path, string server, string name_database)
+        {          
             if (server == @"D:\!localhost")
             {
                 if (path == @"\c$\GMMQ\Export")
@@ -1430,21 +1184,7 @@ namespace Start_EAS_Trans
             else
                 MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
         }
-        public void DeleteFileReplicaAll()
-        {
-            string[] path_mass = new string[4]
-                {
-                 @"\c$\GMMQ\Export",
-                 @"\c$\GMMQ\Import",
-                 "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\1",
-                 "\\\\D01eascl02fskal\\gmmq\\EAS\\KAL\\2",
-                };
-            for (int i = 0; i < path_mass.Length; i++)
-            {
-                Delete_File(path_mass[i]);
-            }
-            
-        }
+        
 
         //Метод удаляет только файлы по заданной маске и пути
         //Вторая версия метода  Delete_File, отличающаяся по параметрам
@@ -1479,309 +1219,88 @@ namespace Start_EAS_Trans
         {
             if (textBox1.Text != "")
             {
-                CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
-                                                         // отменяет отслеживание ошибок,
-                                                         // но дает передать компоненты формы в другой поток 
-                DateTime now = new DateTime();
-                now = DateTime.Now;
-                Name_DataBase_and_Server(textBox1.Text,out string server, out string name_database);
-                Get_Date_Time(@"\\" + server + @"\c$\GMMQ\Export");
-                DateTime export = Get_Date_Time(@"\\" + server + @"\c$\GMMQ\Export").AddHours(3);
-                DateTime inport = Get_Date_Time(@"\\" + server + @"\c$\GMMQ\Import").AddHours(3);
-                DateTime In = Get_Date_Time(@"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\In").AddHours(3);
-                DateTime Out = Get_Date_Time(@"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\Out").AddHours(3);
-                //if (now < export & now < inport & now < In & now < Out)
-                if (now < In & now < Out)
+                Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database, "Проверка работы транспорта");
+                if(server != "")
                 {
-                    textBox3.Text = "Время обновления папок актуальное";
-                    await Task.Delay(200);
-                    if (server != "")
+                    CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
+                                                             // отменяет отслеживание ошибок,
+                                                             // но дает передать компоненты формы в другой поток 
+                    DateTime now = new DateTime();
+                    now = DateTime.Now;
+                    Get_Date_Time(@"\\" + server + @"\c$\GMMQ\Export");
+                    DateTime export = Get_Date_Time(@"\\" + server + @"\c$\GMMQ\Export").AddHours(3);
+                    DateTime inport = Get_Date_Time(@"\\" + server + @"\c$\GMMQ\Import").AddHours(3);
+                    DateTime In = Get_Date_Time(@"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\In").AddHours(3);
+                    DateTime Out = Get_Date_Time(@"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\Out").AddHours(3);
+                    //if (now < export & now < inport & now < In & now < Out)
+                    if (now < In & now < Out)
                     {
-                        if (textBox1.Text != "248000" & textBox1.Text != "249406")
+                        textBox3.Text = "Время обновления папок актуальное";
+                        await Task.Delay(200);
+                        if (server != "")
                         {
-                            string ip = server;
-                            string result = "";
-                            await Task.Run(() => Power_Shell_1("get-service -" +
-                                               "DisplayName \"GMMQ\"" +
-                                               " -ComputerName " + ip + "" +
-                                               " | format-table Status -autosize", out result));
-                            textBox3.Text = "Служба GMMQ - " + result.Replace("\r\n", "");
-                            await Task.Delay(400);
-                            if (result.Replace("\r\n", "") == "Running")
+                            if (textBox1.Text != "248000" & textBox1.Text != "249406")
                             {
-                                if (server != "")
+                                string ip = server;
+                                string result = "";
+                                await Task.Run(() => Power_Shell_1("get-service -" +
+                                                   "DisplayName \"GMMQ\"" +
+                                                   " -ComputerName " + ip + "" +
+                                                   " | format-table Status -autosize", out result));
+                                textBox3.Text = "Служба GMMQ - " + result.Replace("\r\n", "");
+                                await Task.Delay(400);
+                                if (result.Replace("\r\n", "") == "Running")
                                 {
-                                    await Task.Run(() => Power_Shell_1("get-service -" +
-                                                       "DisplayName \"GM_SchedulerSvc\"" +
-                                                       " -ComputerName " + ip + "" +
-                                                       " | format-table Status -autosize", out result));
-                                    textBox3.Text = "Служба GM_Scheduler - " + result.Replace("\r\n", "");
-                                    await Task.Delay(500);
-                                    if (result.Replace("\r\n", "") == "Running")
+                                    if (server != "")
                                     {
-                                        textBox3.Text = "Службы транспорта работают";
-                                        await Task.Delay(1000);
-                                        textBox3.Text = "Транспорт в рабочем состоянии";
+                                        await Task.Run(() => Power_Shell_1("get-service -" +
+                                                           "DisplayName \"GM_SchedulerSvc\"" +
+                                                           " -ComputerName " + ip + "" +
+                                                           " | format-table Status -autosize", out result));
+                                        textBox3.Text = "Служба GM_Scheduler - " + result.Replace("\r\n", "");
+                                        await Task.Delay(500);
+                                        if (result.Replace("\r\n", "") == "Running")
+                                        {
+                                            textBox3.Text = "Службы транспорта работают";
+                                            await Task.Delay(1000);
+                                            textBox3.Text = "Транспорт в рабочем состоянии";
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Время обновления файлов в папках более 3 часов\nТранспорт не работает более 3 часов");
+                                            textBox3.Text = "Транспорт не работает более 3 часов";
+                                        }
                                     }
                                     else
-                                    {
-                                        MessageBox.Show("Время обновления файлов в папках более 3 часов\nТранспорт не работает более 3 часов");
-                                        textBox3.Text = "Транспорт не работает более 3 часов";
-                                    }
+                                        MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
                                 }
                                 else
-                                    MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
+                                {
+                                    MessageBox.Show("Служба GMMQ - не работает");
+                                    textBox3.Text = "Транспорт не работает";
+                                }
                             }
                             else
-                            {
-                                MessageBox.Show("Служба GMMQ - не работает");
-                                textBox3.Text = "Транспорт не работает";
-                            }
+                                await Task.Run(() => textBox3.Text = "Транспорт в рабочем состоянии");
                         }
                         else
-                            await Task.Run(() => textBox3.Text = "Транспорт в рабочем состоянии");
+                            MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
                     }
                     else
-                        MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
-                }
-                else
-                {
-                    MessageBox.Show("Время обновления файлов в папках:\nExport, Import на ОПС и In, Out в DAX - более 3 часов\nТранспорт не работает более 3 часов");
-                    textBox3.Text = "Транспорт не работает";
+                    {
+                        MessageBox.Show("Время обновления файлов в папках:\nExport, Import на ОПС и In, Out в DAX - более 3 часов\nТранспорт не работает более 3 часов");
+                        textBox3.Text = "Транспорт не работает";
+                    }
                 }
             }
             else
                 MessageBox.Show("Поле для ввода номера ОПС - пустое");
         }
-      async public void СheckEasTransport(string server)
-        {
-            СheckTransport = 1;
-            if (textBox1.Text != "")
-            {
-                CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
-                                                         // отменяет отслеживание ошибок,
-                                                         // но дает передать компоненты формы в другой поток 
-                DateTime now = new DateTime();
-                now = DateTime.Now;
-                string path = @"\\" + server + @"\c$\GMMQ\Export";
-                string[] files = Directory.GetFiles(path);
-                string[] files1 = Directory.GetFiles(path);
-                string[] catalog = Directory.GetDirectories(path);
-                Get_Date_Time(@"\\" + server + @"\c$\GMMQ\Export");
-                DateTime export = Get_Date_Time(@"\\" + server + @"\c$\GMMQ\Export").AddHours(3);
-                DateTime inport = Get_Date_Time(@"\\" + server + @"\c$\GMMQ\Import").AddHours(3);
-                DateTime In = Get_Date_Time(@"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\In").AddHours(3);
-                DateTime Out = Get_Date_Time(@"\\D01eascl02fskal\gmmq\EAS\KAL\" + textBox1.Text + @"\Out").AddHours(3);
-                //if (now < export & now < inport & now < In & now < Out)
-                if (now < In & now < Out)
-                {
-                    string text = "Время обновления папок актуальное";
-                    ProdStreamWriterEAStrans(text);
-                    if (server != "")
-                    {
-                        if (textBox1.Text != "248000" & textBox1.Text != "249406")
-                        {
-                            string ip = server;
-                            string result = "";
-                            await Task.Run(() => Power_Shell_1("get-service -" +
-                                               "DisplayName \"GMMQ\"" +
-                                               " -ComputerName " + ip + "" +
-                                               " | format-table Status -autosize", out result));
-                            //textBox3.Text = "Служба GMMQ - " + result.Replace("\r\n", "");
-                            ProdStreamWriterEAStrans("Служба GMMQ - " + result.Replace("\r\n", ""));
-                            if (result.Replace("\r\n", "") == "Running")
-                            {
-                                if (server != "")
-                                {
-                                    await Task.Run(() => Power_Shell_1("get-service -" +
-                                                       "DisplayName \"GM_SchedulerSvc\"" +
-                                                       " -ComputerName " + ip + "" +
-                                                       " | format-table Status -autosize", out result));
-                                    ProdStreamWriterEAStrans("Служба GM_Scheduler - " + result.Replace("\r\n", ""));
-                                    if (result.Replace("\r\n", "") == "Running")
-                                    {
-                                        ProdStreamWriterEAStrans("Службы транспорта работают");
-                                        ProdStreamWriterEAStrans("Транспорт в рабочем состоянии");
-                                        СheckTransport = 1;
-                                    }
-                                    else
-                                    {
-                                        ProdStreamWriterEAStrans("Служба GM_SchedulerSvc - не работает");
-                                        if (server != "")
-                                        {
-                                            textBox11.Clear();
-                                            string name_service = "GM_SchedulerSvc";
-                                            string action_service = "Running";
-                                            await Task.Run(() => Prod_Async_Power_Shell_Service(server, name_service, action_service));
-                                        }
-                                        ProdStreamWriterEAStrans("Запуск GM_SchedulerSvc осуществлен");
-                                        СheckTransport = 1;
-                                    }
-                                }
-                                else
-                                    ProdStreamWriterEAStrans("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
-                            }
-                            else
-                            {
-                                ProdStreamWriterEAStrans("Служба GMMQ - не работает");
-                                if (server != "")
-                                {
-                                    textBox10.Clear();                    
-                                    string name_service = "GMMQ";
-                                    string action_service = "Running";
-                                    await Task.Run(() => Prod_Async_Power_Shell_Service(server, name_service, action_service));
-                                }
-                                ProdStreamWriterEAStrans("Запуск GMMQ осуществлен");
-                                if (server != "")
-                                {
-                                    await Task.Run(() => Power_Shell_1("get-service -" +
-                                                       "DisplayName \"GM_SchedulerSvc\"" +
-                                                       " -ComputerName " + ip + "" +
-                                                       " | format-table Status -autosize", out result));
-                                    ProdStreamWriterEAStrans("Служба GM_Scheduler - " + result.Replace("\r\n", ""));
-                                    if (result.Replace("\r\n", "") == "Running")
-                                    {
-                                        ProdStreamWriterEAStrans("Службы транспорта работают");
-                                        ProdStreamWriterEAStrans("Транспорт в рабочем состоянии");
-                                        СheckTransport = 1;
-                                    }
-                                    else
-                                    {
-                                        ProdStreamWriterEAStrans("Служба GM_SchedulerSvc - не работает");
-                                        if (server != "")
-                                        {
-                                            textBox11.Clear();
-                                            string name_service = "GM_SchedulerSvc";
-                                            string action_service = "Running";
-                                            await Task.Run(() => Prod_Async_Power_Shell_Service(server, name_service, action_service));
-                                        }
-                                        ProdStreamWriterEAStrans("Запуск GM_SchedulerSvc осуществлен");
-                                        СheckTransport = 1;
-                                    }
-                                }
-                                else
-                                    ProdStreamWriterEAStrans("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
-                            }
-                        }
-                        else
-                            ProdStreamWriterEAStrans("Транспорт в рабочем состоянии");
-                    }
-                    else
-                        ProdStreamWriterEAStrans("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
-                }
-                else
-                {
-                    ProdStreamWriterEAStrans("Время обновления файлов в папках:\nExport, Import на ОПС и In, Out в DAX - более 3 часов\nТранспорт не работает более 3 часов");
-                    if (textBox1.Text != "248000" & textBox1.Text != "249406")
-                    {
-                        string ip = server;
-                        string result = "";
-                        await Task.Run(() => Power_Shell_1("get-service -" +
-                                           "DisplayName \"GMMQ\"" +
-                                           " -ComputerName " + ip + "" +
-                                           " | format-table Status -autosize", out result));
-                        //textBox3.Text = "Служба GMMQ - " + result.Replace("\r\n", "");
-                        ProdStreamWriterEAStrans("Служба GMMQ - " + result.Replace("\r\n", ""));
-                        if (result.Replace("\r\n", "") == "Running")
-                        {
-                            if (server != "")
-                            {
-                                await Task.Run(() => Power_Shell_1("get-service -" +
-                                                   "DisplayName \"GM_SchedulerSvc\"" +
-                                                   " -ComputerName " + ip + "" +
-                                                   " | format-table Status -autosize", out result));
-                                ProdStreamWriterEAStrans("Служба GM_Scheduler - " + result.Replace("\r\n", ""));
-                                if (result.Replace("\r\n", "") == "Running")
-                                {
-                                    ProdStreamWriterEAStrans("Службы транспорта работают");
-                                    ProdStreamWriterEAStrans("Файлы старой реплики удалены");
-                                    DeleteFileReplicaAll();
-                                    СheckTransport = 0;
-                                }
-                                else
-                                {
-                                    ProdStreamWriterEAStrans("Служба GM_SchedulerSvc - не работает");
-                                    if (server != "")
-                                    {
-                                        textBox11.Clear();
-                                        string name_service = "GM_SchedulerSvc";
-                                        string action_service = "Running";
-                                        await Task.Run(() => Prod_Async_Power_Shell_Service(server, name_service, action_service));
-                                    }
-                                    ProdStreamWriterEAStrans("Запуск GM_SchedulerSvc осуществлен");
-                                    ProdStreamWriterEAStrans("Службы транспорта работают");
-                                    ProdStreamWriterEAStrans("Файлы старой реплики удалены");
-                                    DeleteFileReplicaAll();
-                                    СheckTransport = 0;
-                                    //textBox3.Text = "Транспорт не работает";
-                                }
-                            }
-                            else
-                                ProdStreamWriterEAStrans("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
-                        }
-                        else
-                        {
-                            ProdStreamWriterEAStrans("Служба GMMQ - не работает");
-                            if (server != "")
-                            {
-                                textBox10.Clear();
-                                string name_service = "GMMQ";
-                                string action_service = "Running";
-                                await Task.Run(() => Prod_Async_Power_Shell_Service(server, name_service, action_service));
-                            }
-                            ProdStreamWriterEAStrans("Запуск GMMQ осуществлен");
-                            if (server != "")
-                            {
-                                await Task.Run(() => Power_Shell_1("get-service -" +
-                                                   "DisplayName \"GM_SchedulerSvc\"" +
-                                                   " -ComputerName " + ip + "" +
-                                                   " | format-table Status -autosize", out result));
-                                ProdStreamWriterEAStrans("Служба GM_Scheduler - " + result.Replace("\r\n", ""));
-                                if (result.Replace("\r\n", "") == "Running")
-                                {
-                                    ProdStreamWriterEAStrans("Службы транспорта работают");
-                                    ProdStreamWriterEAStrans("Файлы старой реплики удалены");
-                                    DeleteFileReplicaAll();
-                                    СheckTransport = 0;
-                                }
-                                else
-                                {
-                                    ProdStreamWriterEAStrans("Служба GM_SchedulerSvc - не работает");
-                                    if (server != "")
-                                    {
-                                        textBox11.Clear();
-                                        string name_service = "GM_SchedulerSvc";
-                                        string action_service = "Running";
-                                        await Task.Run(() => Prod_Async_Power_Shell_Service(server, name_service, action_service));
-                                    }
-                                    ProdStreamWriterEAStrans("Запуск GM_SchedulerSvc осуществлен");
-                                    ProdStreamWriterEAStrans("Файлы старой реплики удалены");
-                                    DeleteFileReplicaAll();
-                                    СheckTransport = 0;
-                                }
-                            }
-                            else
-                                ProdStreamWriterEAStrans("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
-                        }
-                    }
-                    else
-                    {
-                        ProdStreamWriterEAStrans("Транспорт в рабочем состоянии");
-                        СheckTransport = 1;
-                    }
-                      
-                }
-            }
-            else
-                ProdStreamWriterEAStrans("Поле для ввода номера ОПС - пустое");
-        }
-
-
 
         //Кнопка Обновить
         private void button18_Click(object sender, EventArgs e)
         {
-            Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+            Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database, "Обновить Ip для Служб ЕАС");
             label20.Text = "IP Адрес удленного ПК: " + server;
         }
 
@@ -1794,7 +1313,7 @@ namespace Start_EAS_Trans
                                                      // но дает передать компоненты формы в другой поток 
             try
             {
-                Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+                Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database, " Остановка службы \"GMMQ\"");
                 if (server != "")
                 {
                     textBox10.Clear();
@@ -1804,41 +1323,6 @@ namespace Start_EAS_Trans
                     progressBar2.Value = 40;
                     string action_service = "Stopped";
                     await Task.Run(() => Async_Power_Shell_Service(server, name_service, action_service, progressBar2, textBox10));
-                    //await Task.Run(() => Powershell_service_Force(ip, action_service, name_service, ""));
-                    //    await Task.Run(() => Power_Shell("Get-Service -Computer " + ip + " -Name " + name_service + " | Stop-Service -Force"));
-                    //    //Служба GMMQ останавливается с помощью другой команды т к имеет зависимые службы,
-                    //    //поэтому для нее особы метод создан
-
-                    //    await Task.Run(() => Power_Shell_1("get-service -" +
-                    //                       "DisplayName \"GMMQ\"" +
-                    //                       " -ComputerName " + server + "" +
-                    //                       " | format-table Status -autosize", out result));
-
-                    //    //запрос на состояние службы и потом проверка,
-                    //    //работа с службой GMMQ специально разделена на 2 метода
-                    //    //первый метод Powershell_service_Force - не возвращает после отработки состояние службы, только ее останавливает
-                    //    //второй метод Power_Shell_1 - получает просто состояние службы в переменную, записанную в выходные параметры метода
-                    //    //далее логика работы программы, в зависимости от полученного значения состояния, из метода Power_Shell_1
-
-                    //    textBox10.Text = result.Replace("\r\n", "");
-                    //    if (result == $"\r\n{action_service}\r\n\r\n\r\n")
-                    //    {
-                    //        progressBar2.Value = 100;
-                    //        MessageBox.Show($"Служба \"{name_service}\"\nНа компьютере {ip} - {Action_service_info(action_service)}");
-                    //        progressBar2.Value = 0;
-                    //        textBox10.Text = result.Replace("\r\n", "");
-                    //    }
-                    //    if (result == "Блок еlse")
-                    //    {
-                    //        MessageBox.Show($"Блок else \nСлужба \"{name_service}\"на компьютере {ip} - {Action_service_info(action_service)}");
-                    //    }
-                    //    if (result == "Нет данных")
-                    //    {
-                    //        progressBar2.Value = 0;
-                    //    }
-                    //}
-                    //else
-                    //    MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
                 }
             }
             catch (Exception ex)
@@ -1855,7 +1339,7 @@ namespace Start_EAS_Trans
                                                      // но дает передать компоненты формы в другой поток 
             try
             {
-                Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database);
+                Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database, " Остановка службы \"GM_SchedulerSvc\"");
                 if (server != "")
                 {
                     textBox11.Clear();
@@ -1872,7 +1356,6 @@ namespace Start_EAS_Trans
             }
         }
 
-
         // Запуск "GMMQ" и "GM_SchedulerSvc"
         // Запуск "GMMQ"
         async private void button20_Click(object sender, EventArgs e)
@@ -1884,7 +1367,7 @@ namespace Start_EAS_Trans
             {
                 if (textBox1.Text != "")
                 {
-                    Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database);
+                    Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database, "Запуск \"GMMQ\"");
                     if (server != "")
                     {
                         textBox10.Clear();
@@ -1913,7 +1396,7 @@ namespace Start_EAS_Trans
                 if (textBox1.Text != "")
                 {
                     
-                    Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database);
+                    Name_DataBase_and_Server(textBox1.Text, out string server, out string name_database, "Запуск \"GM_SchedulerSvc\"");
                    
                     if (server != "")
                     {
@@ -1941,7 +1424,7 @@ namespace Start_EAS_Trans
                                                      // но дает передать компоненты формы в другой поток 
             if (textBox1.Text != "")
             {
-                Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database);
+                Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database, "Состояние службы \"GMMQ\"");
                 if (server != "")
                 {
                     textBox10.Clear();
@@ -1971,7 +1454,7 @@ namespace Start_EAS_Trans
                                                      // но дает передать компоненты формы в другой поток 
             if (textBox1.Text != "")
             {
-                Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database);
+                Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database, "Состояние службы \"GM_SchedulerSvc\"");
                 if (server != "")
                 {
                     textBox11.Clear();
@@ -2003,7 +1486,7 @@ namespace Start_EAS_Trans
             {
                 if (textBox1.Text != "")
                 {
-                    Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database);
+                    Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database, " Перезапуск \"GMMQ\"");
                     if (server != "")
                     {
                         textBox10.Clear();
@@ -2033,7 +1516,7 @@ namespace Start_EAS_Trans
             {
                 if (textBox1.Text != "")
                 {
-                    Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database);
+                    Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database, "Перезапуск \"GM_SchedulerSvc\"");
                     if (server != "")
                     {
                         textBox11.Clear();
@@ -2054,7 +1537,7 @@ namespace Start_EAS_Trans
 
         //Метод, запускающий командную строку с определенный командой,
         //записанной в параметр метода и выводящиЙ в выходной параметр результат выполнения команды
-        public void Power_Shell_1(string command_power_shell, out string result)
+        public static void Power_Shell_1(string command_power_shell, out string result)
         {
             try
             {
@@ -2078,7 +1561,7 @@ namespace Start_EAS_Trans
 
         //Метод представляющий процесс, запускающий power_shell с командами, передаваемыми через параметр string action_power_shell
         //Метод ожидает своей отработки, т е пока поток не отработает, основная программа не будет выполнять код, ниже которого вызван этот метод
-        public void Power_Shell(string action_power_shell)
+        public static void Power_Shell(string action_power_shell)
         {
             Process.Start(new ProcessStartInfo
             {
@@ -2092,7 +1575,7 @@ namespace Start_EAS_Trans
 
         //Метод представляющий процесс, запускающий power_shell с фиксированной командой, заточенной под остановку службы на удаленном пк в вашей сети,
         //Метод ожидает своей отработки .WaitForExit(); 
-        public void Powershell_service_Force(string ip, string name_service, string action_more)
+        public static void Powershell_service_Force(string ip, string name_service, string action_more)
         {
             Process.Start(new ProcessStartInfo
             {
@@ -2164,6 +1647,13 @@ namespace Start_EAS_Trans
                                 progressBar.Value = 0;
                                 textBox.Text = result.Replace("\r\n", "");
                             }
+                            else
+                            {
+                                progressBar.Value = 100;
+                                MessageBox.Show($"Служба \"{name_service}\"\nНа компьютере {ip} - НЕ Перезапустилась, Ошибка запуска службы");
+                                progressBar.Value = 0;
+                                textBox.Text = "Ошибка";
+                            }                               
                         }
                     }
                 }
@@ -2174,61 +1664,7 @@ namespace Start_EAS_Trans
             }
             else
             MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
-        }
-        async private void Prod_Async_Power_Shell_Service(string ip, string name_service, string action_service)
-        {
-            string service_prod = "[Service] - ";
-            if (textBox1.Text != "")
-            {
-                try
-                {
-                    if (action_service == "Running")
-                    {
-                        string action_power_shell = $"set-service {name_service} -ComputerName {ip} -Status {action_service} -PassThru | format-table Status -autosize";
-                        Power_Shell(action_power_shell);
-                        Thread.Sleep(500);
-                        Powershell_service_checked(ip, name_service, out string check_action);
-                        Prod_Check_Service(check_action, ip, name_service, action_service, out string result);
-                    }
-                    if (action_service == "Stopped")
-                    {
-                        string action_more = "";
-                        Powershell_service_Force(ip, name_service, action_more);
-                        Thread.Sleep(500);
-                        Powershell_service_checked(ip, name_service, out string check_action);
-                        Prod_Check_Service(check_action, ip, name_service, action_service, out string result);
-                    }
-                    if (action_service == "Restart")
-                    {
-                        action_service = "R-Stopped";
-                        string action_more = "";
-                        Powershell_service_Force(ip, name_service, action_more);
-                        string check_action = "";
-                        string check_action_1 = "";
-                        await Task.Run(() => Powershell_service_checked(ip, name_service, out check_action));
-                        Prod_Check_Service(check_action, ip, name_service, action_service, out string result_1);
-                        if (result_1 == "\r\nStopped\r\n\r\n\r\n")
-                        {
-                            action_service = "R-Running";
-                            string action_power_shell = $"set-service {name_service} -ComputerName {ip} -Status {action_service.Substring(2)} -PassThru | format-table Status -autosize";
-                            Power_Shell(action_power_shell);
-                            await Task.Run(() => Powershell_service_checked(ip, name_service, out check_action_1));
-                            Prod_Check_Service(check_action_1, ip, name_service, action_service, out string result);
-                            if (result == "\r\nRunning\r\n\r\n\r\n")
-                            {
-                                ProdStreamWriterEAStrans(service_prod + $"Служба \"{name_service}\"\nНа компьютере {ip} - Перезапущена");
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ProdStreamWriterEAStrans(service_prod + $"Ошибка из метода Async_Power_Shell_Service \nПк выключен или нет интернета\nИли запрашиваемая служба отсутствует на данном ПК\n\n\nОписание:\n\n{ex}");
-                }
-            }
-            else
-                ProdStreamWriterEAStrans($"\nПоле для ввода номера ОПС - пустое");
-        }
+        }     
 
         public void Check_Service(string check_action, string ip, string name_service, string action_service, ProgressBar progressBar, TextBox textBox, out string result)
         {
@@ -2291,62 +1727,7 @@ namespace Start_EAS_Trans
                     progressBar.Value = 0;
                 }
             }
-        }
-        public void Prod_Check_Service(string check_action, string ip, string name_service, string action_service, out string result)
-        {
-            string service_prod = "[Service] - ";
-            if (action_service != "R-Stopped" | action_service != "R-Running")
-            {
-                result = check_action;
-                if (check_action == $"\r\n{action_service}\r\n\r\n\r\n")
-                {
-                    result = check_action;
-                    ProdStreamWriterEAStrans(service_prod + $"Служба \"{name_service}\"\nНа компьютере {ip} - {Action_service_info(action_service)}");
-                    ProdStreamWriterEAStrans(service_prod + check_action.Replace("\r\n", ""));
-                }
-                if (check_action == "Блок еlse")
-                {
-                    result = check_action;
-                    ProdStreamWriterEAStrans(service_prod + $"Блок else \nСлужба \"{name_service}\"на компьютере {ip} - {Action_service_info(action_service)}");
-                }
-                if (check_action == "Нет данных")
-                {
-                    result = check_action;
-                    ProdStreamWriterEAStrans(service_prod + check_action);
-                }
-                if (check_action == $"\r\n{Inversion_Action_service(action_service)}\r\n\r\n\r\n")
-                {
-                    result = check_action;
-                    ProdStreamWriterEAStrans(service_prod + $"Служба \"{name_service}\"\nНа компьютере {ip} - {Action_service_info(action_service + "-Error")}");
-                    ProdStreamWriterEAStrans(service_prod + Inversion_Action_service(action_service));
-                }
-            }
-            else
-            {
-                result = "";
-                if (check_action == $"\r\nStopped\r\n\r\n\r\n")
-                {
-                    result = check_action;
-                    ProdStreamWriterEAStrans(service_prod + check_action.Replace("\r\n", ""));
-                }
-                if (check_action == "Блок еlse")
-                {
-                    result = check_action;
-                    ProdStreamWriterEAStrans(service_prod + $"Блок else \nСлужба \"{name_service}\"на компьютере {ip} - {Action_service_info(action_service)}");
-                }
-                if (check_action == "Нет данных")
-                {
-                    result = check_action;
-                    ProdStreamWriterEAStrans(service_prod + check_action);
-                }
-                if (check_action == $"\r\n{Inversion_Action_service(action_service)}\r\n\r\n\r\n")
-                {
-                    result = check_action;
-                    ProdStreamWriterEAStrans(service_prod + $"Служба \"{name_service}\"\nНа компьютере {ip} - {Action_service_info(action_service + "-Error")}");
-                    ProdStreamWriterEAStrans(service_prod + Inversion_Action_service(action_service));
-                }
-            }
-        }
+        }    
         public string Inversion_Action_service(string action_service)
         {
             if (action_service == "Stopped")
@@ -2443,7 +1824,7 @@ namespace Start_EAS_Trans
         {
             if (textBox1.Text != "")
             {
-                    Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database);
+                    Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database, "Дата обновления папок");
                     if (server != "")
                     {
                         string par = @"\\" + server + path;
@@ -2470,46 +1851,34 @@ namespace Start_EAS_Trans
         private void timer1_Tick(object sender, EventArgs e)
         {
             this.label23.Text = "Время выполнения запроса: " + (++timerCounter).ToString() + " сек.";
-
-
-            //if (progressBar1.Value < 98)
-            //{
-            //    this.progressBar1.Increment(1);
-            //}
-            //else
-            //    this.timer1.Stop();
-
-
-            //else
-            //    MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
         }
 
-        async private void label22_Click(object sender, EventArgs e)
-        {
-            CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
-                                                     // отменяет отслеживание ошибок,
-                                                     // но дает передать компоненты формы в другой поток 
-            Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database);
-            string path = @"\\" + server + @"\c$\GMMQ\Export";
-            string[] files = Directory.GetFiles(path);
-            string[] mass_check = new string[1];
-            if (files.Length > 0)
-            {
-                DateTime dateTime = new DateTime();
-                dateTime = Directory.GetLastAccessTime(path);
-                if (dateTime == DateTime.Now)
-                {
-                    mass_check = new string[files.Length];
-                    for (int i = 0; i < files.Length; i++)
-                    {
-                        label22.Text = files[i];
-                        await Task.Delay(200);
-                    }
-                }
-            }
-            else
-                await Task.Delay(500);
-        }
+        //async private void label22_Click(object sender, EventArgs e)
+        //{
+        //    CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
+        //                                             // отменяет отслеживание ошибок,
+        //                                             // но дает передать компоненты формы в другой поток 
+        //    Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database);
+        //    string path = @"\\" + server + @"\c$\GMMQ\Export";
+        //    string[] files = Directory.GetFiles(path);
+        //    string[] mass_check = new string[1];
+        //    if (files.Length > 0)
+        //    {
+        //        DateTime dateTime = new DateTime();
+        //        dateTime = Directory.GetLastAccessTime(path);
+        //        if (dateTime == DateTime.Now)
+        //        {
+        //            mass_check = new string[files.Length];
+        //            for (int i = 0; i < files.Length; i++)
+        //            {
+        //                label22.Text = files[i];
+        //                await Task.Delay(200);
+        //            }
+        //        }
+        //    }
+        //    else
+        //        await Task.Delay(500);
+        //}
 
 
         //Кнопка "Проводник"
@@ -2519,7 +1888,15 @@ namespace Start_EAS_Trans
             {
                 if (textBox12.Text != "")
                 {
-                    Process.Start($"{textBox12.Text}");
+                    try
+                    {
+                        Process.Start($"{textBox12.Text}");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка {ex}");
+                    }
+                    
                 }
                 else
                     MessageBox.Show("Поле \"Путь\" - пустое.\nНажмите на кнопку \"Посмотреть\"\nВ разделе \"Файлы на ОПС\" или \"Файлы в DAX\"\nТогда поле \"Путь\" заполниться и \"проводник\" по данному откроется  ");
@@ -2528,37 +1905,18 @@ namespace Start_EAS_Trans
                 MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
         }
 
-
-    
+  
         private void button23_Click_1(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
             {
-                Name_DataBase_and_Server(textBox1.Text,  out string server1, out string name_database1);
+                Name_DataBase_and_Server(textBox1.Text,  out string server1, out string name_database1, "Запуск транспорта скриптом Import");
                 string file = "gmmq.packege.end";
                 string file_2 = "meta.xml";
                 string path = @"\\" + server1 + @"\c$\GMMQ\Import\" + file;
                 string path_2 = @"\\" + server1 + @"\c$\GMMQ\Import\" + file_2;
                 FileInfo fileInf = new FileInfo(path);
                 FileInfo fileInf_2 = new FileInfo(path_2);
-                //while (fileInf.Exists | fileInf_2.Exists)
-                //{
-                //    progressBar1.Value = 0;
-                //    textBox2.Clear();
-                //    textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
-                //    timerCounter = 0;
-                //    label22.Text = "Количество файлов реплики: ";
-                //}
-                //if (fileInf.Exists | fileInf_2.Exists)
-                //{
-                //    progressBar1.Value = 0;
-                //    textBox2.Clear();
-                //    textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
-                //    timerCounter = 0;
-                //    label22.Text = "Количество файлов реплики: ";
-                //}
-                //else
-                //{
                 if (fileInf.Exists | fileInf_2.Exists)
                 {
                     try
@@ -2579,49 +1937,13 @@ namespace Start_EAS_Trans
                             Thread thread = new Thread(
                                 () =>
                                 {
-                                    //Action action = () =>
-                                    //{
-                                    //int action = 0;
                                     SqlCommand command = new SqlCommand();
-                                    //int action = 0;
-                                    Start_Transport_Import(progressBar1, command);
-                                    //View_files_Import(progressBar1, command, action);
-                                    //};
-                                    //if (InvokeRequired)
-                                    //    Invoke(action);
-                                    //else
-                                    //    action(); /*реализация через делегат action*/
-
-                                    // Invoke((MethodInvoker)(() =>
-                                    //{
-                                    //    Rebut_MPK_Service(progressBar10);
-                                    //}));
-
+                                    Start_Transport_Import(progressBar1, command, server1, name_database1);
                                 });
                             thread.Start();
                             CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
                                                                      // отменяет отслеживание ошибок,
                                                                      // но дает передать компоненты формы в другой поток 
-                                                                     //Name_DataBase_and_Server(textBox1.Text, out string server1, out string name_database1);
-                                                                     //string path1 = @"\\" + server1 + @"\c$\GMMQ\Export";
-                                                                     //string[] files = Directory.GetFiles(path1);
-                                                                     //while (files.Length != 0)
-                                                                     //{
-                                                                     //    DateTime dateTime = new DateTime();
-                                                                     //    dateTime = Directory.GetLastWriteTime(path1); //перезаписывает переменную, для обновления даты изменения папки
-                                                                     //    if (dateTime.AddSeconds(3) > DateTime.Now)
-                                                                     //    {
-                                                                     //        string[] files_2 = Directory.GetFiles(path1);//перезаписывает переменную, для обновления количества файлов в папке                   
-                                                                     //        for (int i = 0; i < files_2.Length; i++)
-                                                                     //        {
-                                                                     //            if (files_2[i] == "meta.xml" | files_2[i] == "gmmq.packege.end")
-                                                                     //            {
-                                                                     //                textBox9.Text = textBox1.Text + " - толкнул скриптом +";
-                                                                     //                thread.Abort();
-                                                                     //            }
-                                                                     //        }
-                                                                     //    }
-                                                                     //}
                         }
                         if (result == DialogResult.No)
                         {
@@ -2636,7 +1958,6 @@ namespace Start_EAS_Trans
                         textBox2.Text = textBox1.Text + " - ошибка";
                     }
                     textBox1.Focus();
-                    //}
                 }
                 else
                 {
@@ -2646,7 +1967,7 @@ namespace Start_EAS_Trans
             else
                 MessageBox.Show("Поле для ввода номера ОПС - пустое");
         }
-        async public void Start_Transport_Import(ProgressBar progressBar, SqlCommand command)
+        async public void Start_Transport_Import(ProgressBar progressBar, SqlCommand command, string server, string name_database)
         {
             int action = 0;
             try
@@ -2655,9 +1976,6 @@ namespace Start_EAS_Trans
                 {
 
                     textBox2.Clear();
-                    string server = "";
-                    string name_database = "";
-                    Name_DataBase_and_Server(textBox1.Text,  out server, out name_database);
                     string connectionString = $"Server={server};Database={name_database};Persist Security Info=False;User ID=sa;Password=QweAsd123;";
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
@@ -2696,175 +2014,6 @@ namespace Start_EAS_Trans
                 textBox2.Text = textBox1.Text + " - ошибка";
             }
         }
-
-        //Метод, следящий за появлением новых файлов в папке отделения, по фиксированному пути 
-        //@"\\" + server + @"\c$\GMMQ\Export"
-        async public void View_files_Import(ProgressBar progressBar, SqlCommand command, int action)
-        {
-            try
-            {
-                CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
-                                                         // отменяет отслеживание ошибок,
-                                                         // но дает передать компоненты формы в другой поток 
-                Name_DataBase_and_Server(textBox1.Text,  out string server, out string name_database);
-                string path = @"\\" + server + @"\c$\GMMQ\Import";
-                string[] files = Directory.GetFiles(path);
-                string[] files1 = Directory.GetFiles(path);
-                string[] catalog = Directory.GetDirectories(path);
-                int count = 1;
-                int u = 0;
-                textBox12.Text = path;
-                string[] mass_2 = new string[count];
-                if (action != 1)
-                {
-                    
-                    while (files.Length != 0)
-                    {
-                        if (action != 1)
-                        {
-                            count++;
-                            string[] files_1 = Directory.GetFiles(path);
-                            int file3 = files.Length;
-                            DateTime dateTime = new DateTime();
-                            dateTime = Directory.GetLastWriteTime(path); //перезаписывает переменную, для обновления даты изменения папки
-                            FileInfo file = new FileInfo(path);
-                            if (dateTime.AddSeconds(3) > DateTime.Now)
-                            {
-                                catalog = Directory.GetDirectories(path);
-                                if (catalog.Length == 0)
-                                {
-                                    //string[] files_2 = Directory.GetFiles(path);//перезаписывает переменную, для обновления количества файлов в папке
-                                    string[] mass = new string[files_1.Length];
-                                    if (u == 0)
-                                    {
-                                        u++;
-                                        mass = files_1;
-                                        listBox1.Items.Clear();
-                                        //listBox1.BeginUpdate();
-                                        for (int i = 0; i < files_1.Length; i++)
-                                        {
-                                            //if (files_1[i] != "meta.xml" | files_1[i] != "gmmq.packege.end")
-                                            //{
-                                                label22.Text = "Количество файлов реплики: " + files_1.Length + "\nПо пути: " + files_1[i];
-                                                listBox1.Items.Add(files_1[i].Substring(18 + server.Length));
-                                                if (progressBar.Value >= 0 & progressBar.Value < 99)
-                                                {
-                                                    double p = files_1.Length/200;
-                                                    double b = (1 - p)*100 ;
-                                                    if (b < 99)
-                                                    {
-                                                        progressBar.Value = Convert.ToInt32(b);
-                                                    }
-                                            }
-                                        //}
-                                            //else
-                                            //{
-                                            //    textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
-                                            //    action = 1;
-                                            //    break;
-                                            //}
-                                        }
-                                        //listBox1.EndUpdate();
-                                    }
-                                    if (u == 1)
-                                    {
-                                        listBox1.BeginUpdate();
-                                        listBox1.Items.Clear();
-                                        for (int i = 0; i < files_1.Length; i++)
-                                        {
-                                            //if (files_1[i] != "meta.xml" | files_1[i] != "gmmq.packege.end")
-                                            //{
-                                                listBox1.Items.Add(files_1[i].Substring(18 + server.Length));
-                                            //}
-                                            //else
-                                            //{
-                                            //    textBox9.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
-                                            //    action = 1;
-                                            //    break;
-                                            //}
-                                        }
-                                        listBox1.EndUpdate();
-                                        for (int i = 0; i < files_1.Length; i++)
-                                        {
-                                            if (progressBar.Value >= 0 & progressBar.Value < 99)
-                                            {
-                                                double p = files_1.Length;
-                                                double b = p / 1.8;
-                                                if (b < 99)
-                                                {
-                                                    progressBar.Value = Convert.ToInt32(b);
-                                                }
-                                            }
-                                            //if (mass[i] != files_1[i])
-                                            //{
-                                                mass = Addition_Mass(mass, files_1);
-                                                label22.Text = "Количество файлов реплики: " + files_1.Length + "\nПо пути: " + files_1[i];
-                                            //}
-                                        }
-                                    }
-                                    Update_Files_and_Catolog_lenght(path);
-                                }
-                                else
-                                    await Task.Delay(40000000);
-                            }
-                            await Task.Delay(400);
-                        }
-                        else
-                        {
-                            progressBar.Value = 0;
-                            this.timer.Stop();
-                            textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
-                            break;
-                        }
-                    }
-                    if (files.Length == 0)
-                    {
-                        //catalog = Directory.GetDirectories(path);
-                        //if (catalog.Length == 0)
-                        //{
-                            //files = Directory.GetFiles(path);
-                            //for (int i = 0; i < files.Length; i++)
-                            //{
-                            //    if (files[i] != "meta.xml" | files[i] != "gmmq.packege.end")
-
-                            //    {
-                                progressBar.Value = 0;
-                                this.timer.Stop();
-                                textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
-                                //files = Directory.GetFiles(path); //перезаписывает переменную, для обновления количества файлов в папке
-                                    label22.Text = "Количество файлов реплики: 0";
-                            //    }
-                            //    else
-                            //    {
-                            //        await Task.Delay(200000000);
-                            //        action = 1;
-                            //        break;
-                            //    }
-                            //}
-                        //    await Task.Delay(200);
-                        //}
-                        //else
-                        //{
-                        //    action = 1;
-                        //    await Task.Delay(200000000);
-                        //}
-                    }
-                }
-                else
-                {
-                    progressBar.Value = 0;
-                    this.timer.Stop();
-                    textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaImport 0 ";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"\nОшибка: \n{ex}");
-                progressBar.Value = 0;
-                this.timer.Stop();
-                textBox2.Text = textBox1.Text + " - ошибка";
-            }
-        }
         private void Form1_Closing(Object sender, CancelEventArgs e)
         {
             if (!isDataSaved)
@@ -2878,7 +2027,7 @@ namespace Start_EAS_Trans
                 close--;
             }
         }
-        public void AddStramwriter()
+        public void AddStreamwriter()
         {
             if (textBox1.Text != "" & streamwriteEAStrans == 1)
             {
@@ -2913,38 +2062,33 @@ namespace Start_EAS_Trans
         }
         private void button29_Click(object sender, EventArgs e)
         {
-             AddStramwriter();
+             AddStreamwriter();
         }
-        private void button30_Click(object sender, EventArgs e)
+        private void Smart_explorerForm4()
         {
-            string number_ops = textBox1.Text;  
-            var form = new Smart_explorer.Form1(number_ops);
-            form.ShowDialog();
+            string number_ops = textBox1.Text;
+            var form = new Smart_explorer.Form4(number_ops);
+            form.ShowDialog();  
         }
+         private void button30_Click(object sender, EventArgs e)
+        {         
+            Thread th = new Thread(Smart_explorerForm4);
+            th.SetApartmentState(ApartmentState.STA);
+            th.Start();
+            this.Activate();
 
-
+            //await Task.Delay(100);
+            //string number_ops = textBox1.Text;  
+            //var form = new Smart_explorer.Form4(number_ops);
+            //form.ShowDialog();  //если await то интерфейс не зарегистрирован
+        }
 
 
         //Тестовый контур 
         async private void button23_Click(object sender, EventArgs e)
         {
-            //string[] mass_1 = new string[5] { @"10.94\QWER1", @"10.94\QWER2", @"10.94\QWER3", @"10.94\QWER4", @"10.94\QWER5" };
-            //string[] mass_2 = new string[7] { @"10.94\QWER1", @"10.94\QWER2", @"10.94\QWER3",@"10.94\QWER4",@"10.94\QWER5", @"10.94\QWER6" , @"10.94\QWER7" };
-
-            //var result = mass_2.Except(mass_1);
-
-            //foreach (var item in result)
-            //{             
-            //    label23.Text = item;
-            //    await Task.Delay(700);
-            //}
-
             this.timer.Start();
-
             await Task.Run(() => View_files_Test(progressBar1));
-
-            //string path = @"D:\Новая папка (2)";
-            //Delete_File(path);
         }
 
         //Тестовая версия метода
@@ -2971,55 +2115,13 @@ namespace Start_EAS_Trans
                 while (files.Length != 0)
                 {
                     count++;
-                    //mass_2 = new string[count];
                     string[] files_1 = Directory.GetFiles(path);
                     DateTime dateTime = new DateTime();
                     dateTime = Directory.GetLastWriteTime(path);
-                    //int file3 = files.Length;
-                    //DateTime dateTime = new DateTime();
-                    //dateTime = Directory.Get; //перезаписывает переменную, для обновления даты изменения папки
-                    //FileInfo file = new FileInfo(path);
                     if (dateTime.AddSeconds(2) > DateTime.Now)
-                    {
-                        //    string[] files_2 = Directory.GetFiles(path);//перезаписывает переменную, для обновления количества файлов в папке
-                        //                                                //string[] mass_2 = files_2;
-                        //                                                //Checked(files_2, count, mass_2, out string[] mass_3);
+                    {                                          //Checked(files_2, count, mass_2, out string[] mass_3);
                         listBox1.BeginUpdate();
                         listBox1.Items.Clear();
-
-                        //if (files_2.Length > file3)
-                        //{
-                        //int raznich = files_2.Length - files.Length;
-
-                        //string[] mass_1 = new string[5] { @"10.94\QWER1", @"10.94\QWER2", @"10.94\QWER3", @"10.94\QWER4", @"10.94\QWER5" };
-                        //string[] mass_2 = new string[7] { @"10.94\QWER1", @"10.94\QWER2", @"10.94\QWER3", @"10.94\QWER4", @"10.94\QWER5", @"10.94\QWER6", @"10.94\QWER7" };
-
-                        //var result = files_2.Except(files_1);
-
-                        //foreach (var item in result)
-                        //{
-                        //label23.Text = item;
-                        //await Task.Delay(700);
-
-
-                        //foreach (var item in result)
-                        //{
-                        //    label22.Text = "Количество файлов реплики: " + files_2.Length + "\nПо пути: " + item;
-                        //    listBox1.Items.Add(item);
-                        //    //.Substring(18 + server.Length)
-                        //    if (progressBar.Value >= 0 & progressBar.Value < 99)
-                        //    {
-                        //        double p = files.Length;
-                        //        double b = p / 1.8;
-                        //        if (b < 99)
-                        //        {
-                        //            progressBar.Value = Convert.ToInt32(b);
-                        //        }
-                        //    }
-                        //}
-
-
-
                         for (int i = 0; i < files_1.Length; i++)
                         {
                             label22.Text = "Количество файлов реплики: " + dateTime + "\nПо пути: " + files_1[i];
@@ -3035,36 +2137,6 @@ namespace Start_EAS_Trans
                             }
                         }
                         listBox1.EndUpdate();
-
-                        //for (int i = 0; i < files_2.Length; i++)
-                        //{
-                        //    if(count == 1)
-                        //    {
-                        //        mass_2[count - 1] = files_2[files_2.Length - 1];
-                        //    }
-                        //    if (mass_2[count - 1] != files_2[files_2.Length - 1])
-                        //    {
-                        //        label22.Text = "Количество файлов реплики: " + files_2.Length + "\nПо пути: " + files_2[files_2.Length - 1];
-                        //        mass_2[count - 1] = files_2[files_2.Length - 1];
-                        //        listBox1.Items.Add(files_2[i]);
-                        //        //.Substring(18 + server.Length)
-                        //        if (progressBar.Value >= 0 & progressBar.Value < 99)
-                        //        {
-                        //            double p = files.Length;
-                        //            double b = p / 1.8;
-                        //            if (b < 99)
-                        //            {
-                        //                progressBar.Value = Convert.ToInt32(b);
-                        //            }
-                        //        }
-                        //    }
-                        //}
-
-
-
-                        //}
-                        //}
-                        //}
                         label11.Text = files_1.Length.ToString();
                         string[] catalog = Directory.GetDirectories(path);
                         label15.Text = catalog.Length.ToString();
@@ -3151,5 +2223,70 @@ namespace Start_EAS_Trans
             else
                 MessageBox.Show($"\nПоле для ввода номера ОПС - пустое");
         }
+
+        private void button43_Click(object sender, EventArgs e)
+        {
+            listBox2.Items.Clear();
+            label25.Text = "Файлов:";
+            label26.Text = "Папок:";
+            label27.Text = "Элементов:";
+        }
+
+        private void button44_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "")
+            {
+                    try
+                    {
+                        Process.Start(@"\\" + textBox8.Text + @"\c$\Program Files (x86)\Microsoft Dynamics AX\60\PosServices\GMMQ\GMMQ.Client.Service.exe.config");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка {ex}");
+                    }
+            }
+            else
+                MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
+        }
+
+        private void button45_Click(object sender, EventArgs e)
+        {
+            Smart_explorer.Form4.ProcessStart(@"D:\GMMQ.Client.Service\GMMQ.Client.Service.exe.config");
+        }
+
+        //Автоматический режим
+
+        //public void AutoStartExport(string ops, string server1)
+        //{
+        //    action = 0;
+        //    Automodul = 1;
+        //    if (server1 != "")
+        //    {
+        //        string file = "gmmq.packege.end";
+        //        string file_2 = "meta.xml";
+        //        string path = @"\\" + server1 + @"\c$\GMMQ\Export\" + file;
+        //        string path_2 = @"\\" + server1 + @"\c$\GMMQ\Export\" + file_2;
+        //        FileInfo fileInf = new FileInfo(path);
+        //        FileInfo fileInf_2 = new FileInfo(path_2);
+        //        if (fileInf.Exists | fileInf_2.Exists)
+        //        {
+        //            string text = $"{ops} - толкнул транспорт";
+        //            Methods.ProdStreamWriterEAStrans(text, ops, ProdwritePath, listBox2);
+        //        }
+        //        else
+        //        {
+        //            action = 0;
+        //            Thread thread = new Thread(
+        //                () =>
+        //                {
+        //                    SqlCommand command = new SqlCommand();
+        //                    Prod_Start_Transport(command, ops, writePath);
+        //                });
+        //            thread.Start();
+        //            CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
+        //        }
+        //    }
+        //}
+
     }     
 }

@@ -32,6 +32,7 @@ namespace Start_EAS_Trans
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -98,7 +99,6 @@ namespace Start_EAS_Trans
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.button24 = new System.Windows.Forms.Button();
             this.button23 = new System.Windows.Forms.Button();
-            this.listBox2 = new System.Windows.Forms.ListBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
@@ -119,6 +119,9 @@ namespace Start_EAS_Trans
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.button42 = new System.Windows.Forms.Button();
+            this.button43 = new System.Windows.Forms.Button();
+            this.button44 = new System.Windows.Forms.Button();
+            this.button45 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -132,6 +135,14 @@ namespace Start_EAS_Trans
             this.button1.Text = "Скрипт на Экспорт";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(21, 308);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(224, 225);
+            this.listBox2.TabIndex = 11;
             // 
             // label1
             // 
@@ -197,7 +208,7 @@ namespace Start_EAS_Trans
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(250, 104);
+            this.label5.Location = new System.Drawing.Point(250, 102);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(122, 19);
             this.label5.TabIndex = 14;
@@ -208,7 +219,7 @@ namespace Start_EAS_Trans
             this.button2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button2.Location = new System.Drawing.Point(254, 24);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(99, 30);
+            this.button2.Size = new System.Drawing.Size(99, 29);
             this.button2.TabIndex = 15;
             this.button2.Text = "Посмотреть";
             this.button2.UseVisualStyleBackColor = true;
@@ -217,9 +228,9 @@ namespace Start_EAS_Trans
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(254, 124);
+            this.button3.Location = new System.Drawing.Point(254, 122);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(99, 30);
+            this.button3.Size = new System.Drawing.Size(99, 29);
             this.button3.TabIndex = 16;
             this.button3.Text = "Посмотреть";
             this.button3.UseVisualStyleBackColor = true;
@@ -228,9 +239,9 @@ namespace Start_EAS_Trans
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(254, 74);
+            this.button4.Location = new System.Drawing.Point(254, 73);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(99, 30);
+            this.button4.Size = new System.Drawing.Size(99, 29);
             this.button4.TabIndex = 18;
             this.button4.Text = "Посмотреть";
             this.button4.UseVisualStyleBackColor = true;
@@ -240,7 +251,7 @@ namespace Start_EAS_Trans
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label6.Location = new System.Drawing.Point(250, 54);
+            this.label6.Location = new System.Drawing.Point(250, 53);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(160, 19);
             this.label6.TabIndex = 17;
@@ -249,9 +260,9 @@ namespace Start_EAS_Trans
             // button5
             // 
             this.button5.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(254, 174);
+            this.button5.Location = new System.Drawing.Point(254, 170);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(99, 30);
+            this.button5.Size = new System.Drawing.Size(99, 29);
             this.button5.TabIndex = 20;
             this.button5.Text = "Посмотреть";
             this.button5.UseVisualStyleBackColor = true;
@@ -261,7 +272,7 @@ namespace Start_EAS_Trans
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label7.Location = new System.Drawing.Point(249, 154);
+            this.label7.Location = new System.Drawing.Point(249, 151);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(133, 19);
             this.label7.TabIndex = 19;
@@ -463,9 +474,9 @@ namespace Start_EAS_Trans
             // button13
             // 
             this.button13.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button13.Location = new System.Drawing.Point(353, 174);
+            this.button13.Location = new System.Drawing.Point(353, 170);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(99, 30);
+            this.button13.Size = new System.Drawing.Size(99, 29);
             this.button13.TabIndex = 41;
             this.button13.Text = "Удалить";
             this.button13.UseVisualStyleBackColor = true;
@@ -473,9 +484,9 @@ namespace Start_EAS_Trans
             // button14
             // 
             this.button14.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button14.Location = new System.Drawing.Point(353, 124);
+            this.button14.Location = new System.Drawing.Point(353, 122);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(99, 30);
+            this.button14.Size = new System.Drawing.Size(99, 29);
             this.button14.TabIndex = 42;
             this.button14.Text = "Удалить";
             this.button14.UseVisualStyleBackColor = true;
@@ -483,9 +494,9 @@ namespace Start_EAS_Trans
             // button15
             // 
             this.button15.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button15.Location = new System.Drawing.Point(353, 74);
+            this.button15.Location = new System.Drawing.Point(353, 73);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(99, 30);
+            this.button15.Size = new System.Drawing.Size(99, 29);
             this.button15.TabIndex = 43;
             this.button15.Text = "Удалить";
             this.button15.UseVisualStyleBackColor = true;
@@ -495,7 +506,7 @@ namespace Start_EAS_Trans
             this.button16.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button16.Location = new System.Drawing.Point(353, 24);
             this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(99, 30);
+            this.button16.Size = new System.Drawing.Size(99, 29);
             this.button16.TabIndex = 44;
             this.button16.Text = "Удалить";
             this.button16.UseVisualStyleBackColor = true;
@@ -722,7 +733,6 @@ namespace Start_EAS_Trans
             this.label22.Size = new System.Drawing.Size(158, 13);
             this.label22.TabIndex = 71;
             this.label22.Text = "Количество файлов реплики: ";
-            this.label22.Click += new System.EventHandler(this.label22_Click);
             // 
             // label23
             // 
@@ -770,14 +780,6 @@ namespace Start_EAS_Trans
             this.button23.UseVisualStyleBackColor = true;
             this.button23.Click += new System.EventHandler(this.button23_Click_1);
             // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(23, 307);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(225, 225);
-            this.listBox2.TabIndex = 78;
-            // 
             // label25
             // 
             this.label25.AutoSize = true;
@@ -808,7 +810,7 @@ namespace Start_EAS_Trans
             // button29
             // 
             this.button29.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button29.Location = new System.Drawing.Point(253, 353);
+            this.button29.Location = new System.Drawing.Point(253, 361);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(198, 29);
             this.button29.TabIndex = 100;
@@ -838,7 +840,7 @@ namespace Start_EAS_Trans
             // button31
             // 
             this.button31.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button31.Location = new System.Drawing.Point(253, 381);
+            this.button31.Location = new System.Drawing.Point(253, 389);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(198, 29);
             this.button31.TabIndex = 102;
@@ -987,12 +989,49 @@ namespace Start_EAS_Trans
             this.button42.UseVisualStyleBackColor = true;
             this.button42.Click += new System.EventHandler(this.button42_Click);
             // 
+            // button43
+            // 
+            this.button43.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button43.Location = new System.Drawing.Point(172, 509);
+            this.button43.Name = "button43";
+            this.button43.Size = new System.Drawing.Size(72, 23);
+            this.button43.TabIndex = 116;
+            this.button43.Text = "Очистить";
+            this.button43.UseVisualStyleBackColor = true;
+            this.button43.Click += new System.EventHandler(this.button43_Click);
+            // 
+            // button44
+            // 
+            this.button44.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button44.Location = new System.Drawing.Point(254, 254);
+            this.button44.Name = "button44";
+            this.button44.Size = new System.Drawing.Size(99, 27);
+            this.button44.TabIndex = 117;
+            this.button44.Text = "Gmmq.Client";
+            this.button44.UseVisualStyleBackColor = true;
+            this.button44.Click += new System.EventHandler(this.button44_Click);
+            // 
+            // button45
+            // 
+            this.button45.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button45.Location = new System.Drawing.Point(353, 254);
+            this.button45.Name = "button45";
+            this.button45.Size = new System.Drawing.Size(99, 27);
+            this.button45.TabIndex = 118;
+            this.button45.Text = "ExampleGM";
+            this.button45.UseVisualStyleBackColor = true;
+            this.button45.Click += new System.EventHandler(this.button45_Click);
+            // 
             // Form1
             // 
             this.AcceptButton = this.button11;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1118, 535);
+            this.Controls.Add(this.button45);
+            this.Controls.Add(this.button44);
+            this.Controls.Add(this.button43);
+            this.Controls.Add(this.listBox2);
             this.Controls.Add(this.button42);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.label28);
@@ -1012,13 +1051,11 @@ namespace Start_EAS_Trans
             this.Controls.Add(this.label27);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.label25);
-            this.Controls.Add(this.listBox2);
             this.Controls.Add(this.button23);
             this.Controls.Add(this.button24);
             this.Controls.Add(this.textBox12);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label23);
-            this.Controls.Add(this.label22);
             this.Controls.Add(this.button18);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label17);
@@ -1080,6 +1117,7 @@ namespace Start_EAS_Trans
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.label22);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Start_EAS_Trans";
@@ -1092,10 +1130,10 @@ namespace Start_EAS_Trans
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -1122,7 +1160,6 @@ namespace Start_EAS_Trans
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Button button13;
@@ -1151,18 +1188,12 @@ namespace Start_EAS_Trans
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Button button18;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.Button button24;
         private System.Windows.Forms.Button button23;
-        private System.Windows.Forms.ListBox listBox2;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Button button29;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button30;
         private System.Windows.Forms.Button button31;
         private System.Windows.Forms.Button button32;
@@ -1178,6 +1209,16 @@ namespace Start_EAS_Trans
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Button button42;
+        private System.Windows.Forms.Button button43;
+        protected internal System.Windows.Forms.Button button11;
+        protected internal System.Windows.Forms.TextBox textBox2;
+        protected internal System.Windows.Forms.TextBox textBox1;
+        protected internal System.Windows.Forms.Label label22;
+        protected internal System.Windows.Forms.Label label25;
+        protected internal System.Windows.Forms.Label label26;
+        protected internal System.Windows.Forms.Label label27;
+        protected internal System.Windows.Forms.Button button44;
+        protected internal System.Windows.Forms.Button button45;
     }
 }
 
