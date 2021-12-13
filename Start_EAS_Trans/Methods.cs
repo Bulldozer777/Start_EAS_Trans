@@ -370,7 +370,7 @@ namespace Start_EAS_Trans
             try
             {
                 if (ops != "")
-                {
+                {                   
                     Prod_Name_DataBase_and_Server(ops, out string server, out string name_database);
                     string connectionString = $"Server={server};Database={name_database};Persist Security Info=False;User ID=sa;Password=QweAsd123;";
                     using (SqlConnection connection = new SqlConnection(connectionString))
@@ -399,6 +399,7 @@ namespace Start_EAS_Trans
             }
             catch (Exception ex)
             {
+                this.isDataSaved = true;
                 ProdStreamWriterEAStrans(ops + $" - ошибка \n{ex}", ops, ProdwritePath);
             }
         }
@@ -643,6 +644,7 @@ namespace Start_EAS_Trans
             }
             catch(Exception ex)
             {
+                this.isDataSaved = true;
                 ProdStreamWriterEAStrans("Ошибка", ops, ProdwritePath);
                 ProdStreamWriterEAStrans("Ошибка, метод СheckEasTransport " + ex, ops, ProdwritePath);
                 EndOperation(ops, "- ошибка, метод СheckEasTransport");

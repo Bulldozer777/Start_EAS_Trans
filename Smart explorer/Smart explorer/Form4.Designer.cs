@@ -974,6 +974,7 @@ namespace Smart_explorer
             this.button50.TabIndex = 94;
             this.button50.Text = "УпрощенИнструк";
             this.button50.UseVisualStyleBackColor = true;
+            this.button50.Click += new System.EventHandler(this.button50_Click);
             // 
             // button51
             // 

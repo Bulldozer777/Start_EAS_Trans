@@ -371,31 +371,13 @@ namespace Smart_explorer
             ProcessStart(@"\\D01EASFTPBKP01\Backup_in\KAL\");
         }
 
-        /*async*/ private void button19_Click(object sender, EventArgs e)
+        private void button19_Click(object sender, EventArgs e)
         {
-            //string lockal = "\"";
-            //await Task.Run(() => Process.Start(new ProcessStartInfo
-            //{
             Process.Start(new ProcessStartInfo
             {
                 FileName = "cmd",
                 Arguments = @"/c net use * \\10.94.1.166\Download """" /user:guest /persistent:no"
-                //UseShellExecute = false,
-                //CreateNoWindow = true,
-                //RedirectStandardOutput = true
             });
-            MessageBox.Show(@"/c net use * \\10.94.1.166\Download """" /user:guest /persistent:no");
-            //await Task.Run(() => Process.Start(new ProcessStartInfo
-            //{
-            //    FileName = "cmd",
-            //    Arguments = @"/c cd " + appStorageFolder + @"\data\bin\PSTools (1) & psexec \\" + lockal + @" -c " + appStorageFolder + @"\data\bin\166.cmd",
-            //    //Arguments = @"/c cd C:\Users\Eduard.Karpov\Downloads\PSTools (1) & psexec \\" + textBox12.Text + @" -c d:\Clean\Clean.bat",
-            //    UseShellExecute = false,
-            //    WindowStyle = ProcessWindowStyle.Hidden,
-            //    CreateNoWindow = true,
-            //    RedirectStandardOutput = true
-            //}).WaitForExit());      
-            //Process.Start(appStorageFolder + @"\data\bin\166.cmd");
         }
 
         private void button20_Click(object sender, EventArgs e)
@@ -445,21 +427,29 @@ namespace Smart_explorer
 
         private void button31_Click(object sender, EventArgs e)
         {
-            if (textBox12.Text != "")
+            try
             {
-                string path = @"D:\Clean\Clean.bat";
-                string newPath = @"\\" + textBox12.Text + @"\d$\Clean.bat";
-                FileInfo fileInf = new FileInfo(path);
-                if (fileInf.Exists)
+                if (textBox12.Text != "")
                 {
-                    fileInf.CopyTo(newPath, true);
-                }
-                FileInfo fileInf1 = new FileInfo(newPath);
-                if (fileInf1.Exists)
-                {
-                    MessageBox.Show($"Clean.bat скопирован на ОПС: {textBox11.Text}"); 
+                    string path = @"D:\Clean\Clean.bat";
+                    string newPath = @"\\" + textBox12.Text + @"\d$\Clean.bat";
+                    FileInfo fileInf = new FileInfo(path);
+                    if (fileInf.Exists)
+                    {
+                        fileInf.CopyTo(newPath, true);
+                    }
+                    FileInfo fileInf1 = new FileInfo(newPath);
+                    if (fileInf1.Exists)
+                    {
+                        MessageBox.Show($"Clean.bat скопирован на ОПС: {textBox11.Text}");
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: \n{ex}");
+            }
+
         }
 
        async private void button33_Click(object sender, EventArgs e)
@@ -1242,6 +1232,11 @@ namespace Smart_explorer
         private void button86_Click(object sender, EventArgs e)
         {
             ProcessStart(@"\\10.94.1.166\Download\");
+        }
+
+        private void button50_Click(object sender, EventArgs e)
+        {
+            ProcessStart(appStorageFolder + @"\StaticExplorer\упрощенное вручение инструкции");
         }
     }
 }

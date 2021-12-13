@@ -21,7 +21,7 @@ namespace Start_EAS_Trans
 {
     public partial class Form1 : Form
     {
-        private readonly System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        public System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         int timerCounter = 0; //счётчик для таймера
         public static int action = 0;
         public static int СheckTransport = 0;
@@ -219,12 +219,6 @@ namespace Start_EAS_Trans
                 }
             }
         }
-        //private void Dummy()
-        //{
-        //    var allCtrl = new List<Control>();
-        //    allCtrl.AddRange((IEnumerable<Control>)this.listBox2);
-        //    Methods methods = new Methods(streamwriteEAStrans, writePath, allCtrl);
-        //}
 
         //Кнопка толкнуть транспорт скриптом
         //Работа осуществляется в отдельном потоке от основной программы,
@@ -288,11 +282,11 @@ namespace Start_EAS_Trans
                                 () =>
                                 {                                                                    
                                     string ops = textBox1.Text;                                  
-                                    SqlCommand command = new SqlCommand();                                  
+                                    SqlCommand command = new SqlCommand();                                 
                                     Start_Transport(progressBar1, command, ops, writePath, server1, name_database1);
                                     if (action != 1)
                                     {
-                                        View_files(progressBar1, command, action, ops, server1, name_database1);
+                                        View_files(this.progressBar1, command, action, ops, server1, name_database1);
                                     }
                                 });
                             thread.Start();
@@ -307,6 +301,7 @@ namespace Start_EAS_Trans
                     }
                     catch (Exception ex)
                     {
+                        this.isDataSaved = true;
                         MessageBox.Show($"Ошибка: \n{ex}");
                         progressBar1.Value = 0;
                         this.timer.Stop();
@@ -342,6 +337,8 @@ namespace Start_EAS_Trans
                     command.CommandText = "exec ReplicaExport 0";
                     command.Connection = connection;
                     command.CommandTimeout = 5000; //увеличено время на выполнение команды
+                    Form1.action = 0;
+                    action = 0;
                     await Task.Run(() => command.ExecuteNonQueryAsync());
                     action = 1;
                     Action(action);
@@ -362,6 +359,7 @@ namespace Start_EAS_Trans
             }
             catch (Exception ex)
             {
+                this.isDataSaved = true;
                 MessageBox.Show($"Ошибка: \n{ex}");
                 progressBar.Value = 0;
                 this.timer.Stop();
@@ -404,11 +402,12 @@ namespace Start_EAS_Trans
                 int u = 0;
                 textBox12.Text = path;
                 string[] mass_2 = new string[count];
-                while (files.Length == 0 & action != 1 & Form1.action != 1)
+                while (files.Length == 0)
                 {
                     catalog = Directory.GetDirectories(path);
                     if (catalog.Length == 0)
                     {
+                        progressBar.Value = 0;
                         files = Directory.GetFiles(path);
                         label22.Text = "Количество файлов реплики: 0";
                         await Task.Delay(200);
@@ -416,14 +415,16 @@ namespace Start_EAS_Trans
                     else
                     {
                         action = 1;
+                        progressBar.Value = 0;
                         label22.Text = $"Количество файлов реплики: {catalog.Length} - сформированная папка реплики";
                         files = Directory.GetFiles(path);
                         await Task.Delay(200);
+                        break;
                     }
                     files = Directory.GetFiles(path);
                     await Task.Delay(200);
                 }
-                while (files.Length != 0 & action != 1 & Form1.action != 1)
+                while (files.Length != 0)
                 {
                     count++;
                     string[] files_1 = Directory.GetFiles(path);
@@ -437,7 +438,7 @@ namespace Start_EAS_Trans
                         if (catalog.Length == 0)
                         {
                             string[] mass = new string[files_1.Length];
-                            if (u == 0 & Form1.action != 1)
+                            if (u == 0)
                             {
                                 u++;
                                 mass = files_1;
@@ -460,13 +461,15 @@ namespace Start_EAS_Trans
                                     }
                                     else
                                     {
+                                        this.timer.Stop();
+                                        progressBar.Value = 0;
                                         textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
                                         action = 1;
                                         break;
                                     }
                                 }
                             }
-                            if (u == 1 & action != 1)
+                            if (u == 1)
                             {
                                 listBox2.BeginUpdate();
                                 listBox2.Items.Clear();
@@ -478,6 +481,8 @@ namespace Start_EAS_Trans
                                     }
                                     else
                                     {
+                                        this.timer.Stop();
+                                        progressBar.Value = 0;
                                         textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
                                         action = 1;
                                         break;
@@ -518,10 +523,11 @@ namespace Start_EAS_Trans
                 }
                 progressBar.Value = 0;
                 this.timer.Stop();
-                textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";
+                textBox2.Text = textBox1.Text + " - выполнен скрипт exec ReplicaExport 0 ";            
             }
             catch (Exception ex)
             {
+                this.isDataSaved = true;
                 MessageBox.Show($"\nОшибка: \n{ex}");
                 progressBar.Value = 0;
                 this.timer.Stop();
@@ -1905,67 +1911,78 @@ namespace Start_EAS_Trans
                 MessageBox.Show("Поле для ввода пустое.\nВведите ip отделения почтовой связи.");
         }
 
-  
+
         private void button23_Click_1(object sender, EventArgs e)
         {
-            if (textBox1.Text != "")
+            try
             {
-                Name_DataBase_and_Server(textBox1.Text,  out string server1, out string name_database1, "Запуск транспорта скриптом Import");
-                string file = "gmmq.packege.end";
-                string file_2 = "meta.xml";
-                string path = @"\\" + server1 + @"\c$\GMMQ\Import\" + file;
-                string path_2 = @"\\" + server1 + @"\c$\GMMQ\Import\" + file_2;
-                FileInfo fileInf = new FileInfo(path);
-                FileInfo fileInf_2 = new FileInfo(path_2);
-                if (fileInf.Exists | fileInf_2.Exists)
+                if (textBox1.Text != "")
                 {
-                    try
+                    Name_DataBase_and_Server(textBox1.Text, out string server1, out string name_database1, "Запуск транспорта скриптом Import");
+                    string file = "gmmq.packege.end";
+                    string file_2 = "meta.xml";
+                    string path = @"\\" + server1 + @"\c$\GMMQ\Import\" + file;
+                    string path_2 = @"\\" + server1 + @"\c$\GMMQ\Import\" + file_2;
+                    FileInfo fileInf = new FileInfo(path);
+                    FileInfo fileInf_2 = new FileInfo(path_2);
+                    if (fileInf.Exists | fileInf_2.Exists)
                     {
-                        DialogResult result = MessageBox.Show(
-            $"Выполнить скрипт \"exec ReplicaImport 0\",\nна ОПС {textBox1.Text} ? ",
-            "Сообщение",
-            MessageBoxButtons.YesNo,
-            MessageBoxIcon.Information);
-
-                        if (result == DialogResult.Yes)
+                        try
                         {
-                            this.timer.Start();
-                            CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
-                                                                     // отменяет отслеживание ошибок,
-                                                                     // но дает передать компоненты формы в другой поток 
+                            DialogResult result = MessageBox.Show(
+                $"Выполнить скрипт \"exec ReplicaImport 0\",\nна ОПС {textBox1.Text} ? ",
+                "Сообщение",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Information);
 
-                            Thread thread = new Thread(
-                                () =>
-                                {
-                                    SqlCommand command = new SqlCommand();
-                                    Start_Transport_Import(progressBar1, command, server1, name_database1);
-                                });
-                            thread.Start();
-                            CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
-                                                                     // отменяет отслеживание ошибок,
-                                                                     // но дает передать компоненты формы в другой поток 
+                            if (result == DialogResult.Yes)
+                            {
+                                this.timer.Start();
+                                CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
+                                                                         // отменяет отслеживание ошибок,
+                                                                         // но дает передать компоненты формы в другой поток 
+
+                                Thread thread = new Thread(
+                                    () =>
+                                    {
+                                        SqlCommand command = new SqlCommand();
+                                        Start_Transport_Import(progressBar1, command, server1, name_database1);
+                                    });
+                                thread.Start();
+                                CheckForIllegalCrossThreadCalls = false; // нехороший лайфхак,
+                                                                         // отменяет отслеживание ошибок,
+                                                                         // но дает передать компоненты формы в другой поток 
+                            }
+                            if (result == DialogResult.No)
+                            {
+                                this.timer.Stop();
+                            }
                         }
-                        if (result == DialogResult.No)
+                        catch (Exception ex)
                         {
+                            MessageBox.Show($"Ошибка: \n{ex}");
+                            progressBar1.Value = 0;
                             this.timer.Stop();
+                            textBox2.Text = textBox1.Text + " - ошибка";
                         }
+                        textBox1.Focus();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show($"Ошибка: \n{ex}");
-                        progressBar1.Value = 0;
-                        this.timer.Stop();
-                        textBox2.Text = textBox1.Text + " - ошибка";
+                        MessageBox.Show($"Нет файлов: {file} \n{file_2} \nВ папке: {path} \n{path_2}");
                     }
-                    textBox1.Focus();
                 }
                 else
-                {
-                    MessageBox.Show($"Нет файлов: {file} \n{file_2} \nВ папке: {path} \n{path_2}"); 
-                }
+                    MessageBox.Show("Поле для ввода номера ОПС - пустое");
             }
-            else
-                MessageBox.Show("Поле для ввода номера ОПС - пустое");
+            catch (Exception ex)
+            {
+                this.isDataSaved = true;
+                MessageBox.Show($"Ошибка: \n{ex}");
+                progressBar1.Value = 0;
+                this.timer.Stop();
+                textBox2.Text = textBox1.Text + " - ошибка";
+            }
         }
         async public void Start_Transport_Import(ProgressBar progressBar, SqlCommand command, string server, string name_database)
         {
@@ -2008,6 +2025,7 @@ namespace Start_EAS_Trans
             }
             catch (Exception ex)
             {
+                this.isDataSaved = true;
                 MessageBox.Show($"Ошибка: \n{ex}");
                 progressBar.Value = 0;
                 this.timer.Stop();
@@ -2230,6 +2248,7 @@ namespace Start_EAS_Trans
             label25.Text = "Файлов:";
             label26.Text = "Папок:";
             label27.Text = "Элементов:";
+            label22.Text = "Количество файлов реплики: ";
         }
 
         private void button44_Click(object sender, EventArgs e)

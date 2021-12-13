@@ -1130,10 +1130,8 @@ namespace Start_EAS_Trans
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        public System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
@@ -1161,7 +1159,6 @@ namespace Start_EAS_Trans
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button15;
@@ -1219,6 +1216,9 @@ namespace Start_EAS_Trans
         protected internal System.Windows.Forms.Label label27;
         protected internal System.Windows.Forms.Button button44;
         protected internal System.Windows.Forms.Button button45;
+        protected internal System.Windows.Forms.ProgressBar progressBar1;
+        protected internal System.Windows.Forms.ListBox listBox2;
+        protected internal System.Windows.Forms.TextBox textBox8;
     }
 }
 
