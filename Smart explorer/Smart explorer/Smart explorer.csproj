@@ -192,24 +192,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Documents\Start_EAS_Trans\Copy log eas v1.2\Copy_EAS_Log\Copy_EAS_Log\Copy_EAS_Log.csproj">
-      <Project>{137285e7-1021-4408-a2ca-7e5218e569e6}</Project>
-      <Name>Copy_EAS_Log</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Documents\Start_EAS_Trans\Copy_Log_Mpk_for_form\Copy_Log_MPK\Copy_Log_MPK.csproj">
-      <Project>{a75d3b09-0e17-4561-97bd-b9dbc2ec8de9}</Project>
-      <Name>Copy_Log_MPK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Documents\Start_EAS_Trans\Rebut_Service_Pochta\Rebut_Service_Pochta\Rebut_Service_Pochta.csproj">
-      <Project>{133b6b75-c38f-4ea1-b1c5-82531ebe1db2}</Project>
-      <Name>Rebut_Service_Pochta</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Documents\Start_EAS_Trans\Version_File\Version_File\Version_File.csproj">
-      <Project>{677fc50e-45f0-4e95-8a43-cdc454164605}</Project>
-      <Name>Version_File</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

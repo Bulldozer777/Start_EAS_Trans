@@ -7,13 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Start_EAS_Trans", "Start_EA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart explorer", "Smart explorer\Smart explorer\Smart explorer.csproj", "{DE788C9D-D948-48BB-AB3C-40CD6201C6E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rebut_Service_Pochta", "..\..\..\Documents\Start_EAS_Trans\Rebut_Service_Pochta\Rebut_Service_Pochta\Rebut_Service_Pochta.csproj", "{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Copy_EAS_Log", "..\..\Документы\Start_EAS_Trans\Copy log eas v1.2\Copy_EAS_Log\Copy_EAS_Log\Copy_EAS_Log.csproj", "{137285E7-1021-4408-A2CA-7E5218E569E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Copy_Log_MPK", "..\..\..\Documents\Start_EAS_Trans\Copy_Log_Mpk_for_form\Copy_Log_MPK\Copy_Log_MPK.csproj", "{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Copy_Log_MPK", "..\..\Документы\Start_EAS_Trans\Copy_Log_Mpk_for_form\Copy_Log_MPK\Copy_Log_MPK.csproj", "{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Copy_EAS_Log", "..\..\..\Documents\Start_EAS_Trans\Copy log eas v1.2\Copy_EAS_Log\Copy_EAS_Log\Copy_EAS_Log.csproj", "{137285E7-1021-4408-A2CA-7E5218E569E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rebut_Service_Pochta", "..\..\Документы\Start_EAS_Trans\Rebut_Service_Pochta\Rebut_Service_Pochta\Rebut_Service_Pochta.csproj", "{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Version_File", "..\..\..\Documents\Start_EAS_Trans\Version_File\Version_File\Version_File.csproj", "{677FC50E-45F0-4E95-8A43-CDC454164605}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Version_File", "..\..\Документы\Start_EAS_Trans\Version_File\Version_File\Version_File.csproj", "{677FC50E-45F0-4E95-8A43-CDC454164605}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,30 +49,6 @@ Global
 		{DE788C9D-D948-48BB-AB3C-40CD6201C6E7}.версия 1.1|Any CPU.Build.0 = Release|Any CPU
 		{DE788C9D-D948-48BB-AB3C-40CD6201C6E7}.версия 1.1|x86.ActiveCfg = Release|Any CPU
 		{DE788C9D-D948-48BB-AB3C-40CD6201C6E7}.версия 1.1|x86.Build.0 = Release|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Debug|x86.Build.0 = Debug|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Release|x86.ActiveCfg = Release|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Release|x86.Build.0 = Release|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.версия 1.1|Any CPU.ActiveCfg = Debug|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.версия 1.1|Any CPU.Build.0 = Debug|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.версия 1.1|x86.ActiveCfg = Debug|Any CPU
-		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.версия 1.1|x86.Build.0 = Debug|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Debug|x86.Build.0 = Debug|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Release|x86.ActiveCfg = Release|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Release|x86.Build.0 = Release|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.версия 1.1|Any CPU.ActiveCfg = версия 1.1|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.версия 1.1|Any CPU.Build.0 = версия 1.1|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.версия 1.1|x86.ActiveCfg = версия 1.1|Any CPU
-		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.версия 1.1|x86.Build.0 = версия 1.1|Any CPU
 		{137285E7-1021-4408-A2CA-7E5218E569E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{137285E7-1021-4408-A2CA-7E5218E569E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{137285E7-1021-4408-A2CA-7E5218E569E6}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -85,6 +61,30 @@ Global
 		{137285E7-1021-4408-A2CA-7E5218E569E6}.версия 1.1|Any CPU.Build.0 = Debug|Any CPU
 		{137285E7-1021-4408-A2CA-7E5218E569E6}.версия 1.1|x86.ActiveCfg = Debug|Any CPU
 		{137285E7-1021-4408-A2CA-7E5218E569E6}.версия 1.1|x86.Build.0 = Debug|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Debug|x86.Build.0 = Debug|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Release|x86.ActiveCfg = Release|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.Release|x86.Build.0 = Release|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.версия 1.1|Any CPU.ActiveCfg = версия 1.1|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.версия 1.1|Any CPU.Build.0 = версия 1.1|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.версия 1.1|x86.ActiveCfg = версия 1.1|Any CPU
+		{A75D3B09-0E17-4561-97BD-B9DBC2EC8DE9}.версия 1.1|x86.Build.0 = версия 1.1|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Debug|x86.Build.0 = Debug|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Release|x86.ActiveCfg = Release|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.Release|x86.Build.0 = Release|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.версия 1.1|Any CPU.ActiveCfg = Debug|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.версия 1.1|Any CPU.Build.0 = Debug|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.версия 1.1|x86.ActiveCfg = Debug|Any CPU
+		{133B6B75-C38F-4EA1-B1C5-82531EBE1DB2}.версия 1.1|x86.Build.0 = Debug|Any CPU
 		{677FC50E-45F0-4E95-8A43-CDC454164605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{677FC50E-45F0-4E95-8A43-CDC454164605}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{677FC50E-45F0-4E95-8A43-CDC454164605}.Debug|x86.ActiveCfg = Debug|Any CPU
